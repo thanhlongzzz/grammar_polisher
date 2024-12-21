@@ -6,7 +6,7 @@ class SvgButton extends StatelessWidget {
   final double size;
   final VoidCallback? onPressed;
   final Color? color;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final BorderRadius? borderRadius;
   final EdgeInsets padding;
 
@@ -16,31 +16,29 @@ class SvgButton extends StatelessWidget {
     this.onPressed,
     this.size = 24,
     this.color,
-    this.backgroundColor = Colors.transparent,
+    this.backgroundColor,
     this.borderRadius,
     this.padding = const EdgeInsets.all(4),
   });
 
   @override
   Widget build(BuildContext context) {
-    final hideColor = Theme.of(context).colorScheme.onSurface;
+    final colorScheme = Theme.of(context).colorScheme;
     return Material(
-      color: onPressed != null ? backgroundColor : hideColor,
-      borderRadius: borderRadius ?? BorderRadius.circular(100),
+      color: colorScheme.primaryContainer,
+      borderRadius: borderRadius ?? BorderRadius.circular(8),
       child: InkWell(
         onTap: onPressed,
-        borderRadius: borderRadius ?? BorderRadius.circular(100),
+        borderRadius: borderRadius ?? BorderRadius.circular(8),
         child: Padding(
           padding: padding,
           child: SvgPicture.asset(
             height: size,
             svg,
-            colorFilter: color != null
-                ? ColorFilter.mode(
-                    color!,
-                    BlendMode.srcIn,
-                  )
-                : null,
+            colorFilter: ColorFilter.mode(
+              color ?? colorScheme.onPrimaryContainer,
+              BlendMode.srcIn,
+            ),
           ),
         ),
       ),

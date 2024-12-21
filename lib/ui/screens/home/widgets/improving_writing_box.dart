@@ -17,7 +17,6 @@ class ImprovingWritingBox extends StatelessWidget {
         Html(
           data: "<b>Your text:</b> ${result.diff.newText1}",
         ),
-        const SizedBox(height: 8),
         Html(
           data: "<b>Feedback: </b> ${result.diff.newText2}",
         ),
@@ -25,11 +24,8 @@ class ImprovingWritingBox extends StatelessWidget {
           data: "<b>Your text has been improved by ${result.percentage}%</b>",
         ),
         Html(
-          data: "<b>Steps to improve: </b>",
+          data: "<b>Steps to improve: </b> <br> ${stepByStepAdvice.isNotEmpty ? stepByStepAdvice : "No steps to improve"}",
         ),
-        Html(
-          data: stepByStepAdvice.isNotEmpty ? stepByStepAdvice : "No steps to improve",
-        )
       ],
     );
   }

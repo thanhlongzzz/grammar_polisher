@@ -6,6 +6,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../core/failure.dart';
 import '../../../generated/assets.dart';
+import '../../../utils/app_snack_bar.dart';
 import '../../../utils/extensions/go_router_extension.dart';
 import '../../../navigation/app_router.dart';
 import '../home/bloc/home_bloc.dart';
@@ -114,12 +115,7 @@ class _HomeNavigationState extends State<HomeNavigation> {
 
   _handleError(BuildContext context, Failure? failure) {
     if (failure != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(failure.message),
-          backgroundColor: Colors.red,
-        ),
-      );
+      AppSnackBar.showError(context, failure.message);
     }
   }
 }

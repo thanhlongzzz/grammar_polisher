@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/ai_function.dart';
 import '../../../data/models/improve_writing_result.dart';
+import '../../../utils/app_snack_bar.dart';
 import '../../commons/base_page.dart';
 import '../../commons/dialogs/function_picker_dialog.dart';
 import '../../commons/rounded_button.dart';
 import 'bloc/home_bloc.dart';
 import 'widgets/improving_writing_box.dart';
+import 'widgets/text_field_control_box.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -53,6 +56,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
+                    TextFieldControlBox(
+                      onCopy: _onCopy,
+                      onPaste: _onPaste,
+                      onDelete: _onDelete,
+                      onMic: _onMic,
+                    ),
+                    const SizedBox(height: 16),
                     GestureDetector(
                       onTap: _onShowFunctionDialog,
                       child: Container(
@@ -79,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-
+                    const SizedBox(height: 16),
                     if (state.result is ImproveWritingResult) ImprovingWritingBox(result: state.result as ImproveWritingResult),
                   ],
                 ),
@@ -127,5 +137,31 @@ class _HomeScreenState extends State<HomeScreen> {
       default:
         break;
     }
+  }
+
+  void _onCopy() async {
+    if (_textController.text.isEmpty) {
+      return;
+    }
+    final clipboardData = ClipboardData(text: _textController.text);
+    await Clipboard.setData(clipboardData);
+  }
+
+  void _onPaste() async {
+    final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
+    if (clipboardData != null) {
+      _textController.text = clipboardData.text ?? '';
+    }
+  }
+
+  void _onDelete() {
+    if (_textController.text.isEmpty) {
+      return;
+    }
+    _textController.clear();
+  }
+
+  void _onMic() {
+
   }
 }
