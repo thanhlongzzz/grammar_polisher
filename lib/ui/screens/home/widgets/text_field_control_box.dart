@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../generated/assets.dart';
 import '../../../commons/svg_button.dart';
 
 class TextFieldControlBox extends StatelessWidget {
-  final VoidCallback? onCopy;
-  final VoidCallback? onPaste;
-  final VoidCallback? onDelete;
-  final VoidCallback? onMic;
+  final TextEditingController controller;
 
   const TextFieldControlBox({
     super.key,
-    this.onCopy,
-    this.onPaste,
-    this.onDelete,
-    this.onMic,
+    required this.controller,
   });
 
   @override
@@ -24,24 +19,48 @@ class TextFieldControlBox extends StatelessWidget {
       children: [
         SvgButton(
           svg: Assets.svgCopy,
-          onPressed: onCopy,
+          onPressed: _onCopy,
         ),
         const SizedBox(width: 16),
         SvgButton(
           svg: Assets.svgPaste,
-          onPressed: onPaste,
+          onPressed: _onPaste,
         ),
         const SizedBox(width: 16),
         SvgButton(
           svg: Assets.svgDelete,
-          onPressed: onDelete,
+          onPressed: _onDelete,
         ),
         const SizedBox(width: 16),
         SvgButton(
           svg: Assets.svgMic,
-          onPressed: onMic,
+          onPressed: _onMic,
         ),
       ],
     );
   }
+
+  void _onCopy() async {
+    if (controller.text.isEmpty) {
+      return;
+    }
+    final clipboardData = ClipboardData(text: controller.text);
+    await Clipboard.setData(clipboardData);
+  }
+
+  void _onPaste() async {
+    final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
+    if (clipboardData != null) {
+      controller.text = clipboardData.text ?? '';
+    }
+  }
+
+  void _onDelete() {
+    if (controller.text.isEmpty) {
+      return;
+    }
+    controller.clear();
+  }
+
+  void _onMic() {}
 }

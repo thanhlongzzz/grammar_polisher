@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/ai_function.dart';
@@ -21,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late final TextEditingController _textController;
+  late final FocusNode _textFocusNode;
   AIFunction _selectedFunction = AIFunction.improveWriting;
 
   @override
@@ -46,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 16),
                     TextField(
                       controller: _textController,
+                      focusNode: _textFocusNode,
                       minLines: 5,
                       maxLines: 10,
                       decoration: const InputDecoration(
@@ -57,10 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 16),
                     TextFieldControlBox(
-                      onCopy: _onCopy,
-                      onPaste: _onPaste,
-                      onDelete: _onDelete,
-                      onMic: _onMic,
+                      controller: _textController,
                     ),
                     const SizedBox(height: 16),
                     GestureDetector(
@@ -101,16 +99,17 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
   @override
   void initState() {
     super.initState();
     _textController = TextEditingController();
+    _textFocusNode = FocusNode();
   }
 
   @override
   void dispose() {
     _textController.dispose();
+    _textFocusNode.dispose();
     super.dispose();
   }
 
@@ -130,6 +129,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _processContent() {
+    _textFocusNode.unfocus();
+    if (_textController.text.isEmpty) {
+      AppSnackBar.showError(context, 'Please write some content');
+      return;
+    }
     switch (_selectedFunction) {
       case AIFunction.improveWriting:
         context.read<HomeBloc>().add(HomeEvent.improveWriting(_textController.text));
@@ -137,31 +141,5 @@ class _HomeScreenState extends State<HomeScreen> {
       default:
         break;
     }
-  }
-
-  void _onCopy() async {
-    if (_textController.text.isEmpty) {
-      return;
-    }
-    final clipboardData = ClipboardData(text: _textController.text);
-    await Clipboard.setData(clipboardData);
-  }
-
-  void _onPaste() async {
-    final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
-    if (clipboardData != null) {
-      _textController.text = clipboardData.text ?? '';
-    }
-  }
-
-  void _onDelete() {
-    if (_textController.text.isEmpty) {
-      return;
-    }
-    _textController.clear();
-  }
-
-  void _onMic() {
-
   }
 }
