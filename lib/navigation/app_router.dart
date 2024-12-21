@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grammar_polisher/configs/di.dart';
 
+import '../ui/screens/home/bloc/home_bloc.dart';
 import '../ui/screens/home/home_screen.dart';
 import '../ui/screens/home_navigation/home_navigation.dart';
 import '../ui/screens/notifications/notifications_screen.dart';
@@ -20,8 +23,15 @@ class AppRouter {
       ShellRoute(
         navigatorKey: _homeNavigatorKey,
         builder: (context, state, child) {
-          return HomeNavigation(
-            child: child,
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => DI().sl<HomeBloc>(),
+              ),
+            ],
+            child: HomeNavigation(
+              child: child,
+            ),
           );
         },
         routes: [

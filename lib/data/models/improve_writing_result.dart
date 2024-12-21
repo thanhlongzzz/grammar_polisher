@@ -1,13 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'diff.dart';
+import 'result.dart';
 
 part 'generated/improve_writing_result.freezed.dart';
 
 part 'generated/improve_writing_result.g.dart';
 
 @freezed
-class ImproveWritingResult with _$ImproveWritingResult {
+class ImproveWritingResult extends Result with _$ImproveWritingResult {
   const factory ImproveWritingResult({
     @Default(Diff()) @JsonKey(name: "diff") Diff diff,
     @Default("") @JsonKey(name: "originalText") String original,

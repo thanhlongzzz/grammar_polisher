@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/models/ai_function.dart';
 import 'data_picker_dialog.dart';
 
 class FunctionPickerDialog extends StatefulWidget {
-  final Function(String) onChanged;
+  final Function(AIFunction) onChanged;
 
   const FunctionPickerDialog({super.key, required this.onChanged});
 
@@ -12,30 +13,24 @@ class FunctionPickerDialog extends StatefulWidget {
 }
 
 class _StatePickerDialogState extends State<FunctionPickerDialog> {
-  final List<String> _functions = [
-    "Improve Writing",
-    "Check Grammar",
-    "Detect Chat GPT",
-    "Check Level",
-    "Check Score",
-    "Check writing",
-    "Check Vocabulary",
-  ];
+  final List<AIFunction> _functions = AIFunction.values;
 
-  List<String> _filteredFunctions = [];
+  List<AIFunction> _filteredFunctions = [];
 
   @override
   Widget build(BuildContext context) {
-    return DataPickerDialog<String>(
+    return DataPickerDialog<AIFunction>(
       onChanged: widget.onChanged,
       data: _filteredFunctions,
-      itemBuilder: (state) => Text(
-        state,
-      ),
+      itemBuilder: (function) => Text(function.name),
       onChangedSearch: (value) {
         setState(() {
           _filteredFunctions = _functions
-              .where((state) => state.toLowerCase().contains(value.toLowerCase()))
+              .where(
+                (function) => function.name.toLowerCase().contains(
+                      value.toLowerCase(),
+                    ),
+              )
               .toList();
         });
       },

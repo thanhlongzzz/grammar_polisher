@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 
 import '../data/data_sources/remote_data.dart';
 import '../data/repositories/polisher_repository.dart';
+import '../ui/screens/home/bloc/home_bloc.dart';
 import 'dio/app_dio.dart';
 
 class DI {
@@ -19,6 +20,12 @@ class DI {
   final sl = GetIt.instance;
 
   Future<void> init() async {
+    sl.registerFactory(
+      () => HomeBloc(
+        polisherRepository: sl(),
+      ),
+    );
+
     sl.registerLazySingleton<PolisherRepository>(
       () => PolisherRepositoryImpl(
         remoteData: sl(),
