@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 
 import '../../../constants/custom_colors.dart';
 import '../../../data/models/word.dart';
+import '../../../data/models/word_status.dart';
 import '../../screens/vocabulary/widgets/phonetic.dart';
 import '../banner_ads.dart';
+import '../rounded_button.dart';
 
 class WordDetailsDialog extends StatelessWidget {
   final Word word;
-  const WordDetailsDialog({super.key, required this.word});
+  final VoidCallback? onMastered;
+
+  const WordDetailsDialog({
+    super.key,
+    required this.word,
+    required this.onMastered,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -49,42 +57,49 @@ class WordDetailsDialog extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 8),
-              ...List.generate(
-                word.senses.length,
-                (index) {
-                  final sense = word.senses[index];
-                  return Align(
-                    alignment: Alignment.centerLeft,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SelectableText(
-                          '${index + 1}. ${sense.definition}',
-                          style: textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+              ...List.generate(word.senses.length, (index) {
+                final sense = word.senses[index];
+                return Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SelectableText(
+                        '${index + 1}. ${sense.definition}',
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      if (sense.examples.isNotEmpty) ...[
+                        Text("Examples:"),
+                        const SizedBox(height: 8),
+                        ...List.generate(
+                          sense.examples.length,
+                          (index) {
+                            final example = sense.examples[index];
+                            return SelectableText(
+                              '${index + 1}.${example.cf.isNotEmpty ? ' (${example.cf})' : ''} ${example.x}',
+                              style: textTheme.bodyMedium,
+                            );
+                          },
                         ),
                         const SizedBox(height: 8),
-                        if (sense.examples.isNotEmpty) ...[
-                          Text("Examples:"),
-                          const SizedBox(height: 8),
-                          ...List.generate(
-                            sense.examples.length,
-                                (index) {
-                              final example = sense.examples[index];
-                              return SelectableText(
-                                '${index + 1}.${example.cf.isNotEmpty ? ' (${example.cf})' : ''} ${example.x}',
-                                style: textTheme.bodyMedium,
-                              );
-                            },
-                          ),
-                          const SizedBox(height: 8),
-                        ],
                       ],
-                    ),
-                  );
-                }
-              ),
+                    ],
+                  ),
+                );
+              }),
+              if (word.status != WordStatus.mastered) ...[
+                const SizedBox(height: 8),
+                RoundedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    onMastered?.call();
+                  },
+                  child: const Text('Mask as mastered'),
+                ),
+              ]
             ],
           ),
         ),

@@ -202,8 +202,9 @@ class VocabularyItem extends StatelessWidget {
     }
     showDialog(
       context: context,
-      builder: (context) => WordDetailsDialog(
+      builder: (_) => WordDetailsDialog(
         word: word,
+        onMastered: () => _masteredWord(context),
       ),
     );
   }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grammar_polisher/data/models/word.dart';
 
 import '../../../../constants/date_formats.dart';
 import '../../../../data/models/scheduled_notification.dart';
+import '../../../../data/models/word_status.dart';
 import '../../../../generated/assets.dart';
 import '../../../commons/dialogs/word_details_dialog.dart';
 import '../../../commons/svg_button.dart';
@@ -69,11 +71,18 @@ class NotificationItem extends StatelessWidget {
 
   _showDetails(BuildContext context) {
     final words = context.read<VocabularyBloc>().state.words;
+    final word = words.firstWhere((word) => word.index == notification.id);
     showDialog(
       context: context,
       builder: (_) => WordDetailsDialog(
-        word: words.firstWhere((word) => word.index == notification.id),
+        word: word,
+        onMastered: () => _onMastered(context, word),
       ),
     );
+  }
+
+  _onMastered(BuildContext context, Word word) {
+    context.read<VocabularyBloc>().add(VocabularyEvent.changeStatus(word, WordStatus.mastered));
+    _onRemoveNotification(context);
   }
 }

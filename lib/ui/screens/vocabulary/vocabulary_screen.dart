@@ -183,7 +183,10 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         showDialog(
           context: context,
-          builder: (context) => WordDetailsDialog(word: word),
+          builder: (_) => WordDetailsDialog(
+            word: word,
+            onMastered: () => _onMastered(word),
+          ),
         );
       });
     }
@@ -237,5 +240,9 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
       result += search;
     }
     return result;
+  }
+
+  void _onMastered(Word word) {
+    context.read<VocabularyBloc>().add(VocabularyEvent.changeStatus(word, WordStatus.mastered));
   }
 }
