@@ -18,13 +18,11 @@ class PositionedFlashCardController {
 }
 
 class PositionedFlashCard extends StatefulWidget {
-  final bool display;
   final Word word;
   final PositionedFlashCardController? controller;
 
   const PositionedFlashCard({
     super.key,
-    required this.display,
     required this.word,
     this.controller,
   });
@@ -48,21 +46,18 @@ class _PositionedFlashCardState extends State<PositionedFlashCard> {
       right: _status == FlashCardStatus.checkBack ? null : (_status == FlashCardStatus.mastered ? -300 : center),
       duration: PositionedFlashCard._animateDuration,
       curve: Curves.easeInOut,
-      child: Visibility(
-        visible: widget.display,
-        child: FlashCard(
-          height: size.width * 0.9,
-          width: size.width * 0.7,
-          frontWidget: () => SideCard(
-            word: word,
-            isFront: false,
-            status: _status,
-          ),
-          backWidget: () => SideCard(
-            word: word,
-            isFront: true,
-            status: _status,
-          ),
+      child: FlashCard(
+        height: size.width * 0.9,
+        width: size.width * 0.7,
+        frontWidget: () => SideCard(
+          word: word,
+          isFront: false,
+          status: _status,
+        ),
+        backWidget: () => SideCard(
+          word: word,
+          isFront: true,
+          status: _status,
         ),
       ),
     );

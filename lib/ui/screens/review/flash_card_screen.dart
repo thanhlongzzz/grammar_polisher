@@ -47,7 +47,6 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
                   return PositionedFlashCard(
                     key: ValueKey(word.index),
                     controller: _controllers[index],
-                    display: index == _words.length - 1 || index == _words.length - 2 || index == _words.length - 3,
                     word: word,
                   );
                 },
