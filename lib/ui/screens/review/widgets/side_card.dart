@@ -30,7 +30,9 @@ class _SideCardState extends State<SideCard> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.shadow.withValues(alpha: 0.2),
+            color: colorScheme.shadow.withValues(
+              alpha: 0.08,
+            ),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),

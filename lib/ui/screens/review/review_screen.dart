@@ -24,7 +24,7 @@ class ReviewScreen extends StatelessWidget {
     return BasePage(
       title: 'Review',
       actions: [
-        GestureDetector(
+        if (vocabularyState.words.any((word) => word.status == WordStatus.unknown)) GestureDetector(
           onTap: () => _showScheduleModal(context, reviewWords),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(8, 4, 0, 4),
@@ -63,7 +63,9 @@ class ReviewScreen extends StatelessWidget {
                 const SizedBox(height: 16),
               ],
             )
-          : EmptyReviewPage(),
+          : EmptyReviewPage(
+              hasWords: vocabularyState.words.any((word) => word.status == WordStatus.unknown),
+            ),
     );
   }
 
