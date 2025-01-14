@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../generated/assets.dart';
 import '../../../../navigation/app_router.dart';
 import '../../../commons/rounded_button.dart';
+import '../../vocabulary/bloc/vocabulary_bloc.dart';
 
 class EmptyReviewPage extends StatelessWidget {
   const EmptyReviewPage({super.key});
@@ -41,9 +43,18 @@ class EmptyReviewPage extends StatelessWidget {
           expand: false,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           borderRadius: 8,
+          onPressed: () => _onAddRandomWords(context),
+          child: Text(
+            'Randomly add 10 words to review',
+          ),
+        ),
+        TextButton(
           onPressed: () => _onAddWords(context),
           child: Text(
-            'Add words to review',
+            'Add manually by yourself',
+            style: textTheme.bodyMedium?.copyWith(
+              color: colorScheme.primary,
+            ),
           ),
         ),
       ],
@@ -52,5 +63,9 @@ class EmptyReviewPage extends StatelessWidget {
 
   void _onAddWords(BuildContext context) {
     context.go(RoutePaths.vocabulary);
+  }
+
+  _onAddRandomWords(BuildContext context) {
+     context.read<VocabularyBloc>().add(const VocabularyEvent.addWordRandomly());
   }
 }

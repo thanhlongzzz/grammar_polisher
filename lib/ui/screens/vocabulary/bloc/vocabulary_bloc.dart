@@ -24,6 +24,7 @@ class VocabularyBloc extends Bloc<VocabularyEvent, VocabularyState> {
         getAllOxfordWords: (event) => _onGetAllOxfordWords(event, emit),
         changeStatus: (event) => _onChangeStatus(event, emit),
         editDefinition: (event) => _onEditDefinition(event, emit),
+        addWordRandomly: (event) => _onAddWordRandomly(event, emit),
       );
     });
   }
@@ -75,5 +76,21 @@ class VocabularyBloc extends Bloc<VocabularyEvent, VocabularyState> {
     }).toList();
     _oxfordWordsRepository.saveWord(newWord);
     emit(state.copyWith(words: words));
+  }
+
+  _onAddWordRandomly(_AddWordRandomly event, Emitter<VocabularyState> emit) {
+    debugPrint('VocabularyBloc: addWordRandomly');
+    final unknownWords = state.words.where((word) => word.status == WordStatus.unknown).toList()..shuffle();
+    final randomWords = unknownWords.take(10);
+    for (final word in randomWords) {
+      final newWord = word.copyWith(status: WordStatus.star);
+      _oxfordWordsRepository.saveWord(newWord);
+    }
+    emit(state.copyWith(words: state.words.map((word) {
+      if (randomWords.contains(word)) {
+        return word.copyWith(status: WordStatus.star);
+      }
+      return word;
+    }).toList()));
   }
 }
