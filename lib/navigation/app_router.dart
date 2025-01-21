@@ -1,3 +1,4 @@
+import 'package:amplitude_flutter/amplitude.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -22,9 +23,15 @@ class AppRouter {
   static final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
   static final GlobalKey<NavigatorState> homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 
+  static Amplitude amplitude = Amplitude.getInstance();
+
   static final router = GoRouter(
     initialLocation: RoutePaths.vocabulary,
     navigatorKey: rootNavigatorKey,
+    redirect: (context, state) {
+      amplitude.logEvent(state.uri.path);
+      return null;
+    },
     routes: [
       ShellRoute(
         navigatorKey: homeNavigatorKey,

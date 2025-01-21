@@ -1,3 +1,4 @@
+import 'package:amplitude_flutter/amplitude.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +30,11 @@ void main() async {
   );
   await DI().init();
   await DI().sl<OxfordWordsRepository>().initData();
+
+  const apiKey = String.fromEnvironment('AMPLITUDE_API_KEY');
+  final amplitude = Amplitude.getInstance();
+  await amplitude.init(apiKey);
+
   tz.initializeTimeZones();
   final currentTimeZone = await FlutterTimezone.getLocalTimezone();
   tz.setLocalLocation(tz.getLocation(currentTimeZone));
