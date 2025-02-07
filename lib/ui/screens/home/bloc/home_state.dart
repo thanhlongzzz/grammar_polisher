@@ -6,5 +6,6 @@ class HomeState with _$HomeState {
     @Default(false) bool isLoading,
     @Default(null) Failure? failure,
     @Default(null) Result? result,
+    @Default(false) bool outOfFree,
   }) = _HomeState;
 }

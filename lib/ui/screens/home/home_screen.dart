@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 16),
-                          if (_isShowNote) ...[
+                          if (_isShowNote && state.outOfFree) ...[
                             Text(
                               '''*Note:
 Grammarly AI is currently in beta.

@@ -40,7 +40,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     result.fold(
       (failure) {
         debugPrint('HomeBloc: _improveWriting: $failure');
-        emit(state.copyWith(isLoading: false, failure: failure));
+        emit(state.copyWith(isLoading: false, failure: failure, outOfFree: true));
         emit(state.copyWith(failure: null));
       },
       (improveWritingResult) {
@@ -57,7 +57,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     result.fold(
       (failure) {
         debugPrint('HomeBloc: _checkGrammar: $failure');
-        emit(state.copyWith(isLoading: false, failure: failure));
+        emit(state.copyWith(isLoading: false, failure: failure, outOfFree: true));
         emit(state.copyWith(failure: null));
       },
       (checkGrammarResult) {
@@ -74,7 +74,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     result.fold(
       (failure) {
         debugPrint('HomeBloc: _detectGpt: $failure');
-        emit(state.copyWith(isLoading: false, failure: failure));
+        emit(state.copyWith(isLoading: false, failure: failure, outOfFree: true));
         emit(state.copyWith(failure: null));
       },
       (detectGptResult) {
@@ -91,7 +91,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     result.fold(
       (failure) {
         debugPrint('HomeBloc: _checkLevel: $failure');
-        emit(state.copyWith(isLoading: false, failure: failure));
+        emit(state.copyWith(isLoading: false, failure: failure, outOfFree: true));
         emit(state.copyWith(failure: null));
       },
       (checkLevelResult) {
@@ -108,7 +108,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     result.fold(
       (failure) {
         debugPrint('HomeBloc: _checkScore: $failure');
-        emit(state.copyWith(isLoading: false, failure: failure));
+        emit(state.copyWith(isLoading: false, failure: failure, outOfFree: true));
         emit(state.copyWith(failure: null));
       },
       (checkScoreResult) {
@@ -125,7 +125,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     result.fold(
       (failure) {
         debugPrint('HomeBloc: _checkWriting: $failure');
-        emit(state.copyWith(isLoading: false, failure: failure));
+        emit(state.copyWith(isLoading: false, failure: failure, outOfFree: true));
         emit(state.copyWith(failure: null));
       },
       (result) {
