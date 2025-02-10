@@ -28,15 +28,10 @@ class _SideCardState extends State<SideCard> {
       decoration: BoxDecoration(
         color: _getCardColor(colorScheme),
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow.withValues(
-              alpha: 0.08,
-            ),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        border: Border.all(
+          color: widget.isFront ? colorScheme.primary : colorScheme.tertiary,
+          width: 0.5
+        ),
       ),
       padding: const EdgeInsets.all(16),
       child: Center(

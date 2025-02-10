@@ -46,18 +46,21 @@ class _PositionedFlashCardState extends State<PositionedFlashCard> {
       right: _status == FlashCardStatus.checkBack ? null : (_status == FlashCardStatus.mastered ? -300 : center),
       duration: PositionedFlashCard._animateDuration,
       curve: Curves.easeInOut,
-      child: FlashCard(
-        height: size.width * 0.9,
-        width: size.width * 0.7,
-        frontWidget: () => SideCard(
-          word: word,
-          isFront: false,
-          status: _status,
-        ),
-        backWidget: () => SideCard(
-          word: word,
-          isFront: true,
-          status: _status,
+      child: Container(
+        color: Colors.red.withValues(alpha: 0),
+        child: FlashCard(
+          height: size.width * 0.9,
+          width: size.width * 0.7,
+          frontWidget: () => SideCard(
+            word: word,
+            isFront: false,
+            status: _status,
+          ),
+          backWidget: () => SideCard(
+            word: word,
+            isFront: true,
+            status: _status,
+          ),
         ),
       ),
     );

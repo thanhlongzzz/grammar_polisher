@@ -1,4 +1,10 @@
 PODS:
+  - Amplitude (8.18.0):
+    - AnalyticsConnector (~> 1.0.0)
+  - amplitude_flutter (0.0.1):
+    - Amplitude (= 8.18.0)
+    - Flutter
+  - AnalyticsConnector (1.0.3)
   - app_settings (5.1.1):
     - Flutter
   - audioplayers_darwin (0.0.1):
@@ -28,6 +34,7 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/ios`)
   - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/darwin`)
@@ -41,10 +48,14 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Amplitude
+    - AnalyticsConnector
     - Google-Mobile-Ads-SDK
     - GoogleUserMessagingPlatform
 
 EXTERNAL SOURCES:
+  amplitude_flutter:
+    :path: ".symlinks/plugins/amplitude_flutter/ios"
   app_settings:
     :path: ".symlinks/plugins/app_settings/ios"
   audioplayers_darwin:
@@ -67,6 +78,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/darwin"
 
 SPEC CHECKSUMS:
+  Amplitude: 184def4f87aa26f94a93a7faa334e06b1cae704d
+  amplitude_flutter: 20fed3aede0c17e0be5eb0e76de39de560f95f63
+  AnalyticsConnector: a53214d38ae22734c6266106c0492b37832633a9
   app_settings: 3507c575c2b18a462c99948f61d5de21d4420999
   audioplayers_darwin: ccf9c770ee768abb07e26d90af093f7bab1c12ab
   connectivity_plus: 2256d3e20624a7749ed21653aafe291a46446fee
