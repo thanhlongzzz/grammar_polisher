@@ -28,11 +28,10 @@ class _ScheduleModalState extends State<ScheduleModal> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
-    final size = MediaQuery.of(context).size;
-    return Container(
-      height: size.height * 0.7,
+    return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             "Scheduled Reminders",
@@ -104,7 +103,7 @@ class _ScheduleModalState extends State<ScheduleModal> {
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: 16),
           BannerAds(),
           const SizedBox(height: 16),
           RoundedButton(
