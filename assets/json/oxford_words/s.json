@@ -1138,7 +1138,7 @@
     ]
   },
   {
-    "word": "sake1",
+    "word": "sake",
     "pos": "noun",
     "phonetic": "https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/s/sak/sake_/sake__gb_1.mp3",
     "phonetic_text": "/seɪk/",
@@ -7931,7 +7931,7 @@
     ]
   },
   {
-    "word": "second1",
+    "word": "second",
     "pos": "adverb",
     "phonetic": "https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/s/sec/secon/second__gb_1.mp3",
     "phonetic_text": "/ˈsekənd/",
@@ -7987,7 +7987,7 @@
     ]
   },
   {
-    "word": "second1",
+    "word": "second",
     "pos": "determiner, ordinal number",
     "phonetic": "https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/s/sec/secon/second__gb_1.mp3",
     "phonetic_text": "/ˈsekənd/",
@@ -8056,7 +8056,7 @@
     ]
   },
   {
-    "word": "second1",
+    "word": "second",
     "pos": "noun",
     "phonetic": "https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/s/sec/secon/second__gb_1.mp3",
     "phonetic_text": "/ˈsekənd/",
@@ -8217,75 +8217,6 @@
           {
             "cf": "",
             "x": "Wait a minute—this isn't the right key."
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "word": "second1",
-    "pos": "determiner, ordinal number",
-    "phonetic": "https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/s/sec/secon/second__gb_1.mp3",
-    "phonetic_text": "/ˈsekənd/",
-    "phonetic_am": "https://www.oxfordlearnersdictionaries.com/media/english/us_pron/s/sec/secon/second__us_3.mp3",
-    "phonetic_am_text": "/ˈsekənd/",
-    "senses": [
-      {
-        "definition": "happening or coming next after the first in a series of similar things or people; 2nd",
-        "examples": [
-          {
-            "cf": "",
-            "x": "This is the second time it's happened."
-          },
-          {
-            "cf": "",
-            "x": "Italy scored a second goal just after half-time."
-          },
-          {
-            "cf": "",
-            "x": "the second of June/June 2nd"
-          },
-          {
-            "cf": "",
-            "x": "He was the second to arrive."
-          },
-          {
-            "cf": "",
-            "x": "We have one child and are expecting our second in July."
-          }
-        ]
-      },
-      {
-        "definition": "next in order of importance, size, quality, etc. to one other person or thing",
-        "examples": [
-          {
-            "cf": "",
-            "x": "Osaka is Japan's second-largest city."
-          },
-          {
-            "cf": "",
-            "x": "Birmingham, the UK’s second city"
-          },
-          {
-            "cf": "",
-            "x": "Basketball is second only to soccer in global popularity."
-          },
-          {
-            "cf": "",
-            "x": "As a dancer, he is second to none (= nobody is a better dancer than he is)."
-          }
-        ]
-      },
-      {
-        "definition": "another; in addition to one that you already own or use",
-        "examples": [
-          {
-            "cf": "",
-            "x": "They have a second home in Tuscany."
-          },
-          {
-            "cf": "",
-            "x": "teachers of English as a second language (= to people who already speak one or more other languages)"
           }
         ]
       }
