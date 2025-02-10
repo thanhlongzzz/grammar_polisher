@@ -92,12 +92,12 @@ class WordDetailsDialog extends StatelessWidget {
               }),
               if (word.status != WordStatus.mastered) ...[
                 const SizedBox(height: 8),
-                RoundedButton(
+                TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                     onMastered?.call();
                   },
-                  child: const Text('Mask as mastered'),
+                  child: Text('Mark as mastered'),
                 ),
               ]
             ],
