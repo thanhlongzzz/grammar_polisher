@@ -151,8 +151,6 @@ You can resolve this by changing your IP to continue using it (e.g., switching t
                       ),
                     ),
                     const SizedBox(height: 16),
-                    BannerAds(),
-                    const SizedBox(height: 8),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
@@ -166,10 +164,6 @@ You can resolve this by changing your IP to continue using it (e.g., switching t
                         ],
                       ),
                     ),
-                    if (state.result != null) ...[
-                      const SizedBox(height: 8),
-                      BannerAds(),
-                    ]
                   ],
                 ),
               ),
