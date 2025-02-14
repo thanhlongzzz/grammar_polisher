@@ -16,3 +16,5 @@ fastlane/*.json
 .env.*
 metadata/
 fastlane/report.xml
+*.dSYM.zip
+*.ipa

@@ -51,7 +51,6 @@ platform :android do
 #             track: 'beta',
 #             track: 'production',
             aab: "../build/app/outputs/bundle/productionRelease/app-production-release.aab",
-            metadata_path: "./fastlane/metadata/android",
             json_key: ENV["KEY_PATH"],
         )
     end
