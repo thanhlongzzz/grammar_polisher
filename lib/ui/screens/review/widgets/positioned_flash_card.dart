@@ -39,18 +39,18 @@ class _PositionedFlashCardState extends State<PositionedFlashCard> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final word = widget.word;
-    final cardWidth = size.width * 0.7;
+    double cardWidth = (size.width * 0.7) <= 600 ? (size.width * 0.7) : 600;
     final center = size.width / 2 - cardWidth / 2;
     return AnimatedPositioned(
-      left: _status == FlashCardStatus.mastered ? null : (_status == FlashCardStatus.checkBack ? -300 : center),
-      right: _status == FlashCardStatus.checkBack ? null : (_status == FlashCardStatus.mastered ? -300 : center),
+      left: _status == FlashCardStatus.mastered ? null : (_status == FlashCardStatus.checkBack ? - size.width : center),
+      right: _status == FlashCardStatus.checkBack ? null : (_status == FlashCardStatus.mastered ? - size.width : center),
       duration: PositionedFlashCard._animateDuration,
       curve: Curves.easeInOut,
       child: Container(
         color: Colors.red.withValues(alpha: 0),
         child: FlashCard(
-          height: size.width * 0.9,
-          width: size.width * 0.7,
+          height: cardWidth * 1.2,
+          width: cardWidth,
           frontWidget: () => SideCard(
             word: word,
             isFront: false,

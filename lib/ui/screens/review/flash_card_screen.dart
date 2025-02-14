@@ -47,6 +47,7 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
               SizedBox(
                 height: size.width * 0.9,
                 child: Stack(
+                  alignment: Alignment.center,
                   children: List.generate(
                     _words.length,
                     (index) {
