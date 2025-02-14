@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grammar_polisher/ui/screens/vocabulary/bloc/vocabulary_bloc.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 import '../../../constants/custom_colors.dart';
 import '../../../data/models/word.dart';
@@ -9,8 +10,10 @@ import '../../../data/models/word_status.dart';
 import '../../../generated/assets.dart';
 import '../../../utils/ads_tools.dart';
 import '../../../utils/app_snack_bar.dart';
+import '../../../utils/global_values.dart';
 import '../../commons/base_page.dart';
 import '../../commons/rounded_button.dart';
+import 'widgets/flashcard_app_dialog.dart';
 import 'widgets/positioned_flash_card.dart';
 
 class FlashCardScreen extends StatefulWidget {
@@ -154,8 +157,16 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
     if (mounted) {
       context.read<VocabularyBloc>().add(VocabularyEvent.changeStatus(masteredWord, WordStatus.mastered));
       if (_words.isEmpty) {
+        if (!GlobalValues.isShowInAppReview) {
+          InAppReview.instance.requestReview();
+          GlobalValues.isShowInAppReview = true;
+        } else if (!GlobalValues.isShowFlashCardAppDialog) {
+          GlobalValues.isShowFlashCardAppDialog = true;
+          showDialog(context: context, builder: (_) => FlashcardAppDialog());
+        } else {
+          AdsTools.requestNewInterstitial();
+        }
         Navigator.of(context).pop();
-        AdsTools.requestNewInterstitial();
       }
     }
     _animating = false;

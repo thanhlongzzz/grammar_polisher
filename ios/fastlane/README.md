@@ -23,22 +23,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
-### ios fetch_dependencies
-
-```sh
-[bundle exec] fastlane ios fetch_dependencies
-```
-
-Fetch and install dependencies
-
-### ios build
-
-```sh
-[bundle exec] fastlane ios build
-```
-
-Push a new build
-
 ### ios release
 
 ```sh

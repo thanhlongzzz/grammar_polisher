@@ -14,6 +14,7 @@ import 'configs/di.dart';
 import 'data/repositories/oxford_words_repository.dart';
 import 'navigation/app_router.dart';
 import 'ui/screens/settings/bloc/settings_bloc.dart';
+import 'utils/global_values.dart';
 import 'utils/local_notifications_tools.dart';
 
 void main() async {
@@ -34,6 +35,7 @@ void main() async {
   const apiKey = String.fromEnvironment('AMPLITUDE_API_KEY');
   final amplitude = Amplitude.getInstance();
   await amplitude.init(apiKey);
+  await GlobalValues.init();
 
   tz.initializeTimeZones();
   final currentTimeZone = await FlutterTimezone.getLocalTimezone();

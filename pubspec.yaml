@@ -59,6 +59,8 @@ dependencies:
   flash_card: ^0.1.0
   swipeable_page_route: ^0.4.6
   amplitude_flutter: ^3.16.6
+  shared_preferences: ^2.5.2
+  in_app_review: ^2.0.10
 
 dev_dependencies:
   flutter_test:
