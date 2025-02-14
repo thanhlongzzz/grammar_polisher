@@ -36,3 +36,5 @@ Runner/GeneratedPluginRegistrant.*
 *.env.*
 fastlane/report.xml
 *.p8
+*.dSYM.zip
+*.ipa
