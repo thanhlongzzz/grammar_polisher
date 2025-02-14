@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:grammar_polisher/ui/commons/banner_ads.dart';
 import 'package:grammar_polisher/ui/screens/vocabulary/bloc/vocabulary_bloc.dart';
 import 'package:in_app_review/in_app_review.dart';
 
@@ -37,83 +38,88 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
     return BasePage(
       title: 'Flashcards',
       padding: const EdgeInsets.all(0),
-      child: Column(
+      child: Stack(
         children: [
-          const Spacer(),
-          SizedBox(
-            height: size.width * 0.9,
-            child: Stack(
-              children: List.generate(
-                _words.length,
-                (index) {
-                  final word = _words[index];
-                  return PositionedFlashCard(
-                    key: ValueKey(word.index),
-                    controller: _controllers[index],
-                    word: word,
-                  );
-                },
+          BannerAds(),
+          Column(
+            children: [
+              const Spacer(),
+              SizedBox(
+                height: size.width * 0.9,
+                child: Stack(
+                  children: List.generate(
+                    _words.length,
+                    (index) {
+                      final word = _words[index];
+                      return PositionedFlashCard(
+                        key: ValueKey(word.index),
+                        controller: _controllers[index],
+                        word: word,
+                      );
+                    },
+                  ),
+                ),
               ),
-            ),
-          ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: RoundedButton(
-                    backgroundColor: CustomColors.red,
-                    onPressed: _onCheckBack,
-                    borderRadius: 16,
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          Assets.svgUndo,
-                          colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                          height: 16,
-                          width: 16,
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: RoundedButton(
+                        backgroundColor: CustomColors.red,
+                        onPressed: _onCheckBack,
+                        borderRadius: 16,
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                              Assets.svgUndo,
+                              colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                              height: 16,
+                              width: 16,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              "Check back",
+                              style: textTheme.titleSmall?.copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(width: 8),
-                        Text(
-                          "Check back",
-                          style: textTheme.titleSmall?.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: RoundedButton(
-                    backgroundColor: CustomColors.green,
-                    onPressed: _onMastered,
-                    borderRadius: 16,
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          Assets.svgCheck,
-                          colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                          height: 16,
-                          width: 16,
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: RoundedButton(
+                        backgroundColor: CustomColors.green,
+                        onPressed: _onMastered,
+                        borderRadius: 16,
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                              Assets.svgCheck,
+                              colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                              height: 16,
+                              width: 16,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              "Mastered",
+                              style: textTheme.titleSmall?.copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(width: 8),
-                        Text(
-                          "Mastered",
-                          style: textTheme.titleSmall?.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 20),
+            ],
           ),
-          const SizedBox(height: 20),
         ],
       ),
     );
