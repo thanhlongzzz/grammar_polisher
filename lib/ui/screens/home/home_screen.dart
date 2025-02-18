@@ -56,117 +56,124 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, state) {
         return Stack(
           children: [
-            BasePage(
-              title: 'Grammarly AI',
-              padding: const EdgeInsets.all(0),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            Column(
+              children: [
+                Expanded(
+                  child: BasePage(
+                    title: 'Grammarly AI',
+                    padding: const EdgeInsets.all(0),
+                    child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          Text(
-                            'Write your content here\nWe\'ll help you improve it',
-                            style: textTheme.headlineMedium?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: colorScheme.primary,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 16),
-                          if (_isShowNote && state.outOfFree) ...[
-                            Text(
-                              '''*Note:
-Grammarly AI is currently in beta.
-You may encounter the error "Run out of free usage attempts" if you use it excessively on a single IP.
-You can resolve this by changing your IP to continue using it (e.g., switching to a different WiFi or 4G network).''',
-                              style: textTheme.bodySmall?.copyWith(
-                                color: colorScheme.secondary,
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            TextButton(
-                              onPressed: _hideNote,
-                              child: Text('Hide Note'),
-                            ),
-                            const SizedBox(height: 16),
-                          ],
-                          TextField(
-                            controller: _textController,
-                            focusNode: _textFocusNode,
-                            minLines: 5,
-                            maxLines: 10,
-                            decoration: const InputDecoration(
-                              hintText: 'Write your content here',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(16)),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          TextFieldControlBox(
-                            controller: _textController,
-                          ),
-                          const SizedBox(height: 16),
-                          GestureDetector(
-                            onTap: _onShowFunctionDialog,
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: colorScheme.secondaryContainer,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: ListTile(
-                                title: Text(
-                                  _selectedFunction.name,
-                                  style: textTheme.bodyMedium,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Write your content here\nWe\'ll help you improve it',
+                                  style: textTheme.headlineMedium?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: colorScheme.primary,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                              ),
+                                const SizedBox(height: 16),
+                                if (_isShowNote && state.outOfFree) ...[
+                                  Text(
+                                    '''*Note:
+                  Grammarly AI is currently in beta.
+                  You may encounter the error "Run out of free usage attempts" if you use it excessively on a single IP.
+                  You can resolve this by changing your IP to continue using it (e.g., switching to a different WiFi or 4G network).''',
+                                    style: textTheme.bodySmall?.copyWith(
+                                      color: colorScheme.secondary,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  TextButton(
+                                    onPressed: _hideNote,
+                                    child: Text('Hide Note'),
+                                  ),
+                                  const SizedBox(height: 16),
+                                ],
+                                TextField(
+                                  controller: _textController,
+                                  focusNode: _textFocusNode,
+                                  minLines: 5,
+                                  maxLines: 10,
+                                  decoration: const InputDecoration(
+                                    hintText: 'Write your content here',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                TextFieldControlBox(
+                                  controller: _textController,
+                                ),
+                                const SizedBox(height: 16),
+                                GestureDetector(
+                                  onTap: _onShowFunctionDialog,
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: colorScheme.secondaryContainer,
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: ListTile(
+                                      title: Text(
+                                        _selectedFunction.name,
+                                        style: textTheme.bodyMedium,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                if (_selectedFunction == AIFunction.checkScore) ...[
+                                  ScoreTypePicker(
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedScoreType = value;
+                                      });
+                                    },
+                                    selectedScoreType: _selectedScoreType,
+                                  ),
+                                  const SizedBox(height: 16),
+                                ],
+                                RoundedButton(
+                                  borderRadius: 16,
+                                  onPressed: _processContent,
+                                  child: Text(
+                                    'Process',
+                                    style: textTheme.titleMedium?.copyWith(
+                                      color: colorScheme.onPrimary,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           const SizedBox(height: 16),
-                          if (_selectedFunction == AIFunction.checkScore) ...[
-                            ScoreTypePicker(
-                              onChanged: (value) {
-                                setState(() {
-                                  _selectedScoreType = value;
-                                });
-                              },
-                              selectedScoreType: _selectedScoreType,
-                            ),
-                            const SizedBox(height: 16),
-                          ],
-                          RoundedButton(
-                            borderRadius: 16,
-                            onPressed: _processContent,
-                            child: Text(
-                              'Process',
-                              style: textTheme.titleMedium?.copyWith(
-                                color: colorScheme.onPrimary,
-                              ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Column(
+                              children: [
+                                if (state.result is ImproveWritingResult) ImprovingWritingBox(result: state.result as ImproveWritingResult),
+                                if (state.result is CheckGrammarResult) CheckGrammarBox(result: state.result as CheckGrammarResult),
+                                if (state.result is DetectGptResult) DetectGptBox(result: state.result as DetectGptResult),
+                                if (state.result is CheckLevelResult) CheckLevelBox(result: state.result as CheckLevelResult),
+                                if (state.result is CheckScoreResult) CheckScoreBox(result: state.result as CheckScoreResult),
+                                if (state.result is CheckWritingResult) CheckWritingBox(result: state.result as CheckWritingResult),
+                              ],
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        children: [
-                          if (state.result is ImproveWritingResult) ImprovingWritingBox(result: state.result as ImproveWritingResult),
-                          if (state.result is CheckGrammarResult) CheckGrammarBox(result: state.result as CheckGrammarResult),
-                          if (state.result is DetectGptResult) DetectGptBox(result: state.result as DetectGptResult),
-                          if (state.result is CheckLevelResult) CheckLevelBox(result: state.result as CheckLevelResult),
-                          if (state.result is CheckScoreResult) CheckScoreBox(result: state.result as CheckScoreResult),
-                          if (state.result is CheckWritingResult) CheckWritingBox(result: state.result as CheckWritingResult),
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                BannerAds(),
+              ],
             ),
           ],
         );
