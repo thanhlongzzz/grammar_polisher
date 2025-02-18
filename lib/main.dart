@@ -1,4 +1,8 @@
 import 'package:amplitude_flutter/amplitude.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,23 +23,38 @@ import 'utils/local_notifications_tools.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await MobileAds.instance.initialize();
+  const apiKey = String.fromEnvironment('AMPLITUDE_API_KEY');
+  final amplitude = Amplitude.getInstance();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ),
   );
-  await LocalNotificationsTools().initialize(
-    onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
-    onDidReceiveBackgroundNotificationResponse: onDidReceiveBackgroundNotificationResponse,
-  );
-  await DI().init();
+  await Firebase.initializeApp();
+  await Future.wait([
+    MobileAds.instance.initialize(),
+    LocalNotificationsTools().initialize(
+      onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
+      onDidReceiveBackgroundNotificationResponse: onDidReceiveBackgroundNotificationResponse,
+    ),
+    DI().init(),
+    amplitude.init(apiKey),
+    GlobalValues.init(),
+  ]);
   await DI().sl<OxfordWordsRepository>().initData();
 
-  const apiKey = String.fromEnvironment('AMPLITUDE_API_KEY');
-  final amplitude = Amplitude.getInstance();
-  await amplitude.init(apiKey);
-  await GlobalValues.init();
+  if (appFlavor != 'production' || kDebugMode) {
+    debugPrint('setAnalyticsCollectionEnabled false');
+    await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(false);
+  } else {
+    debugPrint('setAnalyticsCollectionEnabled true');
+    await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      return true;
+    };
+  }
 
   tz.initializeTimeZones();
   final currentTimeZone = await FlutterTimezone.getLocalTimezone();

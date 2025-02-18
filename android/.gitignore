@@ -18,3 +18,4 @@ metadata/
 fastlane/report.xml
 *.dSYM.zip
 *.ipa
+**/.cxx/

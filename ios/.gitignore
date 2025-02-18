@@ -38,3 +38,4 @@ fastlane/report.xml
 *.p8
 *.dSYM.zip
 *.ipa
+**/GoogleService-Info*.plist
