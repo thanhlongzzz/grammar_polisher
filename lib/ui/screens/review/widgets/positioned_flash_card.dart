@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flash_card/flash_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,7 +51,7 @@ class _PositionedFlashCardState extends State<PositionedFlashCard> {
       child: Container(
         color: Colors.red.withValues(alpha: 0),
         child: FlashCard(
-          height: cardWidth * 1.2,
+          height: size.height * 0.4,
           width: cardWidth,
           frontWidget: () => SideCard(
             word: word,

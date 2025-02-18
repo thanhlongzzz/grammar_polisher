@@ -45,7 +45,7 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
             children: [
               const Spacer(),
               SizedBox(
-                height: size.width * 0.9,
+                height: size.height * 0.4,
                 child: Stack(
                   alignment: Alignment.center,
                   children: List.generate(
