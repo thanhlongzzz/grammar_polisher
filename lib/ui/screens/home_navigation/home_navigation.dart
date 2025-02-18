@@ -166,6 +166,9 @@ class _HomeNavigationState extends State<HomeNavigation> {
   }
 
   void _onSelect(int value) {
+    if (value == HomeNavigation.routes.indexOf(RoutePaths.notifications)) {
+      context.read<NotificationsBloc>().add(const NotificationsEvent.getScheduledNotifications());
+    }
     context.go(HomeNavigation.routes[value]);
   }
 

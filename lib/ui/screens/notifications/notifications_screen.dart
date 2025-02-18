@@ -59,7 +59,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   void initState() {
     super.initState();
     context.read<NotificationsBloc>().add(const NotificationsEvent.requestPermissions());
-    context.read<NotificationsBloc>().add(const NotificationsEvent.getScheduledNotifications());
   }
 
   void _openReviewScreen() {
