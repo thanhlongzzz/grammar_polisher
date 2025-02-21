@@ -27,7 +27,7 @@ class VocabularyScreen extends StatefulWidget {
 class _VocabularyScreenState extends State<VocabularyScreen> {
   bool _showSearch = false;
   final List<WordPos> _selectedPos = [];
-  List<WordStatus> _selectedStatus = [];
+  final List<WordStatus> _selectedStatus = [];
   String? _selectedLetter;
   String _searchText = '';
 
@@ -50,56 +50,59 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
             )
           ],
           padding: const EdgeInsets.all(0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SearchBox(
-                        showSearch: _showSearch,
-                        selectedPos: _selectedPos,
-                        selectedLetter: _selectedLetter,
-                        selectedStatus: _selectedStatus,
-                        onSelectPos: _onSelectPos,
-                        onSelectLetter: _onSelectLetter,
-                        onClearFilters: _onClearFilters,
-                        onSearch: _onSearch,
-                        onSelectStatus: _onSelectStatus,
-                      ),
-                      GestureDetector(
-                        onTap: _onShowSearch,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Text(
-                            '${_getFilterLabel()}',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SearchBox(
+                  showSearch: _showSearch,
+                  selectedPos: _selectedPos,
+                  selectedLetter: _selectedLetter,
+                  selectedStatus: _selectedStatus,
+                  onSelectPos: _onSelectPos,
+                  onSelectLetter: _onSelectLetter,
+                  onClearFilters: _onClearFilters,
+                  onSearch: _onSearch,
+                  onSelectStatus: _onSelectStatus,
+                ),
+                GestureDetector(
+                  onTap: _onShowSearch,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      '${_getFilterLabel()}',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
                           ),
-                        ),
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: words.length,
-                          itemBuilder: (context, index) {
-                            final word = words[index];
-                            return VocabularyItem(
-                              word: word,
-                              onReminder: _onReminder,
-                            );
-                          },
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-              BannerAds(),
-            ],
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: words.length,
+                    itemBuilder: (context, index) {
+                      final word = words[index];
+                      return Column(
+                        children: [
+                          VocabularyItem(
+                            word: word,
+                            onReminder: _onReminder,
+                          ),
+                          if (index == 5) Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4.0),
+                            child: const BannerAds(
+                              padding: 16,
+                              key: Key('vocabulary_banner_ads'),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

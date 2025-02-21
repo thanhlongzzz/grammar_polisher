@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class BannerAds extends StatefulWidget {
-  const BannerAds({super.key});
+  final double padding;
+  const BannerAds({super.key, this.padding = 0});
 
   @override
   State<BannerAds> createState() => _BannerAdsState();
 }
 
-class _BannerAdsState extends State<BannerAds> {
+class _BannerAdsState extends State<BannerAds> with AutomaticKeepAliveClientMixin {
   BannerAd? _bannerAd;
 
   final adUnitId = Platform.isAndroid
@@ -19,6 +20,7 @@ class _BannerAdsState extends State<BannerAds> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if (_bannerAd != null) {
       return SizedBox(
         width: _bannerAd!.size.width.toDouble(),
@@ -46,9 +48,9 @@ class _BannerAdsState extends State<BannerAds> {
 
   void _loadAd() async {
     final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
-      MediaQuery.of(context).size.width.truncate(),
+      (MediaQuery.of(context).size.width - widget.padding * 2).toInt(),
     );
-    _bannerAd = BannerAd(
+    BannerAd(
       adUnitId: adUnitId,
       request: const AdRequest(),
       size: AdSize(
@@ -67,7 +69,9 @@ class _BannerAdsState extends State<BannerAds> {
           ad.dispose();
         },
       ),
-    );
-    await _bannerAd!.load();
+    ).load();
   }
+
+  @override
+  bool get wantKeepAlive => _bannerAd != null;
 }
