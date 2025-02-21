@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -45,8 +47,14 @@ class FlashcardAppDialog extends StatelessWidget {
                 TextSpan(
                   text: 'Our ',
                 ),
+                WidgetSpan(
+                  child: Image.asset(
+                    Assets.pngImg1,
+                    height: 18,
+                  ),
+                ),
                 TextSpan(
-                  text: 'Flashcard Collections App',
+                  text: ' Flashcard Collections App',
                   style: textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: colorScheme.primary,
@@ -97,7 +105,9 @@ class FlashcardAppDialog extends StatelessWidget {
   }
 
   _onGotIt(BuildContext context) {
-    final url = const String.fromEnvironment("FLASHCARD_APP_LINK");
+    final url = Platform.isIOS
+        ? const String.fromEnvironment('IOS_FLASHCARD_APP_URL')
+        : const String.fromEnvironment('ANDROID_FLASHCARD_APP_URL');
     launchUrl(Uri.parse(url));
     Navigator.of(context).pop();
   }

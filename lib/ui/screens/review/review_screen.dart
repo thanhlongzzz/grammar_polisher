@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grammar_polisher/utils/global_values.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../data/models/word.dart';
 import '../../../data/models/word_status.dart';
+import '../../../generated/assets.dart';
 import '../../../navigation/app_router.dart';
 import '../../commons/base_page.dart';
 import '../../commons/rounded_button.dart';

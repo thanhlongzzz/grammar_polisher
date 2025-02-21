@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grammar_polisher/ui/commons/banner_ads.dart';
 import 'package:grammar_polisher/ui/screens/vocabulary/bloc/vocabulary_bloc.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../constants/custom_colors.dart';
 import '../../../data/models/word.dart';
@@ -34,6 +37,7 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return BasePage(
       title: 'Flashcards',
@@ -62,6 +66,21 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
                 ),
               ),
               const Spacer(),
+              GlobalValues.isShowFlashCardAppDialog ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: _openFlashcardApp,
+                    child: Text(
+                      "Try advance flashcard",
+                      style: textTheme.titleSmall?.copyWith(
+                        color: colorScheme.secondary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ) : const SizedBox(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
@@ -177,5 +196,12 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
       }
     }
     _animating = false;
+  }
+
+  _openFlashcardApp() {
+    final url = Platform.isIOS
+        ? const String.fromEnvironment('IOS_FLASHCARD_APP_URL')
+        : const String.fromEnvironment('ANDROID_FLASHCARD_APP_URL');
+    launchUrl(Uri.parse(url));
   }
 }

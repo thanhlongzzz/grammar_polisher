@@ -6,11 +6,13 @@ import 'svg_button.dart';
 class AppHeader extends StatelessWidget {
   final String title;
   final List<Widget> actions;
+  final Widget leading;
 
   const AppHeader({
     super.key,
     required this.title,
     this.actions = const [],
+    this.leading = const SizedBox(),
   });
 
   @override
@@ -37,6 +39,7 @@ class AppHeader extends StatelessWidget {
                   color: colorScheme.primary,
                   onPressed: () => _onClose(context),
                 ),
+              leading,
               const Spacer(),
               ...actions,
             ],
