@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:grammar_polisher/navigation/app_router.dart';
 import 'package:grammar_polisher/ui/commons/banner_ads.dart';
 import 'package:grammar_polisher/ui/screens/vocabulary/bloc/vocabulary_bloc.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -183,6 +185,10 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
     if (mounted) {
       context.read<VocabularyBloc>().add(VocabularyEvent.changeStatus(masteredWord, WordStatus.mastered));
       if (_words.isEmpty) {
+        if (!context.canPop()) {
+          context.go(RoutePaths.vocabulary);
+          return;
+        }
         if (!GlobalValues.isShowInAppReview) {
           InAppReview.instance.requestReview();
           GlobalValues.isShowInAppReview = true;

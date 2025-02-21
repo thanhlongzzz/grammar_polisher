@@ -41,6 +41,8 @@ class Assets {
   static const String pngImg = 'assets/png/img.png';
   static const String pngImg1 = 'assets/png/img_1.png';
   static const String pngLauncher = 'assets/png/launcher.png';
+  static const String pngLauncherPlaystore = 'assets/png/launcher-playstore.png';
+  static const String pngSample = 'assets/png/sample.png';
   static const String pngXlsxDemo = 'assets/png/xlsx_demo.png';
   static const String svgArrowBackIos = 'assets/svg/arrow_back_ios.svg';
   static const String svgArrowLeftIos = 'assets/svg/arrow_left_ios.svg';

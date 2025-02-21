@@ -197,9 +197,6 @@ class VocabularyItem extends StatelessWidget {
   }
 
   void _openWordDetails(BuildContext context) {
-    if (viewOnly) {
-      return;
-    }
     showDialog(
       context: context,
       builder: (_) => WordDetailsDialog(
@@ -226,6 +223,9 @@ class VocabularyItem extends StatelessWidget {
   }
 
   _showEditWordDialog(BuildContext context) {
+    if (viewOnly) {
+      return;
+    }
     showDialog(
       context: context,
       builder: (_) => UserDefinitionDialog(

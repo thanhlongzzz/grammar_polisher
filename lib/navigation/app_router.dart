@@ -2,6 +2,7 @@ import 'package:amplitude_flutter/amplitude.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grammar_polisher/utils/global_values.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 import '../configs/di.dart';
@@ -11,6 +12,7 @@ import '../ui/screens/home/home_screen.dart';
 import '../ui/screens/home_navigation/home_navigation.dart';
 import '../ui/screens/notifications/bloc/notifications_bloc.dart';
 import '../ui/screens/notifications/notifications_screen.dart';
+import '../ui/screens/onboaring/onboarding_screen.dart';
 import '../ui/screens/review/flash_card_screen.dart';
 import '../ui/screens/review/review_screen.dart';
 import '../ui/screens/settings/settings_screen.dart';
@@ -29,6 +31,10 @@ class AppRouter {
     navigatorKey: rootNavigatorKey,
     redirect: (context, state) {
       amplitude.logEvent(state.uri.path);
+      if (!GlobalValues.isShowOnboarding) {
+        GlobalValues.isShowOnboarding = true;
+        return RoutePaths.onboarding;
+      }
       return null;
     },
     routes: [
@@ -52,17 +58,6 @@ class AppRouter {
           );
         },
         branches: [
-          StatefulShellBranch(routes: [
-            GoRoute(
-              path: RoutePaths.home,
-              pageBuilder: (context, state) {
-                return NoTransitionPage(
-                  key: state.pageKey,
-                  child: const HomeScreen(),
-                );
-              },
-            ),
-          ]),
           StatefulShellBranch(routes: [
             GoRoute(
               path: RoutePaths.notifications,
@@ -125,7 +120,16 @@ class AppRouter {
             )
           ]),
         ],
-      )
+      ),
+      GoRoute(
+        path: RoutePaths.onboarding,
+        pageBuilder: (context, state) {
+          return NoTransitionPage(
+            key: state.pageKey,
+            child: const OnboardingScreen(),
+          );
+        },
+      ),
     ],
   );
 }

@@ -22,7 +22,6 @@ class HomeNavigation extends StatefulWidget {
     RoutePaths.vocabulary,
     RoutePaths.notifications,
     RoutePaths.review,
-    RoutePaths.home,
     RoutePaths.settings,
   ];
 
@@ -30,7 +29,6 @@ class HomeNavigation extends StatefulWidget {
     Assets.svgVocabulary,
     Assets.svgNotifications,
     Assets.svgStar,
-    Assets.svgHome,
     Assets.svgSettings,
   ];
 
@@ -38,7 +36,6 @@ class HomeNavigation extends StatefulWidget {
     "Oxford Words",
     "Reminders",
     "Studying",
-    "Grammarly AI",
     "Settings",
   ];
 
@@ -58,7 +55,10 @@ class _HomeNavigationState extends State<HomeNavigation> {
     final colorScheme = Theme.of(context).colorScheme;
 
     final currentRoute = GoRouter.of(context).currentRoute;
-    final selectedIndex = HomeNavigation.routes.indexOf(currentRoute);
+    var selectedIndex = HomeNavigation.routes.indexOf(currentRoute);
+    if (selectedIndex == -1 && currentRoute == RoutePaths.flashcards) {
+      selectedIndex = 2;
+    }
     final selectedColor = colorScheme.primary;
     final unselectedColor = Colors.grey[600]!;
 

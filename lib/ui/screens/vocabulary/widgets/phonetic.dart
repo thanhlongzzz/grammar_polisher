@@ -49,6 +49,6 @@ class _PhoneticState extends State<Phonetic> {
     if (_player.state == PlayerState.playing) {
       return;
     }
-    await _player.play(UrlSource(widget.phonetic));
+    await _player.play(UrlSource(widget.phonetic, mimeType: 'audio/mpeg'));
   }
 }

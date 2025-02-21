@@ -5,6 +5,7 @@ class GlobalValues {
 
   static const isShowFlashCardAppDialogKey = 'isShowFlashCardAppDialog';
   static const isShowInAppReviewKey = 'isShowInAppReview';
+  static const isShowOnboardingKey = 'isShowOnboarding';
 
   static SharedPreferences? _sharedPreferences;
 
@@ -22,5 +23,11 @@ class GlobalValues {
 
   static set isShowInAppReview(bool value) {
     _sharedPreferences?.setBool(isShowInAppReviewKey, value);
+  }
+
+  static bool get isShowOnboarding => _sharedPreferences?.getBool(isShowOnboardingKey) ?? false;
+
+  static set isShowOnboarding(bool value) {
+    _sharedPreferences?.setBool(isShowOnboardingKey, value);
   }
 }

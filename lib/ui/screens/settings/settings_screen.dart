@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../constants/words.dart';
 import '../../../data/models/sense.dart';
 import '../../../data/models/word.dart';
 import '../../../data/models/word_status.dart';
@@ -59,21 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: VocabularyItem(
-                          word: Word(
-                            word: "sample",
-                            pos: "noun",
-                            phonetic: "https://www.oxfordlearnersdictionaries.com/media/english/uk_pron/s/sam/sampl/sample__gb_3.mp3",
-                            phoneticText: "/ˈsɑːmpl/",
-                            phoneticAm: "https://www.oxfordlearnersdictionaries.com/media/english/us_pron/s/sam/sampl/sample__us_1.mp3",
-                            phoneticAmText: "/ˈsæmpl/",
-                            senses: [
-                              Sense(
-                                definition: "a number of people or things taken from a larger group and used in tests to provide information about the group",
-                                examples: [],
-                              )
-                            ],
-                            status: _status,
-                          ),
+                          word: Words.sampleWord,
                           onMastered: _onMastered,
                           onStar: _onStar,
                           viewOnly: true,

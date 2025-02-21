@@ -1,0 +1,46 @@
+import 'package:flutter/material.dart';
+
+class OnboardingPage extends StatelessWidget {
+  final Widget header;
+  final String label;
+  final String content;
+
+  const OnboardingPage({
+    super.key,
+    required this.header,
+    required this.label,
+    required this.content,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          header,
+          const SizedBox(height: 16.0),
+          Text(
+            label,
+            style: textTheme.titleLarge?.copyWith(
+              color: colorScheme.primary,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 8.0),
+          Text(
+            content,
+            style: textTheme.bodyLarge?.copyWith(
+              color: colorScheme.secondary,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+}
