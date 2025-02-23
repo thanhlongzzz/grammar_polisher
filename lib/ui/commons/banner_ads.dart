@@ -5,6 +5,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class BannerAds extends StatefulWidget {
   final double padding;
+
   const BannerAds({super.key, this.padding = 0});
 
   @override
@@ -13,6 +14,7 @@ class BannerAds extends StatefulWidget {
 
 class _BannerAdsState extends State<BannerAds> with AutomaticKeepAliveClientMixin {
   BannerAd? _bannerAd;
+  bool _loaded = false;
 
   final adUnitId = Platform.isAndroid
       ? const String.fromEnvironment('ANDROID_BANNER_AD_UNIT_ID')
@@ -21,7 +23,7 @@ class _BannerAdsState extends State<BannerAds> with AutomaticKeepAliveClientMixi
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    if (_bannerAd != null) {
+    if (_loaded) {
       return SizedBox(
         width: _bannerAd!.size.width.toDouble(),
         height: _bannerAd!.size.height.toDouble(),
@@ -50,7 +52,7 @@ class _BannerAdsState extends State<BannerAds> with AutomaticKeepAliveClientMixi
     final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
       (MediaQuery.of(context).size.width - widget.padding * 2).toInt(),
     );
-    BannerAd(
+    _bannerAd = BannerAd(
       adUnitId: adUnitId,
       request: const AdRequest(),
       size: AdSize(
@@ -61,7 +63,7 @@ class _BannerAdsState extends State<BannerAds> with AutomaticKeepAliveClientMixi
         onAdLoaded: (ad) {
           debugPrint('BannerAds - loaded successfully - unit id: $adUnitId');
           setState(() {
-            _bannerAd = ad as BannerAd;
+            _loaded = true;
           });
         },
         onAdFailedToLoad: (ad, err) {
@@ -69,9 +71,9 @@ class _BannerAdsState extends State<BannerAds> with AutomaticKeepAliveClientMixi
           ad.dispose();
         },
       ),
-    ).load();
+    )..load();
   }
 
   @override
-  bool get wantKeepAlive => _bannerAd != null;
+  bool get wantKeepAlive => true;
 }
