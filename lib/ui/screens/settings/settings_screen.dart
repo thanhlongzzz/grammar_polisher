@@ -219,6 +219,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (value == null) {
       return;
     }
+    setState(() {
+      _isSelectingTheme = false;
+    });
     context.read<SettingsBloc>().add(
           SettingsEvent.saveSettings(
             themeMode: value,
