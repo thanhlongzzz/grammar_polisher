@@ -5,6 +5,7 @@ import '../../../constants/word_pos.dart';
 import '../../../data/models/word.dart';
 import '../../../data/models/word_status.dart';
 import '../../../generated/assets.dart';
+import '../../commons/ads/banner_ad_widget.dart';
 import '../../commons/base_page.dart';
 import '../../commons/dialogs/word_details_dialog.dart';
 import '../../commons/svg_button.dart';
@@ -79,7 +80,18 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                     itemCount: words.length,
                     itemBuilder: (context, index) {
                       final word = words[index];
-                      return VocabularyItem(word: word);
+                      return Column(
+                        children: [
+                          VocabularyItem(word: word),
+                          if (index == 5) ...[
+                            const SizedBox(height: 8),
+                            const BannerAdWidget(
+                              padding: 16,
+                            ),
+                            const SizedBox(height: 8),
+                          ]
+                        ],
+                      );
                     },
                   ),
                 ),

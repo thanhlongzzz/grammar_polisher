@@ -18,7 +18,7 @@ import 'configs/di.dart';
 import 'data/repositories/oxford_words_repository.dart';
 import 'navigation/app_router.dart';
 import 'ui/screens/settings/bloc/settings_bloc.dart';
-import 'utils/consent_manager.dart';
+import 'utils/ad/consent_manager.dart';
 import 'utils/global_values.dart';
 import 'utils/local_notifications_tools.dart';
 

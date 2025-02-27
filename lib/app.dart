@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'navigation/app_router.dart';
 import 'ui/screens/settings/bloc/settings_bloc.dart';
+import 'utils/ad/app_life_cycle_reactor.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -70,5 +71,6 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
     context.read<SettingsBloc>().add(const SettingsEvent.getSettings());
+    AppLifecycleReactor.listenToShowAds();
   }
 }

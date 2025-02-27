@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-import '../../../utils/consent_manager.dart';
+import '../../../utils/ad/consent_manager.dart';
 
 mixin InterstitialAdMixin<T extends StatefulWidget> on State<T> {
   InterstitialAd? _interstitialAd;
@@ -17,8 +17,9 @@ mixin InterstitialAdMixin<T extends StatefulWidget> on State<T> {
     ConsentManager.gatherConsent((consentError) {
       if (consentError != null) {
         debugPrint("Consent error: ${consentError.errorCode}: ${consentError.message}");
+        _interstitialAd?.dispose();
+        _loadInterstitialAd();
       }
-      _loadInterstitialAd();
     });
     _loadInterstitialAd();
   }
@@ -32,6 +33,7 @@ mixin InterstitialAdMixin<T extends StatefulWidget> on State<T> {
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {
+          debugPrint('InterstitialAd loaded');
           setState(() {
             _interstitialAd = ad;
           });

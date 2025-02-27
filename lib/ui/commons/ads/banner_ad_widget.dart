@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import '../../../utils/consent_manager.dart';
+import '../../../utils/ad/consent_manager.dart';
 
 class BannerAdWidget extends StatefulWidget {
   final double padding;
@@ -31,8 +31,9 @@ class _BannerAdWidgetState extends State<BannerAdWidget> with AutomaticKeepAlive
     ConsentManager.gatherConsent((consentError) {
       if (consentError != null) {
         debugPrint("Consent error: ${consentError.errorCode}: ${consentError.message}");
+        _bannerAd?.dispose();
+        _loadAd();
       }
-      _loadAd();
     });
     _loadAd();
   }
@@ -53,6 +54,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> with AutomaticKeepAlive
       request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (ad) => setState(() {
+          debugPrint("Banner ad loaded");
           _bannerAd = ad as BannerAd;
           _isLoaded = true;
         }),
@@ -65,6 +67,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> with AutomaticKeepAlive
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if (_bannerAd == null || !_isLoaded) return const SizedBox.shrink();
 
     return SizedBox(
@@ -80,8 +83,11 @@ class _BannerAdWidgetState extends State<BannerAdWidget> with AutomaticKeepAlive
     super.didChangeDependencies();
     final newOrientation = MediaQuery.of(context).orientation;
     if (_orientation != newOrientation) {
+      if (_orientation != null) {
+        _bannerAd?.dispose();
+        _loadAd();
+      }
       _orientation = newOrientation;
-      _loadAd();
     }
   }
 
