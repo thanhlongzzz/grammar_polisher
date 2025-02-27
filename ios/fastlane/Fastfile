@@ -43,6 +43,7 @@ platform :ios do
       in_house: false
     )
     build
-    upload_to_testflight
+    upload_to_testflight(skip_waiting_for_build_processing: true)
+    upload_symbols_to_crashlytics(dsym_path: "./Runner.app.dSYM.zip")
   end
 end

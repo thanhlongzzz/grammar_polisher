@@ -26,12 +26,6 @@ platform :android do
       sh("cd #{root_path} && #{command}")
     end
 
-    # Tasks to be reused on each platform flow
-    desc "Fetch and install dependencies"
-    lane :fetch_dependencies do
-      sh_on_root(command: "flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs")
-    end
-
     lane :build_apk do
         fetch_dependencies
         sh_on_root(command: "flutter build apk --flavor #{ENV['FLAVOR']} --release --dart-define-from-file=.env/#{ENV['FLAVOR']}.json")
