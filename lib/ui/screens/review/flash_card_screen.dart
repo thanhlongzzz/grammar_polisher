@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:grammar_polisher/navigation/app_router.dart';
-import 'package:grammar_polisher/ui/commons/banner_ads.dart';
-import 'package:grammar_polisher/ui/screens/vocabulary/bloc/vocabulary_bloc.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,11 +11,14 @@ import '../../../constants/custom_colors.dart';
 import '../../../data/models/word.dart';
 import '../../../data/models/word_status.dart';
 import '../../../generated/assets.dart';
-import '../../../utils/ads_tools.dart';
+import '../../../navigation/app_router.dart';
 import '../../../utils/app_snack_bar.dart';
 import '../../../utils/global_values.dart';
+import '../../commons/ads/banner_ad_widget.dart';
+import '../../commons/ads/interstitial_ad_mixin.dart';
 import '../../commons/base_page.dart';
 import '../../commons/rounded_button.dart';
+import '../vocabulary/bloc/vocabulary_bloc.dart';
 import 'widgets/flashcard_app_dialog.dart';
 import 'widgets/positioned_flash_card.dart';
 
@@ -31,7 +31,7 @@ class FlashCardScreen extends StatefulWidget {
   State<FlashCardScreen> createState() => _FlashCardScreenState();
 }
 
-class _FlashCardScreenState extends State<FlashCardScreen> {
+class _FlashCardScreenState extends State<FlashCardScreen> with InterstitialAdMixin {
   final List<Word> _words = [];
   final List<PositionedFlashCardController> _controllers = [];
   bool _animating = false;
@@ -46,7 +46,7 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
       padding: const EdgeInsets.all(0),
       child: Stack(
         children: [
-          BannerAds(),
+          const BannerAdWidget(),
           Column(
             children: [
               const Spacer(),
@@ -196,7 +196,7 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
           GlobalValues.isShowFlashCardAppDialog = true;
           showDialog(context: context, builder: (_) => FlashcardAppDialog());
         } else {
-          AdsTools.requestNewInterstitial();
+          showInterstitialAd();
         }
         Navigator.of(context).pop();
       }

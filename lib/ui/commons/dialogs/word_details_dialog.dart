@@ -4,8 +4,6 @@ import '../../../constants/custom_colors.dart';
 import '../../../data/models/word.dart';
 import '../../../data/models/word_status.dart';
 import '../../screens/vocabulary/widgets/phonetic.dart';
-import '../banner_ads.dart';
-import '../rounded_button.dart';
 
 class WordDetailsDialog extends StatelessWidget {
   final Word word;

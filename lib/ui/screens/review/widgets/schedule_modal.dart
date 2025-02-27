@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../constants/date_formats.dart';
 import '../../../../data/models/word.dart';
 import '../../../../utils/app_snack_bar.dart';
-import '../../../commons/banner_ads.dart';
+import '../../../commons/ads/banner_ad_widget.dart';
 import '../../../commons/dialogs/request_notifications_permission_dialog.dart';
 import '../../../commons/rounded_button.dart';
 import '../../notifications/bloc/notifications_bloc.dart';
@@ -104,7 +104,7 @@ class _ScheduleModalState extends State<ScheduleModal> {
             ],
           ),
           const SizedBox(height: 16),
-          BannerAds(),
+          const BannerAdWidget(),
           const SizedBox(height: 16),
           RoundedButton(
             onPressed: () => _scheduleNotifications(widget.reviewWords),

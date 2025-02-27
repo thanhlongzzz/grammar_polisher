@@ -1,30 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grammar_polisher/ui/commons/ads/interstitial_ad_mixin.dart';
 
 import '../../../data/models/ai_function.dart';
-import '../../../data/models/check_grammar_result.dart';
-import '../../../data/models/check_level_result.dart';
-import '../../../data/models/check_score_result.dart';
-import '../../../data/models/check_writing_result.dart';
-import '../../../data/models/detect_gpt_result.dart';
-import '../../../data/models/improve_writing_result.dart';
 import '../../../data/models/score_type.dart';
 import '../../../generated/assets.dart';
-import '../../../utils/ads_tools.dart';
 import '../../../utils/app_snack_bar.dart';
-import '../../commons/banner_ads.dart';
-import '../../commons/base_page.dart';
 import '../../commons/dialogs/function_picker_dialog.dart';
-import '../../commons/rounded_button.dart';
 import 'bloc/home_bloc.dart';
-import 'widgets/check_grammar_box.dart';
-import 'widgets/check_level_box.dart';
-import 'widgets/check_score_box.dart';
-import 'widgets/check_writing_box.dart';
-import 'widgets/detect_gpt_box.dart';
-import 'widgets/improving_writing_box.dart';
-import 'widgets/score_type_picker.dart';
-import 'widgets/text_field_control_box.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -33,7 +16,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with InterstitialAdMixin {
   late final TextEditingController _textController;
   late final FocusNode _textFocusNode;
   AIFunction _selectedFunction = AIFunction.improveWriting;
@@ -49,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _count++;
         if (_count % 2 == 0) {
           _count = 0;
-          AdsTools.requestNewInterstitial();
+          showInterstitialAd();
         }
       },
       builder: (context, state) {

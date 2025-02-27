@@ -17,7 +17,7 @@ class ProfileField extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return InkWell(
-      overlayColor: MaterialStateProperty.all(Colors.transparent),
+      overlayColor: WidgetStateProperty.all(Colors.transparent),
       onTap: onPressed,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20.0),

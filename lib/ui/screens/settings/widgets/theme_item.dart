@@ -19,7 +19,7 @@ class ThemeItem extends StatelessWidget {
       builder: (context, state) {
         final selectedThemeMode = state.settingsSnapshot.themeMode;
         return InkWell(
-          overlayColor: MaterialStateProperty.all(Colors.transparent),
+          overlayColor: WidgetStateProperty.all(Colors.transparent),
           onTap: onPress,
           child: Column(
             children: [
