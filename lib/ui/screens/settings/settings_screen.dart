@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,6 +39,10 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   WordStatus _status = WordStatus.unknown;
   bool _isSelectingTheme = false;
+  bool _interacted = false;
+  late final ScrollController _scrollController;
+  static const int _timerPeriod = 8000;
+  static const int _duration = 7000;
 
   @override
   Widget build(BuildContext context) {
@@ -80,33 +86,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 60,
-                        child: ListView.builder(
-                          itemCount: SettingsScreen.seeks.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () => _onChangeColor(context, SettingsScreen.seeks[index].value),
-                              child: Container(
-                                width: 60,
-                                margin: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: ColorScheme.fromSeed(
-                                    seedColor: SettingsScreen.seeks[index],
-                                    brightness: brightness,
-                                  ).primaryContainer,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: colorScheme.primary.withValues(alpha: 0.1),
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 5),
-                                    ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                            );
+                        height: 72,
+                        child: GestureDetector(
+                          onPanDown: (_) {
+                            setState(() {
+                              _interacted = true;
+                            });
                           },
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            itemCount: SettingsScreen.seeks.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () => _onChangeColor(context, SettingsScreen.seeks[index].value),
+                                child: Container(
+                                  width: 60,
+                                  margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                                  decoration: BoxDecoration(
+                                    color:
+                                    ColorScheme.fromSeed(
+                                      seedColor: SettingsScreen.seeks[index],
+                                      brightness: brightness,
+                                    ).primaryContainer,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: colorScheme.primary.withValues(alpha: 0.2),
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 5),
+                                      ),
+                                    ],
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                       Padding(
@@ -211,6 +226,40 @@ class _SettingsScreenState extends State<SettingsScreen> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: _duration),
+        curve: Curves.easeInOut,
+      );
+      Timer.periodic(const Duration(milliseconds: _timerPeriod), (timer) {
+        if (_interacted) {
+          timer.cancel();
+        } else {
+          if (_scrollController.position.pixels > 0) {
+            _scrollController.animateTo(0, duration: const Duration(milliseconds: _duration), curve: Curves.easeInOut);
+          } else {
+            _scrollController.animateTo(
+              _scrollController.position.maxScrollExtent,
+              duration: const Duration(milliseconds: _duration),
+              curve: Curves.easeInOut,
+            );
+          }
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   void _onChangeTheme(BuildContext context, int? value) {

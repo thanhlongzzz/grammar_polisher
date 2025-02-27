@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grammar_polisher/utils/extensions/string_extensions.dart';
@@ -33,18 +35,25 @@ class ThemeItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: colorScheme.secondary, width: 1),
                     ),
-                    child: themeMode == ThemeMode.system ? ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
+                    child:
+                    themeMode == ThemeMode.system
+                        ? ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
                       child: Row(
                         children: [
                           Container(
                             width: 25,
                             height: 30,
-                            color: ColorScheme.fromSeed(seedColor: colorScheme.primary, brightness: Brightness.dark).primaryContainer,
+                            color:
+                            ColorScheme.fromSeed(
+                              seedColor: colorScheme.primary,
+                              brightness: Brightness.dark,
+                            ).primaryContainer,
                           ),
                         ],
                       ),
-                    ) : null,
+                    )
+                        : null,
                   ),
                   const SizedBox(width: 8),
                   Text(
