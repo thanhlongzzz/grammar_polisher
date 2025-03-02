@@ -44,6 +44,7 @@ class _AppState extends State<App> {
       builder: (context, state) {
         var snapshot = state.settingsSnapshot;
         return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
           routerConfig: AppRouter.router,
           theme: ThemeData.from(
             colorScheme: ColorScheme.fromSeed(

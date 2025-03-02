@@ -23,14 +23,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
-### android fetch_dependencies
-
-```sh
-[bundle exec] fastlane android fetch_dependencies
-```
-
-Fetch and install dependencies
-
 ### android build_apk
 
 ```sh
