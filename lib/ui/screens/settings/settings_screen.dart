@@ -176,7 +176,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                             const SizedBox(height: 16),
                             ProfileField(
-                              onPressed: () {},
+                              onPressed: _openContactMail,
                               title: "Contact us",
                               value:
                                   "If you have any questions or suggestions, please contact us for support. We will respond as soon as possible.",
