@@ -54,6 +54,9 @@ class _SearchBoxState extends State<SearchBox> {
               ),
               onChanged: widget.onSearch,
               onSubmitted: widget.onSearch,
+              onTapOutside: (_) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
             ),
             const SizedBox(height: 8),
             SizedBox(
