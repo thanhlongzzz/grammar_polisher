@@ -85,7 +85,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                       return Column(
                         children: [
                           VocabularyItem(word: word),
-                          if (index == 5) ...[
+                          if (index == 1) ...[
                             BannerAdWidget(
                               paddingHorizontal: 16,
                               paddingVertical: 8,

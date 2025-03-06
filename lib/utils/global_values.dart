@@ -7,6 +7,7 @@ class GlobalValues {
   static const isShowInAppReviewKey = 'isShowInAppReview';
   static const isShowOnboardingKey = 'isShowOnboarding';
   static const boughtNoAdsTimeKey = 'boughtNoAds';
+  static const lastReviewTimeKey = 'lastPolishTime';
 
   static SharedPreferences? _sharedPreferences;
 
@@ -42,5 +43,14 @@ class GlobalValues {
       return _sharedPreferences?.remove(boughtNoAdsTimeKey);
     }
     return _sharedPreferences?.setInt(boughtNoAdsTimeKey, value);
+  }
+
+  static DateTime? get lastReviewTime {
+    final result = _sharedPreferences?.getInt(lastReviewTimeKey);
+    return result != null ? DateTime.fromMillisecondsSinceEpoch(result) : null;
+  }
+
+  static Future<bool>? setLastReviewTime(DateTime value) {
+    return _sharedPreferences?.setInt(lastReviewTimeKey, value.millisecondsSinceEpoch);
   }
 }

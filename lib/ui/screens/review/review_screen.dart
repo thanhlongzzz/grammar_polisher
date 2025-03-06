@@ -1,13 +1,17 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grammar_polisher/utils/extensions/date_time_extensions.dart';
 
 import '../../../data/models/word.dart';
 import '../../../data/models/word_status.dart';
+import '../../../generated/assets.dart';
 import '../../../navigation/app_router.dart';
+import '../../../utils/global_values.dart';
 import '../../blocs/iap/iap_bloc.dart';
 import '../../commons/ads/banner_ad_widget.dart';
+import '../../commons/ads/rewarded_ad_mixin.dart';
 import '../../commons/base_page.dart';
 import '../../commons/rounded_button.dart';
 import '../vocabulary/bloc/vocabulary_bloc.dart';
@@ -15,8 +19,15 @@ import '../vocabulary/widgets/vocabulary_item.dart';
 import 'widgets/empty_review_page.dart';
 import 'widgets/schedule_modal.dart';
 
-class ReviewScreen extends StatelessWidget {
+class ReviewScreen extends StatefulWidget {
   const ReviewScreen({super.key});
+
+  @override
+  State<ReviewScreen> createState() => _ReviewScreenState();
+}
+
+class _ReviewScreenState extends State<ReviewScreen> with RewardedAdMixin {
+  bool _hasReviewed = GlobalValues.lastReviewTime == null ? false : GlobalValues.lastReviewTime!.isSameDay(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +39,17 @@ class ReviewScreen extends StatelessWidget {
     return BasePage(
       title: 'Review',
       actions: [
-        if (vocabularyState.words.any((word) => word.status == WordStatus.unknown)) TextButton(
-          onPressed: () => _showScheduleModal(context, reviewWords),
-          child: Text(
-            'Schedule',
-            style: textTheme.titleSmall?.copyWith(
-              color: colorScheme.primary,
-              fontWeight: FontWeight.bold,
+        if (vocabularyState.words.any((word) => word.status == WordStatus.unknown))
+          TextButton(
+            onPressed: () => _showScheduleModal(context, reviewWords),
+            child: Text(
+              'Schedule',
+              style: textTheme.titleSmall?.copyWith(
+                color: colorScheme.primary,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        )
+          )
       ],
       child: reviewWords.isNotEmpty
           ? Column(
@@ -54,7 +66,7 @@ class ReviewScreen extends StatelessWidget {
                             word: word,
                             showReviewButton: false,
                           ),
-                          if (index == 5) ...[
+                          if (index == 1) ...[
                             BannerAdWidget(
                               paddingHorizontal: 16,
                               paddingVertical: 8,
@@ -70,7 +82,24 @@ class ReviewScreen extends StatelessWidget {
                 RoundedButton(
                   onPressed: () => _startFlashcards(context, reviewWords),
                   borderRadius: 16,
-                  child: Text("Flashcards"),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (_hasReviewed && !isPremium) ...[
+                        SvgPicture.asset(
+                          Assets.svgTimerPlay,
+                          colorFilter: ColorFilter.mode(colorScheme.onPrimary, BlendMode.srcIn),
+                          width: 20,
+                          height: 20,
+                        ),
+                        const SizedBox(width: 8),
+                      ],
+                      Text(
+                        'Polish',
+                        style: textTheme.titleSmall?.copyWith(color: colorScheme.onPrimary, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 16),
               ],
@@ -92,6 +121,19 @@ class ReviewScreen extends StatelessWidget {
   }
 
   void _startFlashcards(BuildContext context, List<Word> reviewWords) {
-    context.push(RoutePaths.flashcards, extra: {'words': reviewWords});
+    if (_hasReviewed && !isPremium) {
+      showRewardedAd((_, __) {
+        context.push(RoutePaths.flashcards, extra: {'words': reviewWords});
+      });
+    } else {
+      context.push(RoutePaths.flashcards, extra: {'words': reviewWords});
+    }
+    setState(() {
+      _hasReviewed = true;
+    });
+    GlobalValues.setLastReviewTime(DateTime.now());
   }
+
+  @override
+  bool get isPremium => context.read<IapBloc>().state.boughtNoAdsTime != null;
 }
