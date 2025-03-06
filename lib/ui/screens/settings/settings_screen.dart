@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../constants/words.dart';
 import '../../../data/models/word_status.dart';
 import '../../../generated/assets.dart';
+import '../../blocs/iap/iap_bloc.dart';
 import '../../commons/ads/banner_ad_widget.dart';
 import '../../commons/base_page.dart';
 import '../../commons/rounded_button.dart';
@@ -50,6 +51,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
     final isGrantedNotificationsPermission = context.watch<NotificationsBloc>().state.isNotificationsGranted;
+    final isPremium = context.watch<IapBloc>().state.boughtNoAdsTime != null;
     return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, state) {
         final settingsSnapshot = state.settingsSnapshot;
@@ -220,7 +222,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                 ),
-              BannerAdWidget(),
+              BannerAdWidget(
+                isPremium: isPremium,
+              ),
             ],
           ),
         );

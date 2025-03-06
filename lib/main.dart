@@ -17,6 +17,7 @@ import 'app.dart';
 import 'configs/di.dart';
 import 'data/repositories/oxford_words_repository.dart';
 import 'navigation/app_router.dart';
+import 'ui/blocs/iap/iap_bloc.dart';
 import 'ui/screens/settings/bloc/settings_bloc.dart';
 import 'utils/ad/consent_manager.dart';
 import 'utils/global_values.dart';
@@ -24,8 +25,6 @@ import 'utils/local_notifications_tools.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  const apiKey = String.fromEnvironment('AMPLITUDE_API_KEY');
-  final amplitude = Amplitude.getInstance();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -39,7 +38,6 @@ void main() async {
       onDidReceiveBackgroundNotificationResponse: onDidReceiveBackgroundNotificationResponse,
     ),
     DI().init(),
-    amplitude.init(apiKey),
     GlobalValues.init(),
   ]);
   ConsentManager.gatherConsent((consentError) {
@@ -71,6 +69,9 @@ void main() async {
       providers: [
         BlocProvider(
           create: (context) => DI().sl<SettingsBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => DI().sl<IapBloc>(),
         ),
       ],
       child: App(),

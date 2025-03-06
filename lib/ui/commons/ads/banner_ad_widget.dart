@@ -4,9 +4,11 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../../../utils/ad/consent_manager.dart';
 
 class BannerAdWidget extends StatefulWidget {
-  final double padding;
+  final double paddingHorizontal;
+  final double paddingVertical;
+  final bool isPremium;
 
-  const BannerAdWidget({super.key, this.padding = 0});
+  const BannerAdWidget({super.key, this.paddingHorizontal = 0, required this.isPremium, this.paddingVertical = 0});
 
   @override
   State<BannerAdWidget> createState() => _BannerAdWidgetState();
@@ -24,7 +26,9 @@ class _BannerAdWidgetState extends State<BannerAdWidget> with AutomaticKeepAlive
   @override
   void initState() {
     super.initState();
-    _initializeAds();
+    if (!widget.isPremium) {
+      _initializeAds();
+    }
   }
 
   void _initializeAds() {
@@ -43,7 +47,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> with AutomaticKeepAlive
     if (!mounted) return;
 
     final screenWidth = MediaQuery.of(context).size.width;
-    final adWidth = (screenWidth - widget.padding * 2).truncate();
+    final adWidth = (screenWidth - widget.paddingHorizontal * 2).truncate();
 
     final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(adWidth);
     if (size == null) return;
@@ -68,15 +72,17 @@ class _BannerAdWidgetState extends State<BannerAdWidget> with AutomaticKeepAlive
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    if (_bannerAd == null || !_isLoaded) return const SizedBox.shrink();
+    if (_bannerAd == null || !_isLoaded || widget.isPremium) return const SizedBox.shrink();
 
-    return SizedBox(
-      width: _bannerAd!.size.width.toDouble(),
-      height: _bannerAd!.size.height.toDouble(),
-      child: AdWidget(ad: _bannerAd!),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: widget.paddingVertical),
+      child: SizedBox(
+        width: _bannerAd!.size.width.toDouble(),
+        height: _bannerAd!.size.height.toDouble(),
+        child: AdWidget(ad: _bannerAd!),
+      ),
     );
   }
-
 
   @override
   void didChangeDependencies() {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'dart:io' show Platform;
 
+import '../global_values.dart';
 import 'consent_manager.dart';
 
 class AppOpenAdManager {
@@ -11,13 +12,14 @@ class AppOpenAdManager {
   static AppOpenAd? _appOpenAd;
   static bool _isShowingAd = false;
 
-  static String adUnitId = Platform.isAndroid
-      ? const String.fromEnvironment('ANDROID_APP_OPEN_AD_UNIT_ID')
-      : const String.fromEnvironment('IOS_APP_OPEN_AD_UNIT_ID');
+  static String adUnitId =
+      Platform.isAndroid
+          ? const String.fromEnvironment('ANDROID_APP_OPEN_AD_UNIT_ID')
+          : const String.fromEnvironment('IOS_APP_OPEN_AD_UNIT_ID');
 
   static void loadAd() async {
     var canRequestAds = await ConsentManager.canRequestAds();
-    if (!canRequestAds) {
+    if (!canRequestAds || GlobalValues.boughtNoAdsTime != null) {
       return;
     }
     AppOpenAd.load(
@@ -39,8 +41,9 @@ class AppOpenAdManager {
   static bool get isAdAvailable {
     return _appOpenAd != null;
   }
+
   static void showAdIfAvailable() {
-    if (!isAdAvailable) {
+    if (!isAdAvailable || GlobalValues.boughtNoAdsTime != null) {
       debugPrint('Tried to show ad before available.');
       loadAd();
       return;

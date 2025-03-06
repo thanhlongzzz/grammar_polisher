@@ -1,3 +1,5 @@
+import 'package:amplitude_flutter/amplitude.dart';
+import 'package:amplitude_flutter/configuration.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
@@ -7,9 +9,11 @@ import '../data/data_sources/assets_data.dart';
 import '../data/data_sources/local_data.dart';
 import '../data/data_sources/remote_data.dart';
 import '../data/repositories/home_repository.dart';
+import '../data/repositories/iap_repository.dart';
 import '../data/repositories/notifications_repository.dart';
 import '../data/repositories/oxford_words_repository.dart';
 import '../data/repositories/settings_repository.dart';
+import '../ui/blocs/iap/iap_bloc.dart';
 import '../ui/screens/home/bloc/home_bloc.dart';
 import '../ui/screens/settings/bloc/settings_bloc.dart';
 import '../ui/screens/vocabulary/bloc/vocabulary_bloc.dart';
@@ -44,6 +48,12 @@ class DI {
       ),
     );
 
+    sl.registerLazySingleton<IapBloc>(
+      () => IapBloc(
+        iapRepository: sl(),
+      ),
+    );
+
     sl.registerFactory(
       () => NotificationsBloc(
         localNotificationsTools: sl(),
@@ -62,6 +72,10 @@ class DI {
       () => HomeRepositoryImpl(
         remoteData: sl(),
       ),
+    );
+
+    sl.registerLazySingleton<IapRepository>(
+      () => IapRepositoryImpl(),
     );
 
     sl.registerLazySingleton<OxfordWordsRepository>(
@@ -119,6 +133,14 @@ class DI {
 
     sl.registerLazySingleton<AudioPlayer>(
       () => AudioPlayer(),
+    );
+
+    const apiKey = String.fromEnvironment('AMPLITUDE_API_KEY');
+    final amplitude = Amplitude(Configuration(
+      apiKey: apiKey,
+    ));
+    sl.registerLazySingleton<Amplitude>(
+      () => amplitude,
     );
   }
 }

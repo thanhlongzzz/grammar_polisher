@@ -14,6 +14,7 @@ import '../../../generated/assets.dart';
 import '../../../navigation/app_router.dart';
 import '../../../utils/app_snack_bar.dart';
 import '../../../utils/global_values.dart';
+import '../../blocs/iap/iap_bloc.dart';
 import '../../commons/ads/banner_ad_widget.dart';
 import '../../commons/ads/interstitial_ad_mixin.dart';
 import '../../commons/base_page.dart';
@@ -41,12 +42,15 @@ class _FlashCardScreenState extends State<FlashCardScreen> with InterstitialAdMi
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
+    final isPremium = context.watch<IapBloc>().state.boughtNoAdsTime != null;
     return BasePage(
       title: 'Flashcards',
       padding: const EdgeInsets.all(0),
       child: Stack(
         children: [
-          const BannerAdWidget(),
+          BannerAdWidget(
+            isPremium: isPremium,
+          ),
           Column(
             children: [
               const Spacer(),
@@ -210,4 +214,7 @@ class _FlashCardScreenState extends State<FlashCardScreen> with InterstitialAdMi
         : const String.fromEnvironment('ANDROID_FLASHCARD_APP_URL');
     launchUrl(Uri.parse(url));
   }
+
+  @override
+  bool get isPremium => context.read<IapBloc>().state.boughtNoAdsTime != null;
 }

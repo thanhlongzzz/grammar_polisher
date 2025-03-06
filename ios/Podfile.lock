@@ -1,10 +1,11 @@
 PODS:
-  - Amplitude (8.18.0):
-    - AnalyticsConnector (~> 1.0.0)
   - amplitude_flutter (0.0.1):
-    - Amplitude (= 8.18.0)
+    - AmplitudeSwift (~> 1.11)
     - Flutter
-  - AnalyticsConnector (1.0.3)
+    - FlutterMacOS
+  - AmplitudeSwift (1.11.7):
+    - AnalyticsConnector (~> 1.3.0)
+  - AnalyticsConnector (1.3.1)
   - app_settings (5.1.1):
     - Flutter
   - audioplayers_darwin (0.0.1):
@@ -144,6 +145,9 @@ PODS:
   - GoogleUtilities/UserDefaults (8.0.2):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
+  - in_app_purchase_storekit (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - in_app_review (2.0.0):
     - Flutter
   - nanopb (3.30910.0):
@@ -167,7 +171,7 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
-  - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/ios`)
+  - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/darwin`)
   - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
@@ -178,6 +182,7 @@ DEPENDENCIES:
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
   - google_mobile_ads (from `.symlinks/plugins/google_mobile_ads/ios`)
+  - in_app_purchase_storekit (from `.symlinks/plugins/in_app_purchase_storekit/darwin`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
@@ -186,7 +191,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Amplitude
+    - AmplitudeSwift
     - AnalyticsConnector
     - Firebase
     - FirebaseAnalytics
@@ -208,7 +213,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   amplitude_flutter:
-    :path: ".symlinks/plugins/amplitude_flutter/ios"
+    :path: ".symlinks/plugins/amplitude_flutter/darwin"
   app_settings:
     :path: ".symlinks/plugins/app_settings/ios"
   audioplayers_darwin:
@@ -229,6 +234,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_timezone/ios"
   google_mobile_ads:
     :path: ".symlinks/plugins/google_mobile_ads/ios"
+  in_app_purchase_storekit:
+    :path: ".symlinks/plugins/in_app_purchase_storekit/darwin"
   in_app_review:
     :path: ".symlinks/plugins/in_app_review/ios"
   path_provider_foundation:
@@ -241,9 +248,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/darwin"
 
 SPEC CHECKSUMS:
-  Amplitude: 184def4f87aa26f94a93a7faa334e06b1cae704d
-  amplitude_flutter: 20fed3aede0c17e0be5eb0e76de39de560f95f63
-  AnalyticsConnector: a53214d38ae22734c6266106c0492b37832633a9
+  amplitude_flutter: 6d1f1befdf0c5601a44012331adb1ca207bcd02b
+  AmplitudeSwift: d779154ed598aeb2bfd1dab8da6e5ea529bf170c
+  AnalyticsConnector: 3def11199b4ddcad7202c778bde982ec5da0ebb3
   app_settings: 5127ae0678de1dcc19f2293271c51d37c89428b2
   audioplayers_darwin: ccf9c770ee768abb07e26d90af093f7bab1c12ab
   connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
@@ -268,6 +275,7 @@ SPEC CHECKSUMS:
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleUserMessagingPlatform: a8b56893477f67212fbc8411c139e61d463349f5
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
+  in_app_purchase_storekit: d1a48cb0f8b29dbf5f85f782f5dd79b21b90a5e6
   in_app_review: 5596fe56fab799e8edb3561c03d053363ab13457
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564

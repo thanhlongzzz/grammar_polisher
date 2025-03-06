@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../constants/date_formats.dart';
 import '../../../../data/models/word.dart';
 import '../../../../utils/app_snack_bar.dart';
+import '../../../blocs/iap/iap_bloc.dart';
 import '../../../commons/ads/banner_ad_widget.dart';
 import '../../../commons/dialogs/request_notifications_permission_dialog.dart';
 import '../../../commons/rounded_button.dart';
@@ -13,7 +14,8 @@ import 'time_picker.dart';
 
 class ScheduleModal extends StatefulWidget {
   final List<Word> reviewWords;
-  const ScheduleModal ({super.key, required this.reviewWords});
+
+  const ScheduleModal({super.key, required this.reviewWords});
 
   @override
   State<ScheduleModal> createState() => _ScheduleModalState();
@@ -28,6 +30,7 @@ class _ScheduleModalState extends State<ScheduleModal> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
+    final isPremium = context.watch<IapBloc>().state.boughtNoAdsTime != null;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -103,9 +106,10 @@ class _ScheduleModalState extends State<ScheduleModal> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          const BannerAdWidget(),
-          const SizedBox(height: 16),
+          BannerAdWidget(
+            paddingVertical: 16,
+            isPremium: isPremium,
+          ),
           RoundedButton(
             onPressed: () => _scheduleNotifications(widget.reviewWords),
             borderRadius: 16,
@@ -134,10 +138,10 @@ class _ScheduleModalState extends State<ScheduleModal> {
     }
     final date = DateTime.now();
     final DateTime scheduledTime = DateFormats.timeWithOutSeconds.parse(_time).copyWith(
-      day: date.day,
-      month: date.month,
-      year: date.year,
-    );
+          day: date.day,
+          month: date.month,
+          year: date.year,
+        );
     if (scheduledTime.isBefore(date)) {
       context.pop();
       AppSnackBar.showError(context, "Scheduled time must be in the future");
@@ -145,12 +149,12 @@ class _ScheduleModalState extends State<ScheduleModal> {
     }
     final Duration period = Duration(minutes: int.parse(_minutes));
     context.read<NotificationsBloc>().add(
-      NotificationsEvent.scheduleWordsReminder(
-        scheduledTime: scheduledTime,
-        interval: period,
-        words: words,
-      ),
-    );
+          NotificationsEvent.scheduleWordsReminder(
+            scheduledTime: scheduledTime,
+            interval: period,
+            words: words,
+          ),
+        );
     AppSnackBar.showSuccess(context, "Words reminder scheduled");
     context.pop();
     setState(() {

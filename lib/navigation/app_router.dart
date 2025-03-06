@@ -1,4 +1,5 @@
 import 'package:amplitude_flutter/amplitude.dart';
+import 'package:amplitude_flutter/events/base_event.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -23,13 +24,13 @@ part 'route_paths.dart';
 class AppRouter {
   static final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
-  static Amplitude amplitude = Amplitude.getInstance();
+  static Amplitude amplitude = DI().sl<Amplitude>();
 
   static final router = GoRouter(
     initialLocation: RoutePaths.vocabulary,
     navigatorKey: rootNavigatorKey,
     redirect: (context, state) {
-      amplitude.logEvent(state.uri.path);
+      amplitude.track(BaseEvent(state.uri.path));
       if (!GlobalValues.isShowOnboarding) {
         GlobalValues.isShowOnboarding = true;
         return RoutePaths.onboarding;

@@ -7,9 +7,10 @@ import '../../../utils/ad/consent_manager.dart';
 mixin InterstitialAdMixin<T extends StatefulWidget> on State<T> {
   InterstitialAd? _interstitialAd;
 
-  final _adUnitId = Platform.isAndroid
-      ? const String.fromEnvironment('ANDROID_INTERSTITIAL_AD_UNIT_ID')
-      : const String.fromEnvironment('IOS_INTERSTITIAL_AD_UNIT_ID');
+  final _adUnitId =
+      Platform.isAndroid
+          ? const String.fromEnvironment('ANDROID_INTERSTITIAL_AD_UNIT_ID')
+          : const String.fromEnvironment('IOS_INTERSTITIAL_AD_UNIT_ID');
 
   @override
   void initState() {
@@ -25,7 +26,7 @@ mixin InterstitialAdMixin<T extends StatefulWidget> on State<T> {
   }
 
   void _loadInterstitialAd() async {
-    if (!await ConsentManager.canRequestAds()) {
+    if (!await ConsentManager.canRequestAds() || !mounted || isPremium) {
       return;
     }
     InterstitialAd.load(
@@ -56,6 +57,7 @@ mixin InterstitialAdMixin<T extends StatefulWidget> on State<T> {
   }
 
   void showInterstitialAd() {
+    if (isPremium) return;
     if (_interstitialAd != null) {
       _interstitialAd!.show();
       _interstitialAd = null;
@@ -69,4 +71,6 @@ mixin InterstitialAdMixin<T extends StatefulWidget> on State<T> {
     _interstitialAd?.dispose();
     super.dispose();
   }
+
+  bool get isPremium;
 }

@@ -5,6 +5,7 @@ import '../../../constants/word_pos.dart';
 import '../../../data/models/word.dart';
 import '../../../data/models/word_status.dart';
 import '../../../generated/assets.dart';
+import '../../blocs/iap/iap_bloc.dart';
 import '../../commons/ads/banner_ad_widget.dart';
 import '../../commons/base_page.dart';
 import '../../commons/dialogs/word_details_dialog.dart';
@@ -32,6 +33,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isPremium = context.watch<IapBloc>().state.boughtNoAdsTime != null;
     return BlocConsumer<VocabularyBloc, VocabularyState>(
       listener: (context, state) {
         _showWordDetails();
@@ -84,11 +86,11 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                         children: [
                           VocabularyItem(word: word),
                           if (index == 5) ...[
-                            const SizedBox(height: 8),
-                            const BannerAdWidget(
-                              padding: 16,
+                            BannerAdWidget(
+                              paddingHorizontal: 16,
+                              paddingVertical: 8,
+                              isPremium: isPremium,
                             ),
-                            const SizedBox(height: 8),
                           ]
                         ],
                       );

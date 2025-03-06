@@ -6,6 +6,7 @@ import '../../../data/models/ai_function.dart';
 import '../../../data/models/score_type.dart';
 import '../../../generated/assets.dart';
 import '../../../utils/app_snack_bar.dart';
+import '../../blocs/iap/iap_bloc.dart';
 import '../../commons/dialogs/function_picker_dialog.dart';
 import 'bloc/home_bloc.dart';
 
@@ -131,4 +132,7 @@ class _HomeScreenState extends State<HomeScreen> with InterstitialAdMixin {
         break;
     }
   }
+
+  @override
+  bool get isPremium => context.read<IapBloc>().state.boughtNoAdsTime != null;
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grammar_polisher/ui/blocs/iap/iap_bloc.dart';
 
 import 'navigation/app_router.dart';
 import 'ui/screens/settings/bloc/settings_bloc.dart';
@@ -73,5 +74,6 @@ class _AppState extends State<App> {
     super.initState();
     context.read<SettingsBloc>().add(const SettingsEvent.getSettings());
     AppLifecycleReactor.listenToShowAds();
+    context.read<IapBloc>().add(const IapEvent.listenForPurchases());
   }
 }
