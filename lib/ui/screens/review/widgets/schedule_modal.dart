@@ -110,6 +110,7 @@ class _ScheduleModalState extends State<ScheduleModal> {
             paddingVertical: 16,
             isPremium: isPremium,
           ),
+          const SizedBox(height: 8),
           RoundedButton(
             onPressed: () => _scheduleNotifications(widget.reviewWords),
             borderRadius: 16,

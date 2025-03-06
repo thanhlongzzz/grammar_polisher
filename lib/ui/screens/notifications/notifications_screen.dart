@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../navigation/app_router.dart';
+import '../../blocs/iap/iap_bloc.dart';
+import '../../commons/ads/banner_ad_widget.dart';
 import '../../commons/base_page.dart';
 import '../../commons/rounded_button.dart';
 import 'bloc/notifications_bloc.dart';
@@ -19,6 +21,7 @@ class NotificationsScreen extends StatefulWidget {
 class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
+    final isPremium = context.watch<IapBloc>().state.boughtNoAdsTime != null;
     return BlocBuilder<NotificationsBloc, NotificationsState>(
       builder: (context, state) {
         return BasePage(
@@ -35,7 +38,18 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                           final notification = state.scheduledNotifications[index];
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: NotificationItem(notification: notification),
+                            child: Column(
+                              children: [
+                                NotificationItem(notification: notification),
+                                if (index == 0) ...[
+                                  BannerAdWidget(
+                                    paddingHorizontal: 16,
+                                    paddingVertical: 8,
+                                    isPremium: isPremium,
+                                  ),
+                                ]
+                              ],
+                            ),
                           );
                         },
                       ),
