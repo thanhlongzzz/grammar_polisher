@@ -7,13 +7,11 @@ class BasePage extends StatelessWidget {
   final String title;
   final EdgeInsets padding;
   final List<Widget> actions;
-  final Widget leading;
 
   const BasePage({
     super.key,
     required this.child,
     required this.title,
-    this.leading = const SizedBox(),
     this.actions = const [],
     this.padding = const EdgeInsets.symmetric(horizontal: 16),
   });
@@ -31,7 +29,6 @@ class BasePage extends StatelessWidget {
             AppHeader(
               title: title,
               actions: actions,
-              leading: leading,
             ),
             Expanded(
               child: Padding(

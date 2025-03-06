@@ -11,6 +11,7 @@ class Assets {
   static const String fontsSFProDisplaySemibold = 'assets/fonts/SF-Pro-Display-Semibold.otf';
   static const String fontsSFProDisplayThin = 'assets/fonts/SF-Pro-Display-Thin.otf';
   static const String fontsSFProDisplayUltralight = 'assets/fonts/SF-Pro-Display-Ultralight.otf';
+  static const String lottieConfetti = 'assets/lottie/confetti.json';
   static const String oxfordWordsA = 'assets/json/oxford_words/a.json';
   static const String oxfordWordsB = 'assets/json/oxford_words/b.json';
   static const String oxfordWordsC = 'assets/json/oxford_words/c.json';
@@ -63,6 +64,7 @@ class Assets {
   static const String svgSettings = 'assets/svg/settings.svg';
   static const String svgStar = 'assets/svg/star.svg';
   static const String svgSuccess = 'assets/svg/success.svg';
+  static const String svgTimerPlay = 'assets/svg/timer_play.svg';
   static const String svgUndo = 'assets/svg/undo.svg';
   static const String svgVocabulary = 'assets/svg/vocabulary.svg';
   static const String svgVolumeUp = 'assets/svg/volume_up.svg';

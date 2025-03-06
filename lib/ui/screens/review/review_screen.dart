@@ -28,16 +28,13 @@ class ReviewScreen extends StatelessWidget {
     return BasePage(
       title: 'Review',
       actions: [
-        if (vocabularyState.words.any((word) => word.status == WordStatus.unknown)) GestureDetector(
-          onTap: () => _showScheduleModal(context, reviewWords),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(8, 4, 0, 4),
-            child: Text(
-              'Schedule',
-              style: textTheme.titleSmall?.copyWith(
-                color: colorScheme.primary,
-                fontWeight: FontWeight.bold,
-              ),
+        if (vocabularyState.words.any((word) => word.status == WordStatus.unknown)) TextButton(
+          onPressed: () => _showScheduleModal(context, reviewWords),
+          child: Text(
+            'Schedule',
+            style: textTheme.titleSmall?.copyWith(
+              color: colorScheme.primary,
+              fontWeight: FontWeight.bold,
             ),
           ),
         )

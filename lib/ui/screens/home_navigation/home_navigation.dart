@@ -9,6 +9,9 @@ import '../../../generated/assets.dart';
 import '../../../utils/app_snack_bar.dart';
 import '../../../utils/extensions/go_router_extension.dart';
 import '../../../navigation/app_router.dart';
+import '../../blocs/iap/iap_bloc.dart';
+import '../../commons/paywall_dialog.dart';
+import '../../commons/purchase_success_dialog.dart';
 import '../home/bloc/home_bloc.dart';
 import '../notifications/bloc/notifications_bloc.dart';
 import '../vocabulary/bloc/vocabulary_bloc.dart';
@@ -49,8 +52,9 @@ class _HomeNavigationState extends State<HomeNavigation> {
   @override
   Widget build(BuildContext context) {
     final homeState = context.watch<HomeBloc>().state;
+    final iapState = context.watch<IapBloc>().state;
 
-    final isLoading = homeState.isLoading;
+    final isLoading = homeState.isLoading || iapState.isLoading;
 
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -77,6 +81,34 @@ class _HomeNavigationState extends State<HomeNavigation> {
             }
             if (state.message != null) {
               AppSnackBar.showSuccess(context, state.message!);
+            }
+          },
+        ),
+        BlocListener<IapBloc, IapState>(
+          listener: (context, state) {
+            _handleError(context, state.failure);
+          },
+        ),
+        BlocListener<IapBloc, IapState>(
+          listenWhen: (previous, current) {
+            return previous.boughtNoAdsTime != current.boughtNoAdsTime;
+          },
+          listener: (context, state) {
+            if (state.boughtNoAdsTime == -1) {
+              showDialog(context: context, builder: (_) => PurchaseSuccessDialog());
+            }
+          },
+        ),
+        BlocListener<IapBloc, IapState>(
+          listenWhen: (previous, current) {
+            return previous.products != current.products;
+          },
+          listener: (context, state) {
+            final isPremium = state.boughtNoAdsTime == -1;
+            if (!isPremium) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                showDialog(context: context, builder: (_) => PaywallDialog());
+              });
             }
           },
         ),
@@ -141,7 +173,6 @@ class _HomeNavigationState extends State<HomeNavigation> {
     );
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -157,7 +188,6 @@ class _HomeNavigationState extends State<HomeNavigation> {
       },
     );
   }
-
 
   @override
   void dispose() {
