@@ -9,7 +9,6 @@ import '../../../../generated/assets.dart';
 import '../../../../navigation/app_router.dart';
 import '../../../commons/dialogs/request_notifications_permission_dialog.dart';
 import '../../../commons/dialogs/user_definition_dialog.dart';
-import '../../../commons/dialogs/word_details_dialog.dart';
 import '../../../commons/svg_button.dart';
 import '../../notifications/bloc/notifications_bloc.dart';
 import '../bloc/vocabulary_bloc.dart';
@@ -40,6 +39,7 @@ class VocabularyItem extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final pos = word.pos.split(', ');
     return InkWell(
+      overlayColor: WidgetStateProperty.all(Colors.transparent),
       onTap: () => _openWordDetails(context),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -207,23 +207,10 @@ class VocabularyItem extends StatelessWidget {
     //     onMastered: () => _masteredWord(context),
     //   ),
     // );
-    context.push(RoutePaths.wordDetails, extra: {'word': word});
-  }
-
-  _reminderTomorrow(BuildContext context) async {
     if (viewOnly) {
       return;
     }
-    final isGrantedPermission = context.read<NotificationsBloc>().state.isNotificationsGranted;
-    if (!isGrantedPermission) {
-      showDialog(
-        context: context,
-        builder: (context) => RequestNotificationsPermissionDialog(),
-      );
-      return;
-    }
-    onReminder?.call();
-    context.read<NotificationsBloc>().add(NotificationsEvent.reminderWordTomorrow(word: word));
+    context.push(RoutePaths.wordDetails, extra: {'word': word});
   }
 
   _showEditWordDialog(BuildContext context) {

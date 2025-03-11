@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../constants/word_pos.dart';
 import '../../../data/models/word.dart';
 import '../../../data/models/word_status.dart';
 import '../../../generated/assets.dart';
+import '../../../navigation/app_router.dart';
 import '../../blocs/iap/iap_bloc.dart';
 import '../../commons/ads/banner_ad_widget.dart';
 import '../../commons/base_page.dart';
-import '../../commons/dialogs/word_details_dialog.dart';
 import '../../commons/svg_button.dart';
 import '../notifications/bloc/notifications_bloc.dart';
 import 'bloc/vocabulary_bloc.dart';
@@ -179,15 +180,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
       final word = context.read<VocabularyBloc>().state.words.firstWhere(
             (element) => element.index == wordId,
           );
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        showDialog(
-          context: context,
-          builder: (_) => WordDetailsDialog(
-            word: word,
-            onMastered: () => _onMastered(word),
-          ),
-        );
-      });
+      context.push(RoutePaths.wordDetails, extra: {'word': word});
     }
   }
 
@@ -231,9 +224,5 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
       result += search;
     }
     return result;
-  }
-
-  void _onMastered(Word word) {
-    context.read<VocabularyBloc>().add(VocabularyEvent.changeStatus(word, WordStatus.mastered));
   }
 }

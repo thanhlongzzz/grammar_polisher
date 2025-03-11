@@ -38,21 +38,30 @@ class _PaywallDialogState extends State<PaywallDialog> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Image.asset(
-                    Assets.pngLauncher,
-                    height: size.height * 0.1,
-                  ),
-                ),
-                SizedBox(height: 2 * spacing),
                 Text(
-                  "Unlock Premium Features",
-                  style: textTheme.titleLarge?.copyWith(
+                  "Premium Features",
+                  style: textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: colorScheme.primary,
                   ),
                   textAlign: TextAlign.center,
+                ),
+                SizedBox(height: spacing),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "Don't miss the chance to learn new words everyday!",
+                        style: textTheme.titleMedium,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Image.asset(
+                      Assets.pngLauncher,
+                      height: size.height * 0.08,
+                    ),
+                  ],
                 ),
                 PaywallPage(),
                 SizedBox(height: 2 * spacing),
