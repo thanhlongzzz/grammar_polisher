@@ -17,7 +17,7 @@ import '../notifications/bloc/notifications_bloc.dart';
 import '../vocabulary/bloc/vocabulary_bloc.dart';
 
 class HomeNavigation extends StatefulWidget {
-  final Widget child;
+  final StatefulNavigationShell child;
 
   const HomeNavigation({super.key, required this.child});
 
@@ -199,7 +199,7 @@ class _HomeNavigationState extends State<HomeNavigation> {
     if (value == HomeNavigation.routes.indexOf(RoutePaths.notifications)) {
       context.read<NotificationsBloc>().add(const NotificationsEvent.getScheduledNotifications());
     }
-    context.go(HomeNavigation.routes[value]);
+    widget.child.goBranch(value);
   }
 
   _handleError(BuildContext context, Failure? failure) {

@@ -18,6 +18,7 @@ import '../ui/screens/review/review_screen.dart';
 import '../ui/screens/settings/settings_screen.dart';
 import '../ui/screens/vocabulary/bloc/vocabulary_bloc.dart';
 import '../ui/screens/vocabulary/vocabulary_screen.dart';
+import '../ui/screens/vocabulary/word_details_screen.dart';
 
 part 'route_paths.dart';
 
@@ -39,7 +40,7 @@ class AppRouter {
     },
     routes: [
       StatefulShellRoute.indexedStack(
-        builder: (context, state, child) {
+        builder: (context, state, shellRoutes) {
           return MultiBlocProvider(
             providers: [
               BlocProvider(
@@ -53,11 +54,35 @@ class AppRouter {
               ),
             ],
             child: HomeNavigation(
-              child: child,
+              child: shellRoutes,
             ),
           );
         },
         branches: [
+          StatefulShellBranch(routes: [
+            GoRoute(
+              path: RoutePaths.vocabulary,
+              pageBuilder: (context, state) {
+                final extra = state.extra as Map<String, dynamic>?;
+                final wordId = extra?['wordId'] as int?;
+                return NoTransitionPage(
+                  key: state.pageKey,
+                  child: VocabularyScreen(wordId: wordId),
+                );
+              },
+            ),
+            GoRoute(
+              path: RoutePaths.wordDetails,
+              pageBuilder: (context, state) {
+                final extra = state.extra as Map<String, dynamic>?;
+                final word = extra?['word'] as Word;
+                return SwipeablePage(
+                  key: state.pageKey,
+                  builder: (context) => WordDetailsScreen(word: word),
+                );
+              },
+            ),
+          ]),
           StatefulShellBranch(routes: [
             GoRoute(
               path: RoutePaths.notifications,
@@ -78,9 +103,7 @@ class AppRouter {
                   child: ReviewScreen(),
                 );
               },
-            )
-          ]),
-          StatefulShellBranch(routes: [
+            ),
             GoRoute(
               path: RoutePaths.flashcards,
               pageBuilder: (context, state) {
@@ -93,7 +116,7 @@ class AppRouter {
                   ),
                 );
               },
-            )
+            ),
           ]),
           StatefulShellBranch(routes: [
             GoRoute(
@@ -102,19 +125,6 @@ class AppRouter {
                 return NoTransitionPage(
                   key: state.pageKey,
                   child: const SettingsScreen(),
-                );
-              },
-            )
-          ]),
-          StatefulShellBranch(routes: [
-            GoRoute(
-              path: RoutePaths.vocabulary,
-              pageBuilder: (context, state) {
-                final extra = state.extra as Map<String, dynamic>?;
-                final wordId = extra?['wordId'] as int?;
-                return NoTransitionPage(
-                  key: state.pageKey,
-                  child: VocabularyScreen(wordId: wordId),
                 );
               },
             )

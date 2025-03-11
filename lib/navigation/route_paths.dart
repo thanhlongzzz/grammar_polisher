@@ -8,5 +8,6 @@ class RoutePaths {
   static const String flashcards = '/flashcards';
   static const String settings = '/settings';
   static const String vocabulary = '/vocabulary';
+  static const String wordDetails = '/word_details';
   static const String onboarding = '/onboarding';
 }

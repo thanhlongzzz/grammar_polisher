@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../constants/custom_colors.dart';
 import '../../../../data/models/word.dart';
 import '../../../../data/models/word_status.dart';
 import '../../../../generated/assets.dart';
+import '../../../../navigation/app_router.dart';
 import '../../../commons/dialogs/request_notifications_permission_dialog.dart';
 import '../../../commons/dialogs/user_definition_dialog.dart';
 import '../../../commons/dialogs/word_details_dialog.dart';
@@ -37,7 +39,7 @@ class VocabularyItem extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final pos = word.pos.split(', ');
-    return GestureDetector(
+    return InkWell(
       onTap: () => _openWordDetails(context),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -197,13 +199,14 @@ class VocabularyItem extends StatelessWidget {
   }
 
   void _openWordDetails(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (_) => WordDetailsDialog(
-        word: word,
-        onMastered: () => _masteredWord(context),
-      ),
-    );
+    // showDialog(
+    //   context: context,
+    //   builder: (_) => WordDetailsDialog(
+    //     word: word,
+    //     onMastered: () => _masteredWord(context),
+    //   ),
+    // );
+    context.push(RoutePaths.wordDetails, extra: {'word': word});
   }
 
   _reminderTomorrow(BuildContext context) async {
