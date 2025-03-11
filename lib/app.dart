@@ -59,7 +59,7 @@ class _AppState extends State<App> {
             colorScheme: ColorScheme.fromSeed(
               seedColor: Color(snapshot.seek),
               brightness: Brightness.dark,
-              surface: Colors.black,
+              surface: Color(0xFF1E1E1E),
             ),
             textTheme: TextTheme().apply(fontFamily: fontFamily),
           ),
