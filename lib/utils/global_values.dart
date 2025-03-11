@@ -8,6 +8,7 @@ class GlobalValues {
   static const isShowOnboardingKey = 'isShowOnboarding';
   static const boughtNoAdsTimeKey = 'boughtNoAds';
   static const lastReviewTimeKey = 'lastPolishTime';
+  static const isShowFreeTrialKey = 'isShowFreeTrial';
 
   static SharedPreferences? _sharedPreferences;
 
@@ -52,5 +53,10 @@ class GlobalValues {
 
   static Future<bool>? setLastReviewTime(DateTime value) {
     return _sharedPreferences?.setInt(lastReviewTimeKey, value.millisecondsSinceEpoch);
+  }
+
+  static bool get isShowFreeTrial => _sharedPreferences?.getBool(isShowFreeTrialKey) ?? false;
+  static set isShowFreeTrial(bool value) {
+    _sharedPreferences?.setBool(isShowFreeTrialKey, value);
   }
 }

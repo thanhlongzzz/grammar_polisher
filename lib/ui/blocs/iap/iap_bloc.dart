@@ -120,7 +120,7 @@ class IapBloc extends Bloc<IapEvent, IapState> {
   _onPurchaseProduct(_PurchaseProduct event, Emitter<IapState> emit) async {
     debugPrint('IapBloc -> _onPurchaseProduct -> purchasing: ${event.id}');
     emit(state.copyWith(isLoading: true));
-    if (appFlavor != 'production') {
+    if (appFlavor != 'production' || event.isFree) {
       await Future.delayed(const Duration(seconds: 3));
       _processPurchase(event.id);
       return;
