@@ -59,6 +59,7 @@ class VocabularyItem extends StatelessWidget {
                     style: textTheme.titleLarge?.copyWith(
                       color: colorScheme.onPrimaryContainer,
                       fontWeight: FontWeight.bold,
+                      decoration: word.status == WordStatus.mastered ? TextDecoration.lineThrough : null,
                     ),
                   ),
                   const SizedBox(width: 8),
