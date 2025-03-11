@@ -95,7 +95,7 @@ class _ReviewScreenState extends State<ReviewScreen> with RewardedAdMixin {
                         const SizedBox(width: 8),
                       ],
                       Text(
-                        'Polish',
+                        'Start Flashcards',
                         style: textTheme.titleSmall?.copyWith(color: colorScheme.onPrimary, fontWeight: FontWeight.bold),
                       ),
                     ],

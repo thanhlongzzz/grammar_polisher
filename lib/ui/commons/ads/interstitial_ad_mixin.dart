@@ -29,6 +29,7 @@ mixin InterstitialAdMixin<T extends StatefulWidget> on State<T> {
     if (!await ConsentManager.canRequestAds() || !mounted || isPremium) {
       return;
     }
+    debugPrint('Loading InterstitialAd');
     InterstitialAd.load(
       adUnitId: _adUnitId,
       request: const AdRequest(),

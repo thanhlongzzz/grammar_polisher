@@ -29,6 +29,7 @@ mixin RewardedAdMixin<T extends StatefulWidget> on State<T> {
     if (!await ConsentManager.canRequestAds() || !mounted || isPremium) {
       return;
     }
+    debugPrint('Loading RewardedAd');
     RewardedAd.load(
       adUnitId: _adUnitId,
       request: const AdRequest(),

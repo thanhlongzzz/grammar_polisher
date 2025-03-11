@@ -43,110 +43,129 @@ class _FlashCardScreenState extends State<FlashCardScreen> with InterstitialAdMi
     final colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     final isPremium = context.watch<IapBloc>().state.boughtNoAdsTime != null;
-    return BasePage(
-      title: 'Flashcards',
-      padding: const EdgeInsets.all(0),
-      child: Stack(
-        children: [
-          BannerAdWidget(
-            isPremium: isPremium,
-          ),
-          Column(
-            children: [
-              const Spacer(),
-              SizedBox(
-                height: size.height * 0.4,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: List.generate(
-                    _words.length,
-                    (index) {
-                      final word = _words[index];
-                      return PositionedFlashCard(
-                        key: ValueKey(word.index),
-                        controller: _controllers[index],
-                        word: word,
-                      );
-                    },
-                  ),
-                ),
-              ),
-              const Spacer(),
-              GlobalValues.isShowFlashCardAppDialog ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: _openFlashcardApp,
-                    child: Text(
-                      "Try advance flashcard",
-                      style: textTheme.titleSmall?.copyWith(
-                        color: colorScheme.secondary,
-                        fontWeight: FontWeight.bold,
-                      ),
+    return PopScope(
+      onPopInvokedWithResult: (_, __) {
+        debugPrint('PopScope invoked');
+        if (!GlobalValues.isShowInAppReview) {
+          debugPrint('Requesting review');
+          InAppReview.instance.requestReview();
+          GlobalValues.isShowInAppReview = true;
+        } else if (!GlobalValues.isShowFlashCardAppDialog) {
+          debugPrint('Showing dialog');
+          GlobalValues.isShowFlashCardAppDialog = true;
+          showDialog(context: context, builder: (_) => FlashcardAppDialog());
+        } else {
+          debugPrint('Showing interstitial');
+          showInterstitialAd();
+        }
+      },
+      child: BasePage(
+        title: 'Flashcards',
+        padding: const EdgeInsets.all(0),
+        child: Stack(
+          children: [
+            BannerAdWidget(
+              isPremium: isPremium,
+            ),
+            Column(
+              children: [
+                const Spacer(),
+                SizedBox(
+                  height: size.height * 0.4,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: List.generate(
+                      _words.length,
+                      (index) {
+                        final word = _words[index];
+                        return PositionedFlashCard(
+                          key: ValueKey(word.index),
+                          controller: _controllers[index],
+                          word: word,
+                        );
+                      },
                     ),
                   ),
-                ],
-              ) : const SizedBox(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: RoundedButton(
-                        backgroundColor: CustomColors.red,
-                        onPressed: _onCheckBack,
-                        borderRadius: 16,
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              Assets.svgUndo,
-                              colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                              height: 16,
-                              width: 16,
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              "Check back",
-                              style: textTheme.titleSmall?.copyWith(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: RoundedButton(
-                        backgroundColor: CustomColors.green,
-                        onPressed: _onMastered,
-                        borderRadius: 16,
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              Assets.svgCheck,
-                              colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                              height: 16,
-                              width: 16,
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              "Mastered",
-                              style: textTheme.titleSmall?.copyWith(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
-              ),
-              const SizedBox(height: 20),
-            ],
-          ),
-        ],
+                const Spacer(),
+                GlobalValues.isShowFlashCardAppDialog
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: _openFlashcardApp,
+                            child: Text(
+                              "Try advance flashcard",
+                              style: textTheme.titleSmall?.copyWith(
+                                color: colorScheme.secondary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : const SizedBox(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: RoundedButton(
+                          backgroundColor: CustomColors.red,
+                          onPressed: _onCheckBack,
+                          borderRadius: 16,
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                Assets.svgUndo,
+                                colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                                height: 16,
+                                width: 16,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                "Check back",
+                                style: textTheme.titleSmall?.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: RoundedButton(
+                          backgroundColor: CustomColors.green,
+                          onPressed: _onMastered,
+                          borderRadius: 16,
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                Assets.svgCheck,
+                                colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                                height: 16,
+                                width: 16,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                "Mastered",
+                                style: textTheme.titleSmall?.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -193,15 +212,6 @@ class _FlashCardScreenState extends State<FlashCardScreen> with InterstitialAdMi
           context.go(RoutePaths.vocabulary);
           return;
         }
-        if (!GlobalValues.isShowInAppReview) {
-          InAppReview.instance.requestReview();
-          GlobalValues.isShowInAppReview = true;
-        } else if (!GlobalValues.isShowFlashCardAppDialog) {
-          GlobalValues.isShowFlashCardAppDialog = true;
-          showDialog(context: context, builder: (_) => FlashcardAppDialog());
-        } else {
-          showInterstitialAd();
-        }
         Navigator.of(context).pop();
       }
     }
@@ -209,9 +219,7 @@ class _FlashCardScreenState extends State<FlashCardScreen> with InterstitialAdMi
   }
 
   _openFlashcardApp() {
-    final url = Platform.isIOS
-        ? const String.fromEnvironment('IOS_FLASHCARD_APP_URL')
-        : const String.fromEnvironment('ANDROID_FLASHCARD_APP_URL');
+    final url = Platform.isIOS ? const String.fromEnvironment('IOS_FLASHCARD_APP_URL') : const String.fromEnvironment('ANDROID_FLASHCARD_APP_URL');
     launchUrl(Uri.parse(url));
   }
 
