@@ -55,27 +55,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 OnboardingPage(
                   header: SelectionArea(
-                    child: Markdown(
-                      data: '''# 🌟 **Adjectives in English** 🌟
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 8.0),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Markdown(
+                        data: r'''### 📝 **Adjectives**
       
-      ## 📝 **1. Definition**
-      
-      An **adjective** is a word that describes or modifies a noun or pronoun by providing more information about its quality, size, color, shape, condition, or other attributes.
-      
-      ### ✅ **Examples:**
-      
-      - 🏡 **Big** house
-      - 🌈 **Blue** sky
-      - 😃 **Happy** child''',
-                      shrinkWrap: true,
+An **adjective** is a word that describes or modifies a noun or pronoun by providing more information about its quality, size, color, shape, condition, or other attributes.''',
+                        shrinkWrap: true,
+                      ),
                     ),
                   ),
-                  label: '',
+                  label: 'Grammar lessons',
                   content:
                       'Grammar lessons are available for you to learn. Long press on any text to show the context menu. Try it now!',
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Stack(
                   children: [
                     OnboardingPage(
                       header: VocabularyItem(
@@ -92,20 +90,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       content:
                           'Modify the definition for your own understanding.\nAdd words to your review list and start learning with flashcards.\nNow, try pressing the star button!',
                     ),
-                    const SizedBox(height: 16.0),
-                    Opacity(
-                      opacity: _isReviewing ? 1 : 0.5,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: RoundedButton(
-                          onPressed: _isReviewing
-                              ? () {
-                                  context.go(RoutePaths.flashcards, extra: {
-                                    'words': [Words.sampleWord, Words.helloWord]
-                                  });
-                                }
-                              : null,
-                          child: const Text('Start learning'),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Opacity(
+                        opacity: _isReviewing ? 1 : 0.5,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: RoundedButton(
+                            borderRadius: 16,
+                            backgroundColor: colorScheme.tertiary,
+                            onPressed: _isReviewing
+                                ? () {
+                                    context.go(RoutePaths.flashcards, extra: {
+                                      'words': [Words.sampleWord, Words.helloWord]
+                                    });
+                                  }
+                                : null,
+                            child: const Text('Start learning'),
+                          ),
                         ),
                       ),
                     ),
@@ -130,6 +132,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: RoundedButton(
+                borderRadius: 16,
                 onPressed: _onNext,
                 child: const Text('Next'),
               ),

@@ -21,33 +21,43 @@ class OnboardingPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 600),
-            child: header,
-          ),
-          const SizedBox(height: 16.0),
-          SizedBox(
-            width: 600,
-            child: Text(
-              label,
-              style: textTheme.titleLarge?.copyWith(
-                color: colorScheme.primary,
-                fontWeight: FontWeight.bold,
+          Expanded(
+            child: SizedBox(
+              width: 600,
+              child: Center(
+                child: Text(
+                  label,
+                  style: textTheme.titleLarge?.copyWith(
+                    color: colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
-              textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(height: 8.0),
-          SizedBox(
-            width: 600,
-            child: Text(
-              content,
-              style: textTheme.bodyLarge?.copyWith(
-                color: colorScheme.secondary,
-              ),
-              textAlign: TextAlign.center,
+          Expanded(
+            flex: 2,
+            child: Column(
+              children: [
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 600),
+                  child: header,
+                ),
+                const SizedBox(height: 16.0),
+                SizedBox(
+                  width: 600,
+                  child: Text(
+                    content,
+                    style: textTheme.bodyLarge?.copyWith(
+                      color: colorScheme.secondary,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
             ),
-          ),
+          )
         ],
       ),
     );
