@@ -8,7 +8,6 @@ import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 import '../configs/di.dart';
 import '../data/models/word.dart';
-import '../ui/screens/home/bloc/home_bloc.dart';
 import '../ui/screens/home_navigation/home_navigation.dart';
 import '../ui/screens/notifications/bloc/notifications_bloc.dart';
 import '../ui/screens/notifications/notifications_screen.dart';
@@ -43,9 +42,6 @@ class AppRouter {
         builder: (context, state, shellRoutes) {
           return MultiBlocProvider(
             providers: [
-              BlocProvider(
-                create: (context) => DI().sl<HomeBloc>(),
-              ),
               BlocProvider(
                 create: (context) => DI().sl<VocabularyBloc>(),
               ),

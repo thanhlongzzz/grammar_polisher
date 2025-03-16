@@ -119,7 +119,7 @@ class VocabularyItem extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         if ((word.senses.isNotEmpty || word.userDefinition != null) && word.status != WordStatus.mastered)
-                          SelectableText(
+                          Text(
                             word.userDefinition != null ? "${word.userDefinition} (edited)" : word.senses.first.definition,
                             style: textTheme.bodyMedium?.copyWith(
                               color: colorScheme.onPrimaryContainer,

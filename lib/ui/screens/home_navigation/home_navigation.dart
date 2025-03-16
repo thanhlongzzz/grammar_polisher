@@ -12,7 +12,6 @@ import '../../../navigation/app_router.dart';
 import '../../blocs/iap/iap_bloc.dart';
 import '../../commons/paywall_dialog.dart';
 import '../../commons/purchase_success_dialog.dart';
-import '../home/bloc/home_bloc.dart';
 import '../notifications/bloc/notifications_bloc.dart';
 import '../vocabulary/bloc/vocabulary_bloc.dart';
 
@@ -51,10 +50,9 @@ class _HomeNavigationState extends State<HomeNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    final homeState = context.watch<HomeBloc>().state;
     final iapState = context.watch<IapBloc>().state;
 
-    final isLoading = homeState.isLoading || iapState.isLoading;
+    final isLoading = iapState.isLoading;
 
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -68,11 +66,6 @@ class _HomeNavigationState extends State<HomeNavigation> {
 
     return MultiBlocListener(
       listeners: [
-        BlocListener<HomeBloc, HomeState>(
-          listener: (context, state) {
-            _handleError(context, state.failure);
-          },
-        ),
         BlocListener<NotificationsBloc, NotificationsState>(
           listener: (context, state) {
             _handleError(context, state.failure);
