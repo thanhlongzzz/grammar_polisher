@@ -21,23 +21,32 @@ class OnboardingPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          header,
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: header,
+          ),
           const SizedBox(height: 16.0),
-          Text(
-            label,
-            style: textTheme.titleLarge?.copyWith(
-              color: colorScheme.primary,
-              fontWeight: FontWeight.bold,
+          SizedBox(
+            width: 600,
+            child: Text(
+              label,
+              style: textTheme.titleLarge?.copyWith(
+                color: colorScheme.primary,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8.0),
-          Text(
-            content,
-            style: textTheme.bodyLarge?.copyWith(
-              color: colorScheme.secondary,
+          SizedBox(
+            width: 600,
+            child: Text(
+              content,
+              style: textTheme.bodyLarge?.copyWith(
+                color: colorScheme.secondary,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
           ),
         ],
       ),

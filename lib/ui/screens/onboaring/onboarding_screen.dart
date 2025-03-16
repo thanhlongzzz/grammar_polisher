@@ -21,7 +21,6 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   late final PageController? _pageController;
   bool _isReviewing = false;
-  bool _isTrying = false;
 
   @override
   Widget build(BuildContext context) {
@@ -58,16 +57,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   header: SelectionArea(
                     child: Markdown(
                       data: '''# 🌟 **Adjectives in English** 🌟
-
-## 📝 **1. Definition**
-
-An **adjective** is a word that describes or modifies a noun or pronoun by providing more information about its quality, size, color, shape, condition, or other attributes.
-
-### ✅ **Examples:**
-
-- 🏡 **Big** house
-- 🌈 **Blue** sky
-- 😃 **Happy** child''',
+      
+      ## 📝 **1. Definition**
+      
+      An **adjective** is a word that describes or modifies a noun or pronoun by providing more information about its quality, size, color, shape, condition, or other attributes.
+      
+      ### ✅ **Examples:**
+      
+      - 🏡 **Big** house
+      - 🌈 **Blue** sky
+      - 😃 **Happy** child''',
                       shrinkWrap: true,
                     ),
                   ),
