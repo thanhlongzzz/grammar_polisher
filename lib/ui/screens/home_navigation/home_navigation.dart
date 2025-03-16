@@ -112,7 +112,8 @@ class _HomeNavigationState extends State<HomeNavigation> {
         ),
       ],
       child: Scaffold(
-        floatingActionButton: widget.child.currentIndex <= 2 && HomeNavigation.routes.contains(widget.child.shellRouteContext.routerState.uri.path)
+        floatingActionButton: [0, 2].contains(widget.child.currentIndex) &&
+                HomeNavigation.routes.contains(widget.child.shellRouteContext.routerState.uri.path)
             ? StreakButton(
                 onPressed: () {
                   widget.child.goBranch(HomeNavigation.routes.indexOf(RoutePaths.streak));
