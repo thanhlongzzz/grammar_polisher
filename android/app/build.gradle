@@ -66,12 +66,12 @@ android {
     productFlavors {
         development {
             dimension "default"
-            resValue "string", "app_name", "D-Oxford Dictionary"
+            resValue "string", "app_name", "D-English Handbook"
             applicationIdSuffix ".dev"
         }
         production {
             dimension "default"
-            resValue "string", "app_name", "Oxford Dictionary"
+            resValue "string", "app_name", "English Handbook"
             applicationIdSuffix ""
         }
     }
