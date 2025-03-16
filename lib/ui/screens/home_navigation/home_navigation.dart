@@ -23,6 +23,7 @@ class HomeNavigation extends StatefulWidget {
   static const routes = [
     RoutePaths.vocabulary,
     RoutePaths.notifications,
+    RoutePaths.grammar,
     RoutePaths.review,
     RoutePaths.settings,
   ];
@@ -30,13 +31,15 @@ class HomeNavigation extends StatefulWidget {
   static const icons = [
     Assets.svgVocabulary,
     Assets.svgNotifications,
+    Assets.svgGrammar,
     Assets.svgStar,
     Assets.svgSettings,
   ];
 
   static const labels = [
-    "Oxford Words",
+    "Vocabulary",
     "Reminders",
+    "Grammar",
     "Studying",
     "Settings",
   ];

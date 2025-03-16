@@ -8,6 +8,7 @@ import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 import '../configs/di.dart';
 import '../data/models/word.dart';
+import '../ui/screens/grammar/grammar_screen.dart';
 import '../ui/screens/home_navigation/home_navigation.dart';
 import '../ui/screens/notifications/bloc/notifications_bloc.dart';
 import '../ui/screens/notifications/notifications_screen.dart';
@@ -86,6 +87,17 @@ class AppRouter {
                 return NoTransitionPage(
                   key: state.pageKey,
                   child: const NotificationsScreen(),
+                );
+              },
+            ),
+          ]),
+          StatefulShellBranch(routes: [
+            GoRoute(
+              path: RoutePaths.grammar,
+              pageBuilder: (context, state) {
+                return NoTransitionPage(
+                  key: state.pageKey,
+                  child: const GrammarScreen(),
                 );
               },
             ),
