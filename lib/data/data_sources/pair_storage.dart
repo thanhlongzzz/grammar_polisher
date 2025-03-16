@@ -6,10 +6,24 @@ abstract interface class PairStorage {
   Future<void> saveMarkedLesson(Map<int, bool> markedLessons);
 
   Map<int, bool> getMarkedLesson();
+
+  Future<void> setTimeStreak(int timeStreak);
+
+  int getTimeStreak();
+
+  Future<void> setStreak(int streak);
+
+  int get streak;
+
+  int get longestStreak;
+
+  bool get streakedToday;
 }
 
 class SharedPreferencesStorage implements PairStorage {
   static const String _markedLessonsKey = 'marked_lessons';
+  static const String _streakKey = 'streak';
+  static const String _longestStreakKey = 'longest_streak';
   final SharedPreferences _sharedPreferences;
 
   const SharedPreferencesStorage({
@@ -30,5 +44,47 @@ class SharedPreferencesStorage implements PairStorage {
   Future<void> saveMarkedLesson(Map<int, bool> markedLessons) async {
     var markedLessonJson = jsonEncode(markedLessons.map((key, value) => MapEntry(key.toString(), value)));
     await _sharedPreferences.setString(_markedLessonsKey, markedLessonJson);
+  }
+
+  @override
+  int getTimeStreak() {
+    final now = DateTime.now();
+    final key = '${now.year}-${now.month}-${now.day}';
+    return _sharedPreferences.getInt(key) ?? 0;
+  }
+
+  @override
+  Future<void> setTimeStreak(int timeStreak) {
+    final now = DateTime.now();
+    final key = '${now.year}-${now.month}-${now.day}';
+    return _sharedPreferences.setInt(key, timeStreak);
+  }
+
+  @override
+  int get streak {
+    return _sharedPreferences.getInt(_streakKey) ?? 0;
+  }
+
+  @override
+  int get longestStreak {
+    return _sharedPreferences.getInt(_longestStreakKey) ?? 0;
+  }
+
+  @override
+  Future<void> setStreak(int streak) async {
+    final now = DateTime.now();
+    final key = '${now.year}-${now.month}-${now.day}-streaked';
+    await _sharedPreferences.setBool(key, true);
+    await _sharedPreferences.setInt(_streakKey, streak);
+    if (streak > longestStreak) {
+      await _sharedPreferences.setInt(_longestStreakKey, streak);
+    }
+  }
+
+  @override
+  bool get streakedToday {
+    final now = DateTime.now();
+    final key = '${now.year}-${now.month}-${now.day}-streaked';
+    return _sharedPreferences.getBool(key) ?? false;
   }
 }

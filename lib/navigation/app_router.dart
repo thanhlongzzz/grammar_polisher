@@ -20,6 +20,7 @@ import '../ui/screens/onboaring/onboarding_screen.dart';
 import '../ui/screens/review/flash_card_screen.dart';
 import '../ui/screens/review/review_screen.dart';
 import '../ui/screens/settings/settings_screen.dart';
+import '../ui/screens/streak/bloc/streak_bloc.dart';
 import '../ui/screens/streak/streak_screen.dart';
 import '../ui/screens/vocabulary/bloc/vocabulary_bloc.dart';
 import '../ui/screens/vocabulary/vocabulary_screen.dart';
@@ -56,6 +57,9 @@ class AppRouter {
               ),
               BlocProvider(
                 create: (context) => DI().sl<LessonBloc>(),
+              ),
+              BlocProvider(
+                create: (context) => DI().sl<StreakBloc>(),
               ),
             ],
             child: HomeNavigation(

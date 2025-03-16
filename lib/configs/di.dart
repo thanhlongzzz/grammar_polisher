@@ -14,9 +14,11 @@ import '../data/repositories/lesson_repository.dart';
 import '../data/repositories/notifications_repository.dart';
 import '../data/repositories/oxford_words_repository.dart';
 import '../data/repositories/settings_repository.dart';
+import '../data/repositories/streak_repository.dart';
 import '../ui/blocs/iap/iap_bloc.dart';
 import '../ui/screens/grammar/bloc/lesson_bloc.dart';
 import '../ui/screens/settings/bloc/settings_bloc.dart';
+import '../ui/screens/streak/bloc/streak_bloc.dart';
 import '../ui/screens/vocabulary/bloc/vocabulary_bloc.dart';
 import '../ui/screens/notifications/bloc/notifications_bloc.dart';
 import '../utils/local_notifications_tools.dart';
@@ -69,6 +71,12 @@ class DI {
       ),
     );
 
+    sl.registerFactory(
+      () => StreakBloc(
+        streakRepository: sl(),
+      ),
+    );
+
     sl.registerLazySingleton<IapRepository>(
       () => IapRepositoryImpl(),
     );
@@ -94,6 +102,12 @@ class DI {
 
     sl.registerLazySingleton<LessonRepository>(
       () => LessonRepositoryImpl(
+        pairStorage: sl(),
+      ),
+    );
+
+    sl.registerLazySingleton<StreakRepository>(
+      () => StreakRepositoryImpl(
         pairStorage: sl(),
       ),
     );

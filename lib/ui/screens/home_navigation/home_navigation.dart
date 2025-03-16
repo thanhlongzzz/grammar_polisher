@@ -13,6 +13,7 @@ import '../../blocs/iap/iap_bloc.dart';
 import '../../commons/paywall_dialog.dart';
 import '../../commons/purchase_success_dialog.dart';
 import '../notifications/bloc/notifications_bloc.dart';
+import '../streak/bloc/streak_bloc.dart';
 import '../vocabulary/bloc/vocabulary_bloc.dart';
 
 class HomeNavigation extends StatefulWidget {
@@ -175,6 +176,7 @@ class _HomeNavigationState extends State<HomeNavigation> {
     final notificationsBloc = context.read<NotificationsBloc>();
     notificationsBloc.add(const NotificationsEvent.requestPermissions());
     notificationsBloc.add(const NotificationsEvent.handleOpenAppFromNotification());
+    context.read<StreakBloc>().add(const StreakEvent.watchStreak());
     context.read<VocabularyBloc>().add(const VocabularyEvent.getAllOxfordWords());
     _appLifecycleListener = AppLifecycleListener(
       onShow: () {
