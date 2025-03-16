@@ -15,6 +15,7 @@ import '../../commons/purchase_success_dialog.dart';
 import '../notifications/bloc/notifications_bloc.dart';
 import '../streak/bloc/streak_bloc.dart';
 import '../vocabulary/bloc/vocabulary_bloc.dart';
+import 'widget/streak_button.dart';
 
 class HomeNavigation extends StatefulWidget {
   final StatefulNavigationShell child;
@@ -111,6 +112,13 @@ class _HomeNavigationState extends State<HomeNavigation> {
         ),
       ],
       child: Scaffold(
+        floatingActionButton: widget.child.currentIndex <= 2
+            ? StreakButton(
+                onPressed: () {
+                  widget.child.goBranch(HomeNavigation.routes.indexOf(RoutePaths.streak));
+                },
+              )
+            : null,
         body: Stack(
           children: [
             Column(
