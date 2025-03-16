@@ -56,6 +56,8 @@ class Assets {
   static const String pastPastPerfectTense = 'assets/md/grammar/tenses/past/past__perfect__tense.md';
   static const String pastSimplePastTense = 'assets/md/grammar/tenses/past/simple__past__tense.md';
   static const String pngBook = 'assets/png/book.png';
+  static const String pngFlame = 'assets/png/flame.png';
+  static const String pngFlameInactive = 'assets/png/flame_inactive.png';
   static const String pngGrammar = 'assets/png/grammar.png';
   static const String pngImg = 'assets/png/img.png';
   static const String pngImg1 = 'assets/png/img_1.png';
@@ -98,6 +100,7 @@ class Assets {
   static const String svgSearch = 'assets/svg/search.svg';
   static const String svgSettings = 'assets/svg/settings.svg';
   static const String svgStar = 'assets/svg/star.svg';
+  static const String svgStreak = 'assets/svg/streak.svg';
   static const String svgSuccess = 'assets/svg/success.svg';
   static const String svgTimerPlay = 'assets/svg/timer_play.svg';
   static const String svgUndo = 'assets/svg/undo.svg';

@@ -16,11 +16,11 @@ import '../ui/screens/grammar/lesson_screen.dart';
 import '../ui/screens/grammar/grammar_screen.dart';
 import '../ui/screens/home_navigation/home_navigation.dart';
 import '../ui/screens/notifications/bloc/notifications_bloc.dart';
-import '../ui/screens/notifications/notifications_screen.dart';
 import '../ui/screens/onboaring/onboarding_screen.dart';
 import '../ui/screens/review/flash_card_screen.dart';
 import '../ui/screens/review/review_screen.dart';
 import '../ui/screens/settings/settings_screen.dart';
+import '../ui/screens/streak/streak_screen.dart';
 import '../ui/screens/vocabulary/bloc/vocabulary_bloc.dart';
 import '../ui/screens/vocabulary/vocabulary_screen.dart';
 import '../ui/screens/vocabulary/word_details_screen.dart';
@@ -90,11 +90,24 @@ class AppRouter {
           ]),
           StatefulShellBranch(routes: [
             GoRoute(
-              path: RoutePaths.notifications,
+              path: RoutePaths.review,
               pageBuilder: (context, state) {
                 return NoTransitionPage(
                   key: state.pageKey,
-                  child: const NotificationsScreen(),
+                  child: ReviewScreen(),
+                );
+              },
+            ),
+            GoRoute(
+              path: RoutePaths.flashcards,
+              pageBuilder: (context, state) {
+                final extra = state.extra as Map<String, dynamic>?;
+                final words = extra?['words'] as List<Word>;
+                return SwipeablePage(
+                  key: state.pageKey,
+                  builder: (context) => FlashCardScreen(
+                    words: words,
+                  ),
                 );
               },
             ),
@@ -138,24 +151,11 @@ class AppRouter {
           ]),
           StatefulShellBranch(routes: [
             GoRoute(
-              path: RoutePaths.review,
+              path: RoutePaths.streak,
               pageBuilder: (context, state) {
                 return NoTransitionPage(
                   key: state.pageKey,
-                  child: ReviewScreen(),
-                );
-              },
-            ),
-            GoRoute(
-              path: RoutePaths.flashcards,
-              pageBuilder: (context, state) {
-                final extra = state.extra as Map<String, dynamic>?;
-                final words = extra?['words'] as List<Word>;
-                return SwipeablePage(
-                  key: state.pageKey,
-                  builder: (context) => FlashCardScreen(
-                    words: words,
-                  ),
+                  child: const StreakScreen(),
                 );
               },
             ),

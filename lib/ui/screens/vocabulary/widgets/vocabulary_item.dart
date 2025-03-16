@@ -7,10 +7,8 @@ import '../../../../data/models/word.dart';
 import '../../../../data/models/word_status.dart';
 import '../../../../generated/assets.dart';
 import '../../../../navigation/app_router.dart';
-import '../../../commons/dialogs/request_notifications_permission_dialog.dart';
 import '../../../commons/dialogs/user_definition_dialog.dart';
 import '../../../commons/svg_button.dart';
-import '../../notifications/bloc/notifications_bloc.dart';
 import '../bloc/vocabulary_bloc.dart';
 import 'phonetic.dart';
 import 'pos_badge.dart';
@@ -200,13 +198,6 @@ class VocabularyItem extends StatelessWidget {
   }
 
   void _openWordDetails(BuildContext context) {
-    // showDialog(
-    //   context: context,
-    //   builder: (_) => WordDetailsDialog(
-    //     word: word,
-    //     onMastered: () => _masteredWord(context),
-    //   ),
-    // );
     if (viewOnly) {
       return;
     }

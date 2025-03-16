@@ -22,25 +22,25 @@ class HomeNavigation extends StatefulWidget {
 
   static const routes = [
     RoutePaths.vocabulary,
-    RoutePaths.notifications,
-    RoutePaths.grammar,
     RoutePaths.review,
+    RoutePaths.grammar,
+    RoutePaths.streak,
     RoutePaths.settings,
   ];
 
   static const icons = [
     Assets.svgVocabulary,
-    Assets.svgNotifications,
-    Assets.svgGrammar,
     Assets.svgStar,
+    Assets.svgGrammar,
+    Assets.svgStreak,
     Assets.svgSettings,
   ];
 
   static const labels = [
     "Vocabulary",
-    "Reminders",
-    "Grammar",
     "Studying",
+    "Grammar",
+    "Streak",
     "Settings",
   ];
 
@@ -192,7 +192,7 @@ class _HomeNavigationState extends State<HomeNavigation> {
   }
 
   void _onSelect(int value) {
-    if (value == HomeNavigation.routes.indexOf(RoutePaths.notifications)) {
+    if (value == HomeNavigation.routes.indexOf(RoutePaths.streak)) {
       context.read<NotificationsBloc>().add(const NotificationsEvent.getScheduledNotifications());
     }
     widget.child.goBranch(value);

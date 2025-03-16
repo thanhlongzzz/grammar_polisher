@@ -3,7 +3,7 @@ part of 'app_router.dart';
 class RoutePaths {
   const RoutePaths._();
 
-  static const String notifications = '/notifications';
+  static const String streak = '/streak';
   static const String review = '/review';
   static const String flashcards = '/flashcards';
   static const String settings = '/settings';
