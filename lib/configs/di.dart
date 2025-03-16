@@ -4,14 +4,18 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/data_sources/assets_data.dart';
 import '../data/data_sources/local_data.dart';
+import '../data/data_sources/pair_storage.dart';
 import '../data/repositories/iap_repository.dart';
+import '../data/repositories/lesson_repository.dart';
 import '../data/repositories/notifications_repository.dart';
 import '../data/repositories/oxford_words_repository.dart';
 import '../data/repositories/settings_repository.dart';
 import '../ui/blocs/iap/iap_bloc.dart';
+import '../ui/screens/grammar/bloc/lesson_bloc.dart';
 import '../ui/screens/settings/bloc/settings_bloc.dart';
 import '../ui/screens/vocabulary/bloc/vocabulary_bloc.dart';
 import '../ui/screens/notifications/bloc/notifications_bloc.dart';
@@ -59,6 +63,12 @@ class DI {
       ),
     );
 
+    sl.registerFactory(
+      () => LessonBloc(
+        lessonRepository: sl(),
+      ),
+    );
+
     sl.registerLazySingleton<IapRepository>(
       () => IapRepositoryImpl(),
     );
@@ -82,6 +92,12 @@ class DI {
       ),
     );
 
+    sl.registerLazySingleton<LessonRepository>(
+      () => LessonRepositoryImpl(
+        pairStorage: sl(),
+      ),
+    );
+
     sl.registerLazySingleton<AssetsData>(
       () => AssetsDataImpl(),
     );
@@ -89,6 +105,12 @@ class DI {
     sl.registerLazySingleton<LocalData>(
       () => HiveDatabase(
         appHive: sl(),
+      ),
+    );
+
+    sl.registerLazySingleton<PairStorage>(
+      () => SharedPreferencesStorage(
+        sharedPreferences: sl(),
       ),
     );
 
@@ -119,6 +141,11 @@ class DI {
     ));
     sl.registerLazySingleton<Amplitude>(
       () => amplitude,
+    );
+
+    final prefs = await SharedPreferences.getInstance();
+    sl.registerLazySingleton<SharedPreferences>(
+      () => prefs,
     );
   }
 }

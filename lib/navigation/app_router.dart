@@ -7,7 +7,12 @@ import 'package:grammar_polisher/utils/global_values.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 import '../configs/di.dart';
+import '../data/models/category_data.dart';
+import '../data/models/lesson.dart';
 import '../data/models/word.dart';
+import '../ui/screens/grammar/bloc/lesson_bloc.dart';
+import '../ui/screens/grammar/category_screen.dart';
+import '../ui/screens/grammar/lesson_screen.dart';
 import '../ui/screens/grammar/grammar_screen.dart';
 import '../ui/screens/home_navigation/home_navigation.dart';
 import '../ui/screens/notifications/bloc/notifications_bloc.dart';
@@ -48,6 +53,9 @@ class AppRouter {
               ),
               BlocProvider(
                 create: (context) => DI().sl<NotificationsBloc>(),
+              ),
+              BlocProvider(
+                create: (context) => DI().sl<LessonBloc>(),
               ),
             ],
             child: HomeNavigation(
@@ -97,7 +105,33 @@ class AppRouter {
               pageBuilder: (context, state) {
                 return NoTransitionPage(
                   key: state.pageKey,
-                  child: const GrammarScreen(),
+                  child: GrammarScreen(),
+                );
+              },
+            ),
+            GoRoute(
+              path: RoutePaths.category,
+              pageBuilder: (context, state) {
+                final extra = state.extra as Map<String, dynamic>?;
+                final category = extra?['category'] as CategoryData;
+                return SwipeablePage(
+                  key: state.pageKey,
+                  builder: (context) => CategoryScreen(
+                    category: category,
+                  ),
+                );
+              },
+            ),
+            GoRoute(
+              path: RoutePaths.lesson,
+              pageBuilder: (context, state) {
+                final extra = state.extra as Map<String, dynamic>?;
+                final lesson = extra?['lesson'] as Lesson;
+                return SwipeablePage(
+                  key: state.pageKey,
+                  builder: (context) => LessonScreen(
+                    lesson: lesson,
+                  ),
                 );
               },
             ),

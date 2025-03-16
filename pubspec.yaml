@@ -68,6 +68,7 @@ dependencies:
   in_app_purchase: ^3.2.1
   lottie: ^3.3.1
   share_plus: ^10.1.4
+  flutter_markdown: ^0.7.6+2
 
 dev_dependencies:
   flutter_test:
@@ -144,4 +145,14 @@ flutter:
     - assets/json/oxford_words/
     - assets/fonts/
     - assets/lottie/
+    - assets/md/
+    - assets/md/grammar/
+    - assets/md/grammar/words/
+    - assets/md/grammar/words/word__families/
+    - assets/md/grammar/tenses/
+    - assets/md/grammar/tenses/past/
+    - assets/md/grammar/tenses/future/
+    - assets/md/grammar/tenses/present/
+    - assets/md/grammar/sentences/
+    - assets/md/speaking/
 
