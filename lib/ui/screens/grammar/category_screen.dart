@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../../../data/models/category_data.dart';
 import '../../../data/models/lesson.dart';
 import '../../../navigation/app_router.dart';
+import '../../blocs/iap/iap_bloc.dart';
+import '../../commons/ads/banner_ad_widget.dart';
 import '../../commons/base_page.dart';
 import 'bloc/lesson_bloc.dart';
 import 'widget/category_item.dart';
@@ -29,6 +31,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 (element.subTitle?.toLowerCase() ?? "").contains(query.toLowerCase());
           }).toList()
         : widget.category.lessons;
+    final isPremium = context.watch<IapBloc>().state.boughtNoAdsTime != null;
     return BasePage(
       title: widget.category.title,
       child: Column(
@@ -52,33 +55,32 @@ class _CategoryScreenState extends State<CategoryScreen> {
               itemCount: queriedLesson.length,
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: CategoryItem(
-                    isBeta: widget.category.isBeta,
-                    onTap: () {
-                      _openDetailScreen(context, queriedLesson[index]);
-                    },
-                    onMark: (value) {
-                      _onMark(queriedLesson[index], value);
-                    },
-                    lesson: queriedLesson[index],
-                  ),
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: CategoryItem(
+                        isBeta: widget.category.isBeta,
+                        index: index,
+                        onMark: (value) {
+                          _onMark(queriedLesson[index], value);
+                        },
+                        lesson: queriedLesson[index],
+                      ),
+                    ),
+                    if (index == 1)
+                      BannerAdWidget(
+                        isPremium: isPremium,
+                        paddingVertical: 16,
+                        paddingHorizontal: 16,
+                      ),
+                  ],
                 );
               },
             ),
           ),
         ],
       ),
-    );
-  }
-
-  void _openDetailScreen(BuildContext context, Lesson lesson) {
-    context.push(
-      RoutePaths.lesson,
-      extra: {
-        'lesson': lesson,
-      },
     );
   }
 

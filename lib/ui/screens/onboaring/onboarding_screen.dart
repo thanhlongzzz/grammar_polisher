@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grammar_polisher/navigation/app_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -40,16 +41,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       width: 200,
                     ),
                   ),
-                  label: 'Welcome to Oxford Dictionary 2.0!',
-                  content: 'The best dictionary app in the world!\nWe\'re glad to have you here.\nLet\'s get started!',
-                ),
-                OnboardingPage(
-                  header: Image.asset(
-                    Assets.pngImg,
-                    width: 200,
-                  ),
-                  label: 'Say goodbye with Grammarly AI',
-                  content: 'We are very sorry to announce that this feature has been discontinued.\nWe will be back after improving and refining this feature. See you again on the Nibble app.\nThank you for your patience.',
+                  label: 'Welcome to English Handbook!',
+                  content: 'The best english learning in the world!\nWe\'re glad to have you here.\nLet\'s get started!',
                 ),
                 OnboardingPage(
                   header: VocabularyItem(
@@ -61,38 +54,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   label: 'View definitions and start learning!',
                   content: 'You can tap on any word to view its definition and start learning it.',
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    OnboardingPage(
-                      header: !_isTrying
-                          ? Image.asset(
-                              Assets.pngSample,
-                            )
-                          : VocabularyItem(
-                              word: Words.sampleWord,
-                              onMastered: () {},
-                              onStar: () {},
-                              viewOnly: true,
-                            ),
-                      label: 'Selection for more options',
-                      content: 'Long press on any word to view more options.\n Look Up, Search web and even Translate.',
+                OnboardingPage(
+                  header: SelectionArea(
+                    child: Markdown(
+                      data: '''# 🌟 **Adjectives in English** 🌟
+
+## 📝 **1. Definition**
+
+An **adjective** is a word that describes or modifies a noun or pronoun by providing more information about its quality, size, color, shape, condition, or other attributes.
+
+### ✅ **Examples:**
+
+- 🏡 **Big** house
+- 🌈 **Blue** sky
+- 😃 **Happy** child''',
+                      shrinkWrap: true,
                     ),
-                    const SizedBox(height: 16.0),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: RoundedButton(
-                        onPressed: !_isTrying
-                            ? () {
-                                setState(() {
-                                  _isTrying = true;
-                                });
-                              }
-                            : null,
-                        child: Text(!_isTrying ? 'Try it!' : 'Long press to definition...'),
-                      ),
-                    ),
-                  ],
+                  ),
+                  label: '',
+                  content:
+                      'Grammar lessons are available for you to learn. Long press on any text to show the context menu. Try it now!',
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -143,7 +124,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               dotHeight: 10,
               dotWidth: 10,
             ),
-            count: 5,
+            count: 4,
           ),
           SafeArea(
             top: false,
@@ -161,7 +142,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _onNext() {
-    if (_pageController?.page?.toInt() == 4) {
+    if (_pageController?.page?.toInt() == 3) {
       context.push(RoutePaths.vocabulary);
       return;
     }

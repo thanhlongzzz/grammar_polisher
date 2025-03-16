@@ -56,6 +56,7 @@ class Assets {
   static const String pastPastPerfectTense = 'assets/md/grammar/tenses/past/past__perfect__tense.md';
   static const String pastSimplePastTense = 'assets/md/grammar/tenses/past/simple__past__tense.md';
   static const String pngBook = 'assets/png/book.png';
+  static const String pngGrammar = 'assets/png/grammar.png';
   static const String pngImg = 'assets/png/img.png';
   static const String pngImg1 = 'assets/png/img_1.png';
   static const String pngLauncher = 'assets/png/launcher.png';

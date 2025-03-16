@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../../../utils/ad/consent_manager.dart';
+import '../../../utils/app_snack_bar.dart';
 
 mixin RewardedAdMixin<T extends StatefulWidget> on State<T> {
   RewardedAd? _rewardedAd;
@@ -66,6 +67,7 @@ mixin RewardedAdMixin<T extends StatefulWidget> on State<T> {
       _rewardedAd = null;
     } else {
       debugPrint('InterstitialAd is not ready yet.');
+      AppSnackBar.showError(context, 'This feature is not ready yet. Please try again later.');
     }
   }
 
