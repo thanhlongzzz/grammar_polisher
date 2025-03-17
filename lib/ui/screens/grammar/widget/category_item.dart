@@ -33,6 +33,7 @@ class _CategoryItemState extends State<CategoryItem> with RewardedAdMixin {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
+    final isPremium = context.read<IapBloc>().state.boughtNoAdsTime != null;
     return BlocBuilder<LessonBloc, LessonState>(
       builder: (context, state) {
         final isMarked = state.markedLessons[widget.lesson.id] ?? false;
@@ -62,10 +63,14 @@ class _CategoryItemState extends State<CategoryItem> with RewardedAdMixin {
                           ),
                         ),
                         const SizedBox(width: 4.0),
-                        if (widget.index != 0)
+                        if (widget.index >= 3 && !isPremium)
                           SvgPicture.asset(
                             Assets.svgTimerPlay,
                             height: 16,
+                            colorFilter: ColorFilter.mode(
+                              colorScheme.onPrimaryContainer,
+                              BlendMode.srcIn,
+                            ),
                           )
                       ],
                     ),
@@ -101,7 +106,7 @@ class _CategoryItemState extends State<CategoryItem> with RewardedAdMixin {
 
   _onTap() {
     final isPremium = context.read<IapBloc>().state.boughtNoAdsTime != null;
-    if (!isPremium && widget.index != 0) {
+    if (!isPremium && widget.index >= 3) {
       showRewardedAd((_, __) {
         context.push(RoutePaths.lesson, extra: {'lesson': widget.lesson});
       });
