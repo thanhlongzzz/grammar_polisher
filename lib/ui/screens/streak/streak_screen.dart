@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grammar_polisher/ui/commons/rounded_button.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../generated/assets.dart';
+import '../../../utils/global_values.dart';
 import '../../blocs/iap/iap_bloc.dart';
 import '../../commons/ads/banner_ad_widget.dart';
 import '../../commons/base_page.dart';
 import 'bloc/streak_bloc.dart';
 
-class StreakScreen extends StatelessWidget {
+class StreakScreen extends StatefulWidget {
   const StreakScreen({super.key});
+
+  @override
+  State<StreakScreen> createState() => _StreakScreenState();
+}
+
+class _StreakScreenState extends State<StreakScreen> {
+  bool _isShared = GlobalValues.isShowFreeTrial;
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +100,32 @@ class StreakScreen extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 16.0),
+                    if (!_isShared) RoundedButton(
+                      borderRadius: 16,
+                      onPressed: state.streak != 0 ? () async {
+                        final result = await Share.share('''🚀 Master English with 6000 Oxford Words and Grammar Handbook! 📚✨
+🔥 I have been studying English for ${state.streak} days in a row! 🔥
+Boost your English skill with:
+  ✅ 6000 Oxford Words – Learn essential English words
+  ✅ Flashcards – Easy and effective memorization
+  ✅ Notification Reminders – Never miss a learning session
+  ✅ Grammar Handbook – Master English grammar
+Start your journey to fluent English today! 🔥📖
+👉 ${const String.fromEnvironment("APP_URL")}
+''');
+                        if (result.status == ShareResultStatus.success && mounted) {
+                          setState(() {
+                            _isShared = true;
+                          });
+                          GlobalValues.isShowFreeTrial = true;
+                          final secondaryId = const String.fromEnvironment("SECONDARY_PRODUCT_ID");
+                          if (context.mounted) {
+                            context.read<IapBloc>().add(IapEvent.purchaseProduct(secondaryId, isFree: true));
+                          }
+                        }
+                      } : null,
+                      child: Text("Share your streak to get 1 day free trial"),
+                    )
                   ],
                 ),
               ),
