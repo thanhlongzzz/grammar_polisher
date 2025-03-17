@@ -4,14 +4,14 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../../../utils/ad/consent_manager.dart';
 import '../../../utils/app_snack_bar.dart';
+import '../dialogs/paywall_dialog.dart';
 
 mixin RewardedAdMixin<T extends StatefulWidget> on State<T> {
   RewardedAd? _rewardedAd;
 
-  final _adUnitId =
-      Platform.isAndroid
-          ? const String.fromEnvironment('ANDROID_REWARDED_AD_UNIT_ID')
-          : const String.fromEnvironment('IOS_REWARDED_AD_UNIT_ID');
+  final _adUnitId = Platform.isAndroid
+      ? const String.fromEnvironment('ANDROID_REWARDED_AD_UNIT_ID')
+      : const String.fromEnvironment('IOS_REWARDED_AD_UNIT_ID');
 
   @override
   void initState() {
@@ -67,7 +67,12 @@ mixin RewardedAdMixin<T extends StatefulWidget> on State<T> {
       _rewardedAd = null;
     } else {
       debugPrint('InterstitialAd is not ready yet.');
-      AppSnackBar.showError(context, 'This feature is not ready yet. Please try again later.');
+      AppSnackBar.showError(context, 'Ad is not ready yet!');
+      Future.delayed(Duration(milliseconds: 1000), () {
+        if (mounted) {
+          showDialog(context: context, builder: (context) => PaywallDialog());
+        }
+      });
     }
   }
 

@@ -10,10 +10,11 @@ class PaywallPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final spacing = 8.0;
+    final size = MediaQuery.of(context).size;
+    final spacing = size.width <= 320 ? 2.0 : 8.0;
     return Column(
       children: [
-        SizedBox(height: 2 * spacing),
+        SizedBox(height: spacing),
         ListTile(
           leading: SvgPicture.asset(Assets.svgTimerPlay, color: colorScheme.primary, width: 24, height: 24),
           title: Text("No Ads", style: textTheme.titleMedium?.copyWith(color: colorScheme.onSurface)),
