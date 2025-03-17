@@ -9,6 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../data/data_sources/assets_data.dart';
 import '../data/data_sources/local_data.dart';
 import '../data/data_sources/pair_storage.dart';
+import '../data/data_sources/translation_data.dart';
+import '../data/repositories/global_repository.dart';
 import '../data/repositories/iap_repository.dart';
 import '../data/repositories/lesson_repository.dart';
 import '../data/repositories/notifications_repository.dart';
@@ -16,6 +18,7 @@ import '../data/repositories/oxford_words_repository.dart';
 import '../data/repositories/settings_repository.dart';
 import '../data/repositories/streak_repository.dart';
 import '../ui/blocs/iap/iap_bloc.dart';
+import '../ui/blocs/translate/translate_cubit.dart';
 import '../ui/screens/grammar/bloc/lesson_bloc.dart';
 import '../ui/screens/settings/bloc/settings_bloc.dart';
 import '../ui/screens/streak/bloc/streak_bloc.dart';
@@ -77,6 +80,12 @@ class DI {
       ),
     );
 
+    sl.registerFactory(
+      () => TranslateCubit(
+        globalRepository: sl(),
+      ),
+    );
+
     sl.registerLazySingleton<IapRepository>(
       () => IapRepositoryImpl(),
     );
@@ -106,6 +115,12 @@ class DI {
       ),
     );
 
+    sl.registerLazySingleton<GlobalRepository>(
+      () => GlobalRepositoryImpl(
+        translationData: sl(),
+      ),
+    );
+
     sl.registerLazySingleton<StreakRepository>(
       () => StreakRepositoryImpl(
         pairStorage: sl(),
@@ -122,6 +137,12 @@ class DI {
       ),
     );
 
+    sl.registerLazySingleton<TranslationData>(
+      () => GoogleTranslateData(
+        dio: sl(),
+      ),
+    );
+
     sl.registerLazySingleton<PairStorage>(
       () => SharedPreferencesStorage(
         sharedPreferences: sl(),
@@ -130,7 +151,7 @@ class DI {
 
     // Tools
     sl.registerLazySingleton<Dio>(
-      () => WritingTutorDio(
+      () => TranslationDio(
         connectivity: Connectivity(),
       ).dio,
     );

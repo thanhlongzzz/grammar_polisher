@@ -7,12 +7,12 @@ import 'package:grammar_polisher/utils/extensions/list_extension.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../configs/di.dart';
-import '../../generated/assets.dart';
-import '../../utils/global_values.dart';
-import '../blocs/iap/iap_bloc.dart';
-import 'paywall_button.dart';
-import 'paywall_page.dart';
+import '../../../configs/di.dart';
+import '../../../generated/assets.dart';
+import '../../../utils/global_values.dart';
+import '../../blocs/iap/iap_bloc.dart';
+import '../paywall_button.dart';
+import '../paywall_page.dart';
 
 class PaywallDialog extends StatefulWidget {
   const PaywallDialog({super.key});

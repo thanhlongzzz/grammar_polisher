@@ -1,4 +1,3 @@
-import 'package:amplitude_flutter/amplitude.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -19,6 +18,7 @@ import 'configs/di.dart';
 import 'data/repositories/oxford_words_repository.dart';
 import 'navigation/app_router.dart';
 import 'ui/blocs/iap/iap_bloc.dart';
+import 'ui/blocs/translate/translate_cubit.dart';
 import 'ui/screens/settings/bloc/settings_bloc.dart';
 import 'utils/ad/consent_manager.dart';
 import 'utils/global_values.dart';
@@ -76,6 +76,9 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => DI().sl<IapBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => DI().sl<TranslateCubit>(),
         ),
       ],
       child: App(),

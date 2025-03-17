@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../generated/assets.dart';
 import '../blocs/iap/iap_bloc.dart';
-import 'paywall_dialog.dart';
+import 'dialogs/paywall_dialog.dart';
 import 'svg_button.dart';
 
 class AppHeader extends StatelessWidget {

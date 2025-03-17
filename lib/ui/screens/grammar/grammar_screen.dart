@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grammar_polisher/ui/commons/base_page.dart';
 import 'package:grammar_polisher/utils/app_snack_bar.dart';
 
 import '../../../../generated/assets.dart';
@@ -8,6 +7,7 @@ import '../../../data/models/category_data.dart';
 import '../../../data/models/lesson.dart';
 import '../../blocs/iap/iap_bloc.dart';
 import '../../commons/ads/banner_ad_widget.dart';
+import '../../commons/base_page.dart';
 import 'bloc/lesson_bloc.dart';
 import 'widget/home_item.dart';
 

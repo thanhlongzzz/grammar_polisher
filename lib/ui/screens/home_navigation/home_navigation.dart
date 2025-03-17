@@ -10,7 +10,7 @@ import '../../../utils/app_snack_bar.dart';
 import '../../../utils/extensions/go_router_extension.dart';
 import '../../../navigation/app_router.dart';
 import '../../blocs/iap/iap_bloc.dart';
-import '../../commons/paywall_dialog.dart';
+import '../../commons/dialogs/paywall_dialog.dart';
 import '../../commons/purchase_success_dialog.dart';
 import '../notifications/bloc/notifications_bloc.dart';
 import '../streak/bloc/streak_bloc.dart';

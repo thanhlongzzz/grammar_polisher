@@ -20,12 +20,12 @@ abstract class AppDio {
   Dio _get();
 }
 
-class WritingTutorDio extends AppDio {
+class TranslationDio extends AppDio {
   final int _connectTimeout = 60000;
   final int _receiveTimeout = 60000;
   final Connectivity _connectivity;
 
-  WritingTutorDio({
+  TranslationDio({
     required Connectivity connectivity,
   }) : _connectivity = connectivity;
 
@@ -33,7 +33,7 @@ class WritingTutorDio extends AppDio {
   Dio _get() {
     return Dio()
       ..options = BaseOptions(
-        baseUrl: const String.fromEnvironment("BASE_URL"),
+        baseUrl: const String.fromEnvironment("TRANSLATION_BASE_URL"),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',

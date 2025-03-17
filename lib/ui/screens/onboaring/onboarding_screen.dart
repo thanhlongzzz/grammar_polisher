@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:go_router/go_router.dart';
-import 'package:grammar_polisher/navigation/app_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../constants/words.dart';
 import '../../../data/models/word_status.dart';
 import '../../../generated/assets.dart';
+import '../../../navigation/app_router.dart';
 import '../../commons/rounded_button.dart';
 import '../vocabulary/widgets/vocabulary_item.dart';
 import 'onboarding_page.dart';
