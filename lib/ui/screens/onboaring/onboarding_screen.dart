@@ -8,6 +8,7 @@ import '../../../data/models/word_status.dart';
 import '../../../generated/assets.dart';
 import '../../../navigation/app_router.dart';
 import '../../commons/rounded_button.dart';
+import '../../commons/selection_area_with_search.dart';
 import '../vocabulary/widgets/vocabulary_item.dart';
 import 'onboarding_page.dart';
 
@@ -54,7 +55,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   content: 'You can tap on any word to view its definition and start learning it.',
                 ),
                 OnboardingPage(
-                  header: SelectionArea(
+                  header: SelectionAreaWithSearch(
                     child: Container(
                       margin: const EdgeInsets.symmetric(vertical: 8.0),
                       decoration: BoxDecoration(
@@ -71,7 +72,7 @@ An **adjective** is a word that describes or modifies a noun or pronoun by provi
                   ),
                   label: 'Grammar lessons',
                   content:
-                      'Grammar lessons are available for you to learn. Long press on any text to show the context menu. Try it now!',
+                      'Grammar lessons are available for you to learn. Long press on any text to translate. Try it now!',
                 ),
                 Stack(
                   children: [
