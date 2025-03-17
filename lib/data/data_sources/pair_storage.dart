@@ -62,6 +62,16 @@ class SharedPreferencesStorage implements PairStorage {
 
   @override
   int get streak {
+    final now = DateTime.now();
+    final yesterday = now.subtract(const Duration(days: 1));
+    final yesterdayKey = '${yesterday.year}-${yesterday.month}-${yesterday.day}-streaked';
+    final yesterdayStreaked = _sharedPreferences.getBool(yesterdayKey) ?? false;
+    if (!yesterdayStreaked) {
+      final todayKey = '${now.year}-${now.month}-${now.day}-streaked';
+      _sharedPreferences.setBool(todayKey, false);
+      _sharedPreferences.setInt(_streakKey, 0);
+      return 0;
+    }
     return _sharedPreferences.getInt(_streakKey) ?? 0;
   }
 
