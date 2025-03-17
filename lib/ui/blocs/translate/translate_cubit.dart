@@ -16,13 +16,13 @@ class TranslateCubit extends Cubit<TranslateState> {
   })  : _globalRepository = globalRepository,
         super(const TranslateState());
 
-  void translate() async {
+  void translate(String source, String target, String text) async {
     emit(state.copyWith(isLoading: true));
 
     final result = await _globalRepository.translate(
-      text: state.text,
-      from: state.sourceLanguage,
-      to: state.targetLanguage,
+      text: text,
+      from: source,
+      to: target,
     );
 
     result.fold(
@@ -31,14 +31,7 @@ class TranslateCubit extends Cubit<TranslateState> {
     );
   }
 
-  void updateText(String text) {
-    emit(state.copyWith(text: text));
-  }
-
-  void swapLanguages() {
-    emit(state.copyWith(
-      sourceLanguage: state.targetLanguage,
-      targetLanguage: state.sourceLanguage,
-    ));
+  void clear() {
+    emit(const TranslateState());
   }
 }

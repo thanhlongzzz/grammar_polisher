@@ -9,6 +9,8 @@ import '../../blocs/iap/iap_bloc.dart';
 import '../../commons/ads/banner_ad_widget.dart';
 import '../../commons/ads/interstitial_ad_mixin.dart';
 import '../../commons/base_page.dart';
+import '../../commons/dialogs/translation_dialog.dart';
+import '../../commons/selection_area_with_search.dart';
 import 'bloc/lesson_bloc.dart';
 
 class LessonScreen extends StatefulWidget {
@@ -52,7 +54,9 @@ class _LessonScreenState extends State<LessonScreen> with InterstitialAdMixin {
                   ],
                   child: data == null
                       ? Center(child: LoadingAnimationWidget.fourRotatingDots(color: colorScheme.primary, size: 40))
-                      : SelectionArea(child: Markdown(data: data!, controller: _scrollController, softLineBreak: true)),
+                      : SelectionAreaWithSearch(
+                          child: Markdown(data: data!, controller: _scrollController, softLineBreak: true),
+                        ),
                 ),
               ),
               BannerAdWidget(isPremium: isPremium),

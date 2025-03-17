@@ -6,8 +6,5 @@ class TranslateState with _$TranslateState {
     TranslateSnapshot? translateSnapshot,
     String? errorMessage,
     @Default(false) bool isLoading,
-    @Default('en') String sourceLanguage,
-    @Default('vn') String targetLanguage,
-    @Default('') String text,
   }) = _TranslateState;
 }
