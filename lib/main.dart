@@ -58,6 +58,12 @@ void main() async {
   } else {
     debugPrint('setAnalyticsCollectionEnabled true');
     await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
+    FirebaseAnalytics.instance.setConsent(
+      analyticsStorageConsentGranted: true,
+      adPersonalizationSignalsConsentGranted: true,
+      adStorageConsentGranted: true,
+      adUserDataConsentGranted: true,
+    );
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
     PlatformDispatcher.instance.onError = (error, stack) {
       FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);

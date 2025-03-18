@@ -41,6 +41,11 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8558827553085965~6646392338"/>
 
+        <meta-data android:name="google_analytics_default_allow_analytics_storage" android:value="true" />
+        <meta-data android:name="google_analytics_default_allow_ad_storage" android:value="true" />
+        <meta-data android:name="google_analytics_default_allow_ad_user_data" android:value="true" />
+        <meta-data android:name="google_analytics_default_allow_ad_personalization_signals" android:value="true" />
+
         <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
         <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
             <intent-filter>
