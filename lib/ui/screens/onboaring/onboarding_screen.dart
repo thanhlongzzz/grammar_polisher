@@ -146,7 +146,7 @@ An **adjective** is a word that describes or modifies a noun or pronoun by provi
 
   void _onNext() {
     if (_pageController?.page?.toInt() == 3) {
-      context.push(RoutePaths.vocabulary);
+      context.go(RoutePaths.vocabulary);
       return;
     }
     _pageController?.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
