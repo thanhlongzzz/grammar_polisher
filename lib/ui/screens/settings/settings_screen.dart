@@ -321,7 +321,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
       path: contactEmail,
-      query: 'subject=Feedback For Oxford Dictionary',
+      query: 'subject=Feedback For English Handbook',
     );
     await launchUrl(emailLaunchUri);
   }

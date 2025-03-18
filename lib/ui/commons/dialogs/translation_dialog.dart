@@ -43,262 +43,265 @@ class _TranslateDialogState extends State<TranslateDialog> {
           shadowColor: Colors.transparent,
           elevation: 0,
           backgroundColor: Colors.transparent,
-          content: SingleChildScrollView(
-            controller: _scrollController,
-            child: Column(
-              children: [
-                Container(
-                  width: 600,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(onPressed: () {}, icon: const Icon(Icons.translate)),
-                          Text("Translate", style: Theme.of(context).textTheme.bodyLarge),
-                          IconButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              icon: const Icon(Icons.close))
-                        ],
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          style: Theme.of(context).textTheme.titleSmall,
-                          children: [
-                            const TextSpan(text: "Source: "),
-                            WidgetSpan(
-                              alignment: PlaceholderAlignment.middle,
-                              child: RoundedButton(
-                                expand: false,
-                                padding: EdgeInsets.all(4.0),
-                                borderRadius: 8,
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (_) => LanguagePickerDialog(
-                                      onChanged: (language) {
-                                        setState(() {
-                                          _source = language;
-                                        });
-                                        _translate(_sourceController.text);
-                                      },
-                                    ),
-                                  );
-                                },
-                                child: Text(_source.name),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              controller: _sourceController,
-                              onChanged: (value) {
-                                _debouncer(() {
-                                  _translate(value);
-                                });
-                              },
-                              maxLines: 1,
-                              onSubmitted: _translate,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.primary),
-                              decoration: InputDecoration(
-                                hintText: "Type your translation here",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide.none,
-                                ),
-                                filled: true,
-                                fillColor: Theme.of(context).colorScheme.primaryContainer,
-                              ),
-                            ),
-                          ),
-                          if (_sourceController.text.isNotEmpty)
-                            IconButton(
-                              onPressed: _onDelete,
-                              icon: Icon(
-                                Icons.cancel,
-                                color: Theme.of(context).colorScheme.primary,
-                                size: 16,
-                              ),
-                            )
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Divider(
-                                color: Theme.of(context).colorScheme.primary.withAlpha(100),
-                              ),
-                            ),
-                            IconButton(
-                                onPressed: _onSwitch, icon: Icon(Icons.swap_vert, color: Theme.of(context).colorScheme.primary)),
-                            Expanded(
-                              child: Divider(
-                                color: Theme.of(context).colorScheme.primary.withAlpha(100),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          style: Theme.of(context).textTheme.titleSmall,
-                          children: [
-                            const TextSpan(text: "Target: "),
-                            WidgetSpan(
-                              alignment: PlaceholderAlignment.middle,
-                              child: RoundedButton(
-                                expand: false,
-                                padding: EdgeInsets.all(4.0),
-                                borderRadius: 8,
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (_) => LanguagePickerDialog(
-                                      onChanged: (language) {
-                                        setState(() {
-                                          _target = language;
-                                        });
-                                        _translate(_sourceController.text);
-                                      },
-                                    ),
-                                  );
-                                },
-                                child: Text(_target.name),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              enabled: false,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.primary),
-                              controller: _targetController,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Translation will appear here",
-                              ),
-                            ),
-                          ),
-                          if (state.translateSnapshot != null && state.translateSnapshot!.type != null)
-                            FilterChip(
-                              label: Text(state.translateSnapshot!.type!),
-                              onSelected: (value) {},
-                              selected: true,
-                              showCheckmark: false,
-                            ),
-                          if ((state.translateSnapshot?.content ?? "").isNotEmpty) IconButton(
-                            onPressed: _onCopy,
-                            icon: Icon(
-                              Icons.copy,
-                              color: Theme.of(context).colorScheme.primary,
-                              size: 16,
-                            ),
-                          )
-                        ],
-                      ),
-                      if (state.translateSnapshot?.spelling != null)
-                        Text(state.translateSnapshot!.spelling!, style: Theme.of(context).textTheme.bodyMedium),
-                      const SizedBox(height: 8),
-                      RoundedButton(
-                        borderRadius: 16,
-                        child: Text("Translate"),
-                        onPressed: () {
-                          if (_sourceController.text.isEmpty) {
-                            return;
-                          }
-                          _translate(_sourceController.text);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                if (extraTranslations.isNotEmpty)
+          content: ClipRRect(
+            borderRadius: BorderRadius.circular(16.0),
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                children: [
                   Container(
                     width: 600,
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    margin: const EdgeInsets.only(top: 8),
                     padding: const EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                Text("More translations (${extraTranslations.length})",
-                                    style: Theme.of(context).textTheme.titleSmall),
-                                const Spacer(),
-                                if (extraTranslations.length > 1)
-                                  TextButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          _showAllExtraTranslations = !_showAllExtraTranslations;
-                                        });
-                                      },
-                                      child: Text(_showAllExtraTranslations ? "Hide" : "Show all")),
-                              ],
-                            ),
-                            ...List.generate(
-                              _showAllExtraTranslations ? extraTranslations.length : 1,
-                              (index) {
-                                var translation = extraTranslations[index];
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(translation.label, style: Theme.of(context).textTheme.titleSmall),
-                                          const SizedBox(height: 8),
-                                          ...translation.content.map((e) => FilterChip(
-                                                label: Text(e),
-                                                onSelected: (bool value) {
-                                                  _onPick(e);
-                                                },
-                                              )),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      FilterChip(
-                                        label: Text(translation.type),
-                                        onSelected: (value) {},
-                                        selected: true,
-                                        showCheckmark: false,
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
+                            IconButton(onPressed: () {}, icon: const Icon(Icons.translate)),
+                            Text("Translate", style: Theme.of(context).textTheme.bodyLarge),
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                icon: const Icon(Icons.close))
                           ],
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.titleSmall,
+                            children: [
+                              const TextSpan(text: "Source: "),
+                              WidgetSpan(
+                                alignment: PlaceholderAlignment.middle,
+                                child: RoundedButton(
+                                  expand: false,
+                                  padding: EdgeInsets.all(4.0),
+                                  borderRadius: 8,
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => LanguagePickerDialog(
+                                        onChanged: (language) {
+                                          setState(() {
+                                            _source = language;
+                                          });
+                                          _translate(_sourceController.text);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Text(_source.name),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: _sourceController,
+                                onChanged: (value) {
+                                  _debouncer(() {
+                                    _translate(value);
+                                  });
+                                },
+                                maxLines: 1,
+                                onSubmitted: _translate,
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.primary),
+                                decoration: InputDecoration(
+                                  hintText: "Type your translation here",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  filled: true,
+                                  fillColor: Theme.of(context).colorScheme.primaryContainer,
+                                ),
+                              ),
+                            ),
+                            if (_sourceController.text.isNotEmpty)
+                              IconButton(
+                                onPressed: _onDelete,
+                                icon: Icon(
+                                  Icons.cancel,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  size: 16,
+                                ),
+                              )
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Divider(
+                                  color: Theme.of(context).colorScheme.primary.withAlpha(100),
+                                ),
+                              ),
+                              IconButton(
+                                  onPressed: _onSwitch, icon: Icon(Icons.swap_vert, color: Theme.of(context).colorScheme.primary)),
+                              Expanded(
+                                child: Divider(
+                                  color: Theme.of(context).colorScheme.primary.withAlpha(100),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.titleSmall,
+                            children: [
+                              const TextSpan(text: "Target: "),
+                              WidgetSpan(
+                                alignment: PlaceholderAlignment.middle,
+                                child: RoundedButton(
+                                  expand: false,
+                                  padding: EdgeInsets.all(4.0),
+                                  borderRadius: 8,
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => LanguagePickerDialog(
+                                        onChanged: (language) {
+                                          setState(() {
+                                            _target = language;
+                                          });
+                                          _translate(_sourceController.text);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Text(_target.name),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                enabled: false,
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.primary),
+                                controller: _targetController,
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Translation will appear here",
+                                ),
+                              ),
+                            ),
+                            if (state.translateSnapshot != null && state.translateSnapshot!.type != null)
+                              FilterChip(
+                                label: Text(state.translateSnapshot!.type!),
+                                onSelected: (value) {},
+                                selected: true,
+                                showCheckmark: false,
+                              ),
+                            if ((state.translateSnapshot?.content ?? "").isNotEmpty) IconButton(
+                              onPressed: _onCopy,
+                              icon: Icon(
+                                Icons.copy,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 16,
+                              ),
+                            )
+                          ],
+                        ),
+                        if (state.translateSnapshot?.spelling != null)
+                          Text(state.translateSnapshot!.spelling!, style: Theme.of(context).textTheme.bodyMedium),
+                        const SizedBox(height: 8),
+                        RoundedButton(
+                          borderRadius: 16,
+                          child: Text("Translate"),
+                          onPressed: () {
+                            if (_sourceController.text.isEmpty) {
+                              return;
+                            }
+                            _translate(_sourceController.text);
+                          },
                         ),
                       ],
                     ),
                   ),
-              ],
+                  if (extraTranslations.isNotEmpty)
+                    Container(
+                      width: 600,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surface,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      margin: const EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text("More translations (${extraTranslations.length})",
+                                      style: Theme.of(context).textTheme.titleSmall),
+                                  const Spacer(),
+                                  if (extraTranslations.length > 1)
+                                    TextButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            _showAllExtraTranslations = !_showAllExtraTranslations;
+                                          });
+                                        },
+                                        child: Text(_showAllExtraTranslations ? "Hide" : "Show all")),
+                                ],
+                              ),
+                              ...List.generate(
+                                _showAllExtraTranslations ? extraTranslations.length : 1,
+                                (index) {
+                                  var translation = extraTranslations[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(translation.label, style: Theme.of(context).textTheme.titleSmall),
+                                            const SizedBox(height: 8),
+                                            ...translation.content.map((e) => FilterChip(
+                                                  label: Text(e),
+                                                  onSelected: (bool value) {
+                                                    _onPick(e);
+                                                  },
+                                                )),
+                                          ],
+                                        ),
+                                        const Spacer(),
+                                        FilterChip(
+                                          label: Text(translation.type),
+                                          onSelected: (value) {},
+                                          selected: true,
+                                          showCheckmark: false,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
             ),
           ),
         );
