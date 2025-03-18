@@ -49,14 +49,16 @@ class StreakBloc extends Bloc<StreakEvent, StreakState> {
         timer.cancel();
         return;
       }
-      final newSpentTimeToday = state.spentTimeToday + 1;
+      final newSpentTimeToday = _streakRepository.getTimeStreak() + 1;
       add(StreakEvent.emitState(state.copyWith(
         spentTimeToday: newSpentTimeToday,
       )));
-      _streakRepository.setTimeStreak(newSpentTimeToday);
+      if (!_streakRepository.streakedToday) {
+        _streakRepository.setTimeStreak(newSpentTimeToday);
+      }
       debugPrint('StreakBloc: newSpentTimeToday: $newSpentTimeToday');
       if (newSpentTimeToday >= timePerDayNeeded && !_streakRepository.streakedToday) {
-        final newStreak = streak + 1;
+        final newStreak = _streakRepository.streak + 1;
         final newLongestStreak = newStreak > longestStreak ? newStreak : longestStreak;
         add(StreakEvent.emitState(state.copyWith(
           streak: newStreak,
