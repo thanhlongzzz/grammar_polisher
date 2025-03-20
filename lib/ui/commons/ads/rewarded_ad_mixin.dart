@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'package:amplitude_flutter/amplitude.dart';
+import 'package:amplitude_flutter/events/base_event.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import '../../../configs/di.dart';
 import '../../../utils/ad/consent_manager.dart';
 import '../../../utils/app_snack_bar.dart';
 import '../dialogs/paywall_dialog.dart';
@@ -12,6 +15,8 @@ mixin RewardedAdMixin<T extends StatefulWidget> on State<T> {
   final _adUnitId = Platform.isAndroid
       ? const String.fromEnvironment('ANDROID_REWARDED_AD_UNIT_ID')
       : const String.fromEnvironment('IOS_REWARDED_AD_UNIT_ID');
+
+  final _amplitude = DI().sl<Amplitude>();
 
   @override
   void initState() {
@@ -38,13 +43,16 @@ mixin RewardedAdMixin<T extends StatefulWidget> on State<T> {
         onAdLoaded: (ad) {
           ad.fullScreenContentCallback = FullScreenContentCallback(
             onAdShowedFullScreenContent: (ad) {},
-            onAdImpression: (ad) {},
+            onAdImpression: (ad) {
+              _amplitude.track(BaseEvent("rewarded_ad_impression"));
+            },
             onAdFailedToShowFullScreenContent: (ad, err) {
               ad.dispose();
               _loadRewardedAd();
             },
             onAdDismissedFullScreenContent: (ad) {
               ad.dispose();
+              _amplitude.track(BaseEvent("rewarded_ad_dismissed"));
               _loadRewardedAd();
             },
             onAdClicked: (ad) {},
@@ -54,6 +62,7 @@ mixin RewardedAdMixin<T extends StatefulWidget> on State<T> {
           _rewardedAd = ad;
         },
         onAdFailedToLoad: (LoadAdError error) {
+          _amplitude.track(BaseEvent("rewarded_ad_error", extra: {"error": error.toString()}));
           debugPrint('RewardedAd failed to load: $error');
         },
       ),

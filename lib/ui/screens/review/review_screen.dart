@@ -13,6 +13,7 @@ import '../../blocs/iap/iap_bloc.dart';
 import '../../commons/ads/banner_ad_widget.dart';
 import '../../commons/ads/rewarded_ad_mixin.dart';
 import '../../commons/base_page.dart';
+import '../../commons/dialogs/paywall_dialog.dart';
 import '../../commons/rounded_button.dart';
 import '../vocabulary/bloc/vocabulary_bloc.dart';
 import '../vocabulary/widgets/vocabulary_item.dart';
