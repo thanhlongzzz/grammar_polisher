@@ -1,3 +1,4 @@
+
 # grammar_polisher
 
 Master English Vocabulary & Grammar with Ease!
@@ -11,6 +12,48 @@ Key Features:
 🔥 Streak Tracking – Stay motivated by maintaining your learning streak and reaching new milestones.
 
 Whether you're a student, professional, or language enthusiast, this app is your ultimate companion for mastering English. Start learning today! 🚀
+
+# 📥 Download My App
+
+<p align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.alexcao.grammar_polisher">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" height="60" alt="Get it on Google Play">
+  </a>
+  <a href="https://apps.apple.com/us/app/english-handbook-learning/id6741855072">
+    <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" height="60" alt="Download on the App Store">
+  </a>
+</p>
+
+---
+
+# 🌐 Landing Page
+
+🔹 [**Dev Pullstack**](https://pullstack.id.vn/) - Personal Portfolio  
+🔹 [**English Handbook**](https://pullstack.id.vn/pages/english_handbook/) - English Handbook
+
+---
+
+# 🤝 Connect with Me
+
+<p align="center">
+  <a href="https://www.youtube.com/@dev.pullstack">
+    <img src="https://img.shields.io/badge/YouTube-FF0000?logo=youtube&logoColor=white" height="30" alt="YouTube">
+  </a>
+  <a href="https://github.com/alexcao194">
+    <img src="https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white" height="30" alt="GitHub">
+  </a>
+  <a href="https://www.tiktok.com/@dev.pullstack">
+    <img src="https://img.shields.io/badge/TikTok-000000?logo=tiktok&logoColor=white" height="30" alt="TikTok">
+  </a>
+  <a href="https://facebook.com/alexcao194">
+    <img src="https://img.shields.io/badge/Facebook-1877F2?logo=facebook&logoColor=white" height="30" alt="Facebook">
+  </a>
+</p>
+
+
+## Support & Donations
+
+<a href="https://www.buymeacoffee.com/jKBSanOvvw" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 45px !important;width: 150px !important;" ></a>
 
 ## Required Environment
 
@@ -41,7 +84,7 @@ Whether you're a student, professional, or language enthusiast, this app is your
     - `configs`: Configuration of Router, Supabase, etc.
     - `constants`: Constants of application
     - `core`: Base classes, extensions, etc.
-    - `data`: 
+    - `data`:
         - `data_sources`: Data sources such as API, Database, realtime, etc.
         - `models`: Data models convert from raw data to entity
         - `repositories`: Repositories to interact with data sources
@@ -49,7 +92,7 @@ Whether you're a student, professional, or language enthusiast, this app is your
     - `navigation`: Navigation of application
     - `ui`: User interface
         - `commons`: Common and base widgets
-        - `screens`: 
+        - `screens`:
             - `home`:
                 - `bloc`: Join screen bloc
                 - `widgets`: Widgets of Join screen
@@ -94,11 +137,11 @@ storeFile=<relative path to keystore file> (from android/app)
 ### Build
 This project uses Fastlane to build and release the app. To build the app, you can run the following commands:
 - Android:
-  - `cd android`
-  - `fastlane release --env production`
+    - `cd android`
+    - `fastlane release --env production`
 - IOS:
-  - `cd ios`
-  - `fastlane release --env production`
+    - `cd ios`
+    - `fastlane release --env production`
 
 And That's it! You are ready to go! 🚀
 
