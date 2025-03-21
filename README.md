@@ -137,6 +137,11 @@ Whether you're a student, professional, or language enthusiast, this app is your
 - Click `Build` -> `Generate Flutter Assets` to generate assets path
 - Note: If you create a new assets folder, right-click on the folder and click `Flutter: Configuring Paths` to add assets path into `pubspec.yaml`
 
+### Add Google Services
+- Download `google-services.json` from Firebase and put it in `android/app/src/development` folder
+- Download `GoogleService-Info.plist` from Firebase and put it in `ios/Runner/GoogleServices` folder, then rename it to `GoogleService-Info-Development.plist`
+- Do the same for `production` flavor
+
 ### Run
 - We have 2 flavors: `development` and `production`
 - Get the environment file from [alexcao194](https://github.com/alexcao194) or create your own env file and put it in `.env/` folder, that named `development.json`
