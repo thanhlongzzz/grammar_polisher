@@ -1,6 +1,16 @@
 # grammar_polisher
 
-Refine your writing with step-by-step grammar guidance.
+Master English Vocabulary & Grammar with Ease!
+
+Our app goes beyond vocabulary! Now, in addition to learning 6,000+ of the most common words from the Oxford Dictionary, you can also improve your grammar with our new Grammar Handbook—your complete guide to mastering English rules and structures.
+
+Key Features:
+📖 Grammar Handbook – Learn essential grammar rules with clear explanations and examples to enhance your writing and speaking skills.
+📝 Vocabulary Builder – Expand your word bank with curated word lists, flashcards, and review tools.
+🔔 Custom Reminders – Get daily notifications for new words or grammar tips to keep learning consistently.
+🔥 Streak Tracking – Stay motivated by maintaining your learning streak and reaching new milestones.
+
+Whether you're a student, professional, or language enthusiast, this app is your ultimate companion for mastering English. Start learning today! 🚀
 
 ## Required Environment
 
@@ -67,7 +77,7 @@ Refine your writing with step-by-step grammar guidance.
 
 ### Run
 - We have 2 flavors: `development` and `production`
-- Get the environment file from [alexcao194](https://github.com/alexcao194) and put it in `.env/` folder, that named `development.json`
+- Get the environment file from [alexcao194](https://github.com/alexcao194) or create your own env file and put it in `.env/` folder, that named `development.json`
 - Run `flutter run --flavor development --dart-define-from-file=.env/development.json` to run the app in development mode
 
 ### Sign with your own keystore
@@ -95,3 +105,4 @@ And That's it! You are ready to go! 🚀
 ## Contributing
 - Clone the repository
 - See [CONTRIBUTION.md](CONTRIBUTION.md) for more details
+
