@@ -144,7 +144,7 @@ Whether you're a student, professional, or language enthusiast, this app is your
 
 ### Run
 - We have 2 flavors: `development` and `production`
-- Get the environment file from [alexcao194](https://github.com/alexcao194) or create your own env file and put it in `.env/` folder, that named `development.json`
+- Remove `.example` in `.env.example` folder or create your own env file and put it in `.env/` folder, that named `development.json`
 - Run `flutter run --flavor development --dart-define-from-file=.env/development.json` to run the app in development mode
 
 ### Sign with your own keystore
