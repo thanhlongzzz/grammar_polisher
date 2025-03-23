@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'package:amplitude_flutter/amplitude.dart';
+import 'package:amplitude_flutter/events/base_event.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import '../../../configs/di.dart';
 import '../../../utils/ad/consent_manager.dart';
 
 mixin InterstitialAdMixin<T extends StatefulWidget> on State<T> {
@@ -11,6 +14,8 @@ mixin InterstitialAdMixin<T extends StatefulWidget> on State<T> {
       Platform.isAndroid
           ? const String.fromEnvironment('ANDROID_INTERSTITIAL_AD_UNIT_ID')
           : const String.fromEnvironment('IOS_INTERSTITIAL_AD_UNIT_ID');
+
+  final _amplitude = DI().sl<Amplitude>();
 
   @override
   void initState() {
@@ -51,6 +56,7 @@ mixin InterstitialAdMixin<T extends StatefulWidget> on State<T> {
           );
         },
         onAdFailedToLoad: (LoadAdError error) {
+          _amplitude.track(BaseEvent("interstitial_ad_failed_to_load", extra: {"error": error.toString()}));
           debugPrint('InterstitialAd failed to load: $error');
         },
       ),
@@ -61,6 +67,7 @@ mixin InterstitialAdMixin<T extends StatefulWidget> on State<T> {
     if (isPremium) return;
     if (_interstitialAd != null) {
       _interstitialAd!.show();
+      _amplitude.track(BaseEvent("interstitial_ad_impression"));
       _interstitialAd = null;
     } else {
       debugPrint('InterstitialAd is not ready yet.');

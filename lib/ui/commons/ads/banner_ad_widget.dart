@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'package:amplitude_flutter/amplitude.dart';
+import 'package:amplitude_flutter/events/base_event.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../../../configs/di.dart';
 import '../../../utils/ad/consent_manager.dart';
 
 class BannerAdWidget extends StatefulWidget {
@@ -18,6 +21,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> with AutomaticKeepAlive
   BannerAd? _bannerAd;
   bool _isLoaded = false;
   Orientation? _orientation;
+  final _amplitude = DI().sl<Amplitude>();
 
   final _adUnitId = Platform.isAndroid
       ? const String.fromEnvironment('ANDROID_BANNER_AD_UNIT_ID')
@@ -61,8 +65,10 @@ class _BannerAdWidgetState extends State<BannerAdWidget> with AutomaticKeepAlive
           debugPrint("Banner ad loaded");
           _bannerAd = ad as BannerAd;
           _isLoaded = true;
+          _amplitude.track(BaseEvent("banner_ad_loaded"));
         }),
         onAdFailedToLoad: (ad, err) {
+          _amplitude.track(BaseEvent("banner_ad_error", extra: {"error": err.toString()}));
           ad.dispose();
         },
       ),
