@@ -82,6 +82,10 @@ class IapBloc extends Bloc<IapEvent, IapState> {
             if (purchase.status == PurchaseStatus.purchased) {
               _amplitude.track(BaseEvent('purchase_success', extra: {'product_id': purchase.productID}));
               _processPurchase(purchase.productID);
+              final isPrimary = purchase.productID == const String.fromEnvironment('PRIMARY_PRODUCT_ID');
+              if (!isPrimary) {
+                _iapRepository.consumePurchase(purchase);
+              }
             } else if (purchase.status == PurchaseStatus.restored) {
               _amplitude.track(BaseEvent('purchase_restored', extra: {'product_id': purchase.productID}));
               final currentPurchased = [...state.purchases];
@@ -152,7 +156,8 @@ class IapBloc extends Bloc<IapEvent, IapState> {
   }
 
   _processPurchase(String id) {
-    if (id != const String.fromEnvironment('PRIMARY_PRODUCT_ID')) {
+    final isPrimary = id == const String.fromEnvironment('PRIMARY_PRODUCT_ID');
+    if (!isPrimary) {
       final boughtNoAdsTime = GlobalValues.boughtNoAdsTime;
       debugPrint('IapBloc -> _processPurchase -> boughtNoAdsTime: $boughtNoAdsTime');
       if (boughtNoAdsTime == null) {

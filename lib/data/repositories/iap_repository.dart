@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 
 import '../../core/failure.dart';
 
@@ -14,6 +17,8 @@ abstract interface class IapRepository {
   Future<Either<Failure, void>> purchaseProduct(ProductDetails product);
 
   void completePurchase(PurchaseDetails purchase);
+
+  void consumePurchase(PurchaseDetails purchase);
 }
 
 class IapRepositoryImpl implements IapRepository {
@@ -72,5 +77,13 @@ class IapRepositoryImpl implements IapRepository {
   @override
   void completePurchase(PurchaseDetails purchase) {
     _iap.completePurchase(purchase);
+  }
+
+  @override
+  void consumePurchase(PurchaseDetails purchase) async {
+    if (purchase is GooglePlayPurchaseDetails && Platform.isAndroid) {
+      final InAppPurchaseAndroidPlatformAddition androidAddition = InAppPurchase.instance.getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
+      await androidAddition.consumePurchase(purchase);
+    }
   }
 }
