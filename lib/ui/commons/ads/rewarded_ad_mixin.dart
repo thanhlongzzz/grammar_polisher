@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:amplitude_flutter/amplitude.dart';
 import 'package:amplitude_flutter/events/base_event.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -62,7 +63,8 @@ mixin RewardedAdMixin<T extends StatefulWidget> on State<T> {
           _rewardedAd = ad;
         },
         onAdFailedToLoad: (LoadAdError error) {
-          _amplitude.track(BaseEvent("rewarded_ad_error", extra: {"error": error.toString()}));
+          _amplitude.track(BaseEvent("rewarded_ad_error"));
+          FirebaseAnalytics.instance.logEvent(name: "rewarded_ad_error", parameters: {"error": error.toString()});
           debugPrint('RewardedAd failed to load: $error');
         },
       ),

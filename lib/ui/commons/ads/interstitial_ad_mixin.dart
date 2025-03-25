@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:amplitude_flutter/amplitude.dart';
 import 'package:amplitude_flutter/events/base_event.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -56,7 +57,8 @@ mixin InterstitialAdMixin<T extends StatefulWidget> on State<T> {
           );
         },
         onAdFailedToLoad: (LoadAdError error) {
-          _amplitude.track(BaseEvent("interstitial_ad_failed_to_load", extra: {"error": error.toString()}));
+          _amplitude.track(BaseEvent("interstitial_ad_failed_to_load"));
+          FirebaseAnalytics.instance.logEvent(name: 'interstitial_ad_failed_to_load', parameters: {'error': error.toString()});
           debugPrint('InterstitialAd failed to load: $error');
         },
       ),

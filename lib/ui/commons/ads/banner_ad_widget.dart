@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:amplitude_flutter/amplitude.dart';
 import 'package:amplitude_flutter/events/base_event.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../../../configs/di.dart';
@@ -68,7 +69,8 @@ class _BannerAdWidgetState extends State<BannerAdWidget> with AutomaticKeepAlive
           _amplitude.track(BaseEvent("banner_ad_loaded"));
         }),
         onAdFailedToLoad: (ad, err) {
-          _amplitude.track(BaseEvent("banner_ad_error", extra: {"error": err.toString()}));
+          _amplitude.track(BaseEvent("banner_ad_error"));
+          FirebaseAnalytics.instance.logEvent(name: "banner_ad_error", parameters: {"error": err.toString()});
           ad.dispose();
         },
       ),
