@@ -1,5 +1,5 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 
 import '../../../../configs/di.dart';
 import '../../../../generated/assets.dart';
@@ -46,9 +46,11 @@ class _PhoneticState extends State<Phonetic> {
   }
 
   void _playSound() async {
-    if (_player.state == PlayerState.playing) {
-      return;
+    try {
+      await _player.setUrl(widget.phonetic);
+      await _player.play();
+    } catch (e) {
+      debugPrint('skip');
     }
-    await _player.play(UrlSource(widget.phonetic, mimeType: 'audio/mpeg'));
   }
 }
