@@ -21,19 +21,24 @@ class LocalNotificationsTools {
   Future<bool?> requestPermissions() async {
     switch (Platform.operatingSystem) {
       case 'ios':
-        return await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()?.requestPermissions(
+        return await flutterLocalNotificationsPlugin
+            .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
+            ?.requestPermissions(
               alert: true,
               badge: true,
               sound: true,
             );
       case 'macos':
-        return await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<MacOSFlutterLocalNotificationsPlugin>()?.requestPermissions(
+        return await flutterLocalNotificationsPlugin
+            .resolvePlatformSpecificImplementation<MacOSFlutterLocalNotificationsPlugin>()
+            ?.requestPermissions(
               alert: true,
               badge: true,
               sound: true,
             );
       case 'android':
-        final AndroidFlutterLocalNotificationsPlugin? androidImplementation = flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+        final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
+            flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
         return await androidImplementation?.requestNotificationsPermission();
       default:
         return null;
@@ -124,15 +129,14 @@ class LocalNotificationsTools {
     );
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        id,
-        title,
-        "$body${kDebugMode ? ' - ${scheduledDate.toIso8601String()}' : ''}",
-        payload: payload,
-        tz.TZDateTime.from(scheduledDate, tz.local),
-        notificationDetails,
-        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime,
+      id,
+      title,
+      "$body${kDebugMode ? ' - ${scheduledDate.toIso8601String()}' : ''}",
+      payload: payload,
+      tz.TZDateTime.from(scheduledDate, tz.local),
+      notificationDetails,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      matchDateTimeComponents: DateTimeComponents.time,
     );
   }
 
