@@ -3,7 +3,7 @@ import 'package:amplitude_flutter/events/base_event.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:grammar_polisher/utils/global_values.dart';
+import 'package:grammar_learn/utils/global_values.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 import '../configs/di.dart';

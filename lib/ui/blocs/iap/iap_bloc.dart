@@ -7,7 +7,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:grammar_polisher/utils/extensions/list_extension.dart';
+import 'package:grammar_learn/utils/extensions/list_extension.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
 import '../../../configs/di.dart';

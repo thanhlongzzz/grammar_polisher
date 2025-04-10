@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:grammar_polisher/utils/extensions/list_extension.dart';
+import 'package:grammar_learn/utils/extensions/list_extension.dart';
 
 import '../../core/failure.dart';
 import '../data_sources/assets_data.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grammar_polisher/utils/app_snack_bar.dart';
+import 'package:grammar_learn/utils/app_snack_bar.dart';
 
 import '../../../../generated/assets.dart';
 import '../../../data/models/category_data.dart';

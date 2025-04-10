@@ -3,7 +3,7 @@ import 'package:amplitude_flutter/events/base_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:grammar_polisher/utils/extensions/list_extension.dart';
+import 'package:grammar_learn/utils/extensions/list_extension.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 

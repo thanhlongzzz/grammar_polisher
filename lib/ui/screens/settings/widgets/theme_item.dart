@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grammar_polisher/utils/extensions/string_extensions.dart';
+import 'package:grammar_learn/utils/extensions/string_extensions.dart';
 
 import '../bloc/settings_bloc.dart';
 
