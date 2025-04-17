@@ -50,16 +50,16 @@ class AppRouter {
           return MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => DI().sl<VocabularyBloc>(),
+                create: (context) => DI.get<VocabularyBloc>(),
               ),
               BlocProvider(
-                create: (context) => DI().sl<NotificationsBloc>(),
+                create: (context) => DI.get<NotificationsBloc>(),
               ),
               BlocProvider(
-                create: (context) => DI().sl<LessonBloc>(),
+                create: (context) => DI.get<LessonBloc>(),
               ),
               BlocProvider(
-                create: (context) => DI().sl<StreakBloc>(),
+                create: (context) => DI.get<StreakBloc>(),
               ),
             ],
             child: HomeNavigation(

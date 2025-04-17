@@ -134,6 +134,7 @@ Whether you're a student, professional, or language enthusiast, this app is your
 
 ### Generate files
 - Generate necessary files: `flutter pub run build_runner build --delete-conflicting-outputs`
+- Auto generate necessary files: run in new terminal `flutter pub run build_runner watch --delete-conflicting-outputs`
 - Click `Build` -> `Generate Flutter Assets` to generate assets path
 - Note: If you create a new assets folder, right-click on the folder and click `Flutter: Configuring Paths` to add assets path into `pubspec.yaml`
 

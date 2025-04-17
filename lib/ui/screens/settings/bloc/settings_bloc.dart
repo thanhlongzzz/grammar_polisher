@@ -22,6 +22,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       await event.map(
         getSettings: (event) => _onGetSettings(event, emit),
         saveSettings: (event) => _onSaveSettings(event, emit),
+        resetToDefault: (event) => _onResetToDefault(event,emit),
       );
     });
   }
@@ -42,4 +43,9 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     _settingsRepository.saveSettingsSnapshot(settingsSnapshot);
     emit(SettingsState(settingsSnapshot: settingsSnapshot));
   }
+  _onResetToDefault(_ResetToDefault event, Emitter<SettingsState> emit) {
+
+  }
 }
+
+
