@@ -49,8 +49,13 @@ class _PhoneticState extends State<Phonetic> {
   void _playSound() async {
     try {
       if (_player.state == PlayerState.playing) {
-        await _player.stop();
-        // return;
+        String currentUrl = (_player.source as UrlSource).url;
+        debugPrint(currentUrl);
+        if (currentUrl != widget.phonetic) {
+          await _player.stop();
+        } else {
+          return;
+        }
       }
       await _player.play(UrlSource(widget.phonetic, mimeType: 'audio/mpeg'));
     } catch (e) {
