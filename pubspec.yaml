@@ -52,7 +52,7 @@ dependencies:
   flutter_local_notifications: ^19.0.0
   timezone: ^0.10.0
   flutter_timezone: ^4.1.0
-  app_settings: ^5.2.0
+  app_settings: ^6.1.1
   intl: ^0.20.2
   url_launcher: ^6.3.1
   flash_card: ^0.1.0
