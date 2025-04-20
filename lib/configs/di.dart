@@ -1,9 +1,9 @@
 import 'package:amplitude_flutter/amplitude.dart';
 import 'package:amplitude_flutter/configuration.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/data_sources/assets_data.dart';
@@ -170,11 +170,15 @@ class DI {
       () => appHive,
     );
 
-    final player = AudioPlayer(
-      userAgent:
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+    // final player = AudioPlayer(
+    //   userAgent:
+    //   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+    // );
+    // sl.registerLazySingleton<AudioPlayer>(() => player);
+    
+    sl.registerLazySingleton<AudioPlayer>(
+      () => AudioPlayer(),
     );
-    sl.registerLazySingleton<AudioPlayer>(() => player);
 
     const apiKey = String.fromEnvironment('AMPLITUDE_API_KEY');
     final amplitude = Amplitude(Configuration(

@@ -83,16 +83,18 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                     itemCount: words.length,
                     itemBuilder: (context, index) {
                       final word = words[index];
+                      if (index == 1 || (index > 0 && index % 12 == 0)) {
+                        debugPrint('Show banner ad at index: $index');
+                      }
                       return Column(
                         children: [
                           VocabularyItem(word: word),
-                          if (index == 1) ...[
+                          if (index == 1 || (index > 0 && index % 12 == 0))
                             BannerAdWidget(
                               paddingHorizontal: 16,
                               paddingVertical: 8,
                               isPremium: isPremium,
                             ),
-                          ]
                         ],
                       );
                     },
@@ -180,7 +182,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
       final word = context.read<VocabularyBloc>().state.words.firstWhere(
             (element) => element.index == wordId,
           );
-      context.push(RoutePaths.wordDetails, extra: {'word': word});
+      context.push(RoutePaths.wordDetails, extra: {'word': word.toJson()});
     }
   }
 

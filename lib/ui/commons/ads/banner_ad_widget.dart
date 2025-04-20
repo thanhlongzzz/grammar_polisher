@@ -80,7 +80,16 @@ class _BannerAdWidgetState extends State<BannerAdWidget> with AutomaticKeepAlive
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    if (_bannerAd == null || !_isLoaded || widget.isPremium) return const SizedBox.shrink();
+    if (widget.isPremium) return const SizedBox.shrink();
+    
+    if (_bannerAd == null || !_isLoaded) {
+      // Provide a fixed size container while loading
+      return Container(
+        width: MediaQuery.of(context).size.width - (widget.paddingHorizontal * 2),
+        height: 60, // Standard banner height
+        margin: EdgeInsets.symmetric(vertical: widget.paddingVertical),
+      );
+    }
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: widget.paddingVertical),

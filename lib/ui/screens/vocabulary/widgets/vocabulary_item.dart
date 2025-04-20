@@ -201,7 +201,7 @@ class VocabularyItem extends StatelessWidget {
     if (viewOnly) {
       return;
     }
-    context.push(RoutePaths.wordDetails, extra: {'word': word});
+    context.push(RoutePaths.wordDetails, extra: {'word': word.toJson()});
   }
 
   _showEditWordDialog(BuildContext context) {

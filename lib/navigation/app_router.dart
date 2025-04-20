@@ -84,7 +84,8 @@ class AppRouter {
               path: RoutePaths.wordDetails,
               pageBuilder: (context, state) {
                 final extra = state.extra as Map<String, dynamic>?;
-                final word = extra?['word'] as Word;
+                final wordMap = extra?['word'] as Map<String, dynamic>;
+                final word = Word.fromJson(wordMap); // Create Word object from map
                 return SwipeablePage(
                   key: state.pageKey,
                   builder: (context) => WordDetailsScreen(word: word),

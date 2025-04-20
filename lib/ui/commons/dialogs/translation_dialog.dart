@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grammar_learn/configs/di.dart';
+import 'package:grammar_learn/data/data_sources/pair_storage.dart';
 
 import '../../../constants/languages.dart';
 import '../../../core/debouncer.dart';
@@ -23,8 +25,11 @@ class _TranslateDialogState extends State<TranslateDialog> {
   late TextEditingController _targetController;
   bool _showAllExtraTranslations = false;
   late ScrollController _scrollController;
-  Language _source = Language.languages.firstWhere((element) => element.code == 'en');
-  Language _target = Language.languages.firstWhere((element) => element.code == 'ja');
+  String lastSource = DI.get<PairStorage>().lastTranslateSource == ''? 'en' : DI.get<PairStorage>().lastTranslateSource;
+  String lastTarget = DI.get<PairStorage>().lastTranslateTarget == ''? 'vi' : DI.get<PairStorage>().lastTranslateTarget;
+  late Language _source;
+  late Language _target;
+
   final Debouncer _debouncer = Debouncer(delay: Duration(milliseconds: 500));
 
   @override
@@ -311,6 +316,8 @@ class _TranslateDialogState extends State<TranslateDialog> {
 
   void _translate(String value) async {
     context.read<TranslateCubit>().translate(_source.code, _target.code, value);
+    DI.get<PairStorage>().lastTranslateSource = _source.code;
+    DI.get<PairStorage>().lastTranslateTarget = _target.code;
     _scrollController.animateTo(
       0.0,
       duration: const Duration(milliseconds: 100),
@@ -328,9 +335,12 @@ class _TranslateDialogState extends State<TranslateDialog> {
     _targetController = TextEditingController();
     _scrollController = ScrollController();
 
+    _source = Language.languages.firstWhere((element) => element.code == lastSource);
+    _target = Language.languages.firstWhere((element) => element.code == lastTarget);
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final languageCode = WidgetsBinding.instance.window.locale.languageCode;
-      if (languageCode != 'en') {
+      if (languageCode != 'en' && DI.get<PairStorage>().lastTranslateTarget == '') {
         final language = Language.languages.firstWhere((element) => element.code == languageCode);
         setState(() {
           _target = language;

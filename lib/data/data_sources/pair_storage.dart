@@ -18,6 +18,11 @@ abstract interface class PairStorage {
   int get longestStreak;
 
   bool get streakedToday;
+
+  set lastTranslateSource(String val);
+  String get lastTranslateSource;
+  set lastTranslateTarget(String val);
+  String get lastTranslateTarget;
 }
 
 class SharedPreferencesStorage implements PairStorage {
@@ -96,5 +101,25 @@ class SharedPreferencesStorage implements PairStorage {
     final now = DateTime.now();
     final key = '${now.year}-${now.month}-${now.day}-streaked';
     return _sharedPreferences.getBool(key) ?? false;
+  }
+  
+  @override
+  set lastTranslateSource(String val) {
+    _sharedPreferences.setString('last_translate_source',val);
+  }
+  
+  @override
+  set lastTranslateTarget(String val) {
+    _sharedPreferences.setString('last_translate_target',val);
+  }
+
+  @override
+  String get lastTranslateSource {
+    return _sharedPreferences.getString('last_translate_source') ?? '';
+  }
+  
+  @override
+  String get lastTranslateTarget {
+    return _sharedPreferences.getString('last_translate_target') ?? '';
   }
 }

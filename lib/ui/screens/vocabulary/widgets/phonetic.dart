@@ -1,5 +1,5 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 
 import '../../../../configs/di.dart';
 import '../../../../generated/assets.dart';
@@ -22,7 +22,7 @@ class Phonetic extends StatefulWidget {
 }
 
 class _PhoneticState extends State<Phonetic> {
-  final _player = DI().sl<AudioPlayer>();
+  final _player = DI.get<AudioPlayer>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _PhoneticState extends State<Phonetic> {
           svg: Assets.svgVolumeUp,
           backgroundColor: widget.backgroundColor,
           color: Colors.white,
-          size: 32, // Tăng kích thước từ 24 lên 32
+          size: 26,
           padding: const EdgeInsets.all(8), // Thêm padding để tăng vùng chạm
           onPressed: _playSound,
         ),
@@ -48,8 +48,11 @@ class _PhoneticState extends State<Phonetic> {
 
   void _playSound() async {
     try {
-      await _player.setUrl(widget.phonetic);
-      await _player.play();
+      if (_player.state == PlayerState.playing) {
+        await _player.stop();
+        // return;
+      }
+      await _player.play(UrlSource(widget.phonetic, mimeType: 'audio/mpeg'));
     } catch (e) {
       debugPrint('skip');
     }
